@@ -8,10 +8,11 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.reflections.Reflections;
-import support.kajstech.kajbot.utils.*;
+import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.utils.CustomCommandsManager;
+import support.kajstech.kajbot.utils.KajbotLogger;
 
 import javax.security.auth.login.LoginException;
 import java.io.BufferedReader;

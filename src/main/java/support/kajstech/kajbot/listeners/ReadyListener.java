@@ -2,7 +2,6 @@ package support.kajstech.kajbot.listeners;
 
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import support.kajstech.kajbot.Main;
 import support.kajstech.kajbot.utils.ConfigManager;
 import support.kajstech.kajbot.utils.KajbotLogger;
 
