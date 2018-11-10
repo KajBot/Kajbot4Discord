@@ -13,7 +13,7 @@ public class ConfigManager {
     public static void init() {
         if (!cfgFile.exists()) {
             try {
-                config.storeToXML(new FileOutputStream("config.xml"), null);
+                config.storeToXML(new FileOutputStream(cfgFile), null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -21,7 +21,7 @@ public class ConfigManager {
         }
 
         try {
-            config.loadFromXML(new FileInputStream("config.xml"));
+            config.loadFromXML(new FileInputStream(cfgFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,7 +30,7 @@ public class ConfigManager {
 
     public static void shutdown() {
         try {
-            config.storeToXML(new FileOutputStream("config.xml"), null);
+            config.storeToXML(new FileOutputStream(cfgFile), null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class ConfigManager {
     public static void setProperty(String key, String value) {
         config.setProperty(key, value);
         try {
-            config.storeToXML(new FileOutputStream("config.xml"), null);
+            config.storeToXML(new FileOutputStream(cfgFile), null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class ConfigManager {
 
     public static String getProperty(String key) {
         try {
-            config.loadFromXML(new FileInputStream("config.xml"));
+            config.loadFromXML(new FileInputStream(cfgFile));
             key = config.getProperty(key);
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class ConfigManager {
     public static void removeProperty(String key) {
         config.remove(key);
         try {
-            config.storeToXML(new FileOutputStream("config.xml"), null);
+            config.storeToXML(new FileOutputStream(cfgFile), null);
         } catch (IOException e) {
             e.printStackTrace();
         }

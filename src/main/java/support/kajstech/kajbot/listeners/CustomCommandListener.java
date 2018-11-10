@@ -1,6 +1,5 @@
 package support.kajstech.kajbot.listeners;
 
-import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import support.kajstech.kajbot.Main;
@@ -8,14 +7,10 @@ import support.kajstech.kajbot.utils.CustomCommandsManager;
 
 public class CustomCommandListener extends ListenerAdapter {
 
-    public void onReady(ReadyEvent e) {
-        CustomCommandsManager.init();
-    }
-
     public void onMessageReceived(MessageReceivedEvent event) {
 
-        if (!event.getMessage().getContentRaw().startsWith(Main.commandClient.getPrefix())) return;
-        if (event.getAuthor() == event.getJDA().getSelfUser()) return;
+        if (!event.getMessage().getContentRaw().startsWith(Main.commandClient.getPrefix()) || event.getAuthor() == event.getJDA().getSelfUser())
+            return;
 
 
         String command = event.getMessage().getContentRaw().substring(Main.commandClient.getPrefix().length());

@@ -19,16 +19,16 @@ public class BlacklistListener extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor() == event.getJDA().getSelfUser()) return;
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("url_blacklist")) {
-            ConfigManager.setProperty("url_blacklist", "false");
+        if (!ConfigManager.getConfig().stringPropertyNames().contains("linkblacklist")) {
+            ConfigManager.setProperty("linkblacklist", "false");
         }
-        if (!ConfigManager.getConfig().getProperty("url_blacklist").equalsIgnoreCase("true") || event.getAuthor().isBot())
+        if (!ConfigManager.getConfig().getProperty("linkblacklist").equalsIgnoreCase("true") || event.getAuthor().isBot())
             return;
         if (canControlBot(event.getMember())) return;
 
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
-            event.getChannel().sendMessage(event.getMember().getAsMention() + " \u26D4 URL blacklist is enabled.").queue();
+            event.getChannel().sendMessage(event.getMember().getAsMention() + " \u26D4 Link blacklist is enabled.").queue();
             event.getMessage().delete().queue();
         }
     }

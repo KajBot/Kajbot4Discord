@@ -3,12 +3,12 @@ package support.kajstech.kajbot.commands;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import support.kajstech.kajbot.utils.ConfigManager;
-import support.kajstech.kajbot.utils.CustomCommandsManager;
+import support.kajstech.kajbot.utils.KeywordManager;
 
-public class delcom extends Command {
+public class delkeyword extends Command {
 
-    public delcom() {
-        this.name = "delcom";
+    public delkeyword() {
+        this.name = "delkeyword";
         this.guildOnly = true;
         this.requiredRole = ConfigManager.getProperty("botcontroller");
     }
@@ -19,9 +19,9 @@ public class delcom extends Command {
         String[] args = e.getArgs().split("\\W+");
         if (args[0].length() < 1) return;
 
-        if (CustomCommandsManager.cmds.containsKey(args[0])) {
-            CustomCommandsManager.removeCommand(args[0]);
-            e.getChannel().sendMessage("The command '``" + args[0].toUpperCase() + "``' has been deleted").queue();
+        if (KeywordManager.kws.containsKey(args[0])) {
+            KeywordManager.removeKeyword(args[0]);
+            e.getChannel().sendMessage("The keyword '``" + args[0].toUpperCase() + "``' has been deleted").queue();
         }
 
     }

@@ -22,8 +22,12 @@ public class addcom extends Command {
             return;
 
         String cmdName = args[0];
-        args = e.getArgs().substring(cmdName.length()).substring(1).split("\\W+");
-        if (args[0].length() < 1) return;
+        try {
+            args = e.getArgs().substring(cmdName.length() + 1).split("\\W+");
+        } catch (Exception ignored) {
+            return;
+        }
+
 
         CustomCommandsManager.addCommand(cmdName, String.join(" ", args));
         e.getChannel().sendMessage("'``" + cmdName.toUpperCase() + "``' is now registered as a command").queue();
