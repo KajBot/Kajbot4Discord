@@ -17,7 +17,7 @@ public class ConfigManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            KajbotLogger.info("Config file missing, generating a new");
+            KajbotLogger.info(KajbotLogger.bot, "Config file missing, generating a new");
         }
 
         try {

@@ -39,7 +39,13 @@ public class Main {
             ConfigManager.setProperty("serverport", token);
         }
 
-        Thread webServer = new Thread(() -> Server.run(ConfigManager.getProperty("serverport")));
+        Thread webServer = new Thread(() -> {
+            try {
+                Server.run(ConfigManager.getProperty("serverport"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         webServer.start();
 
         Thread bot = new Thread(() -> {

@@ -10,10 +10,10 @@ public class ReadyListener extends ListenerAdapter {
 
     public void onReady(ReadyEvent event) {
 
-        KajbotLogger.info("Logged in using token: " + ConfigManager.getProperty("token"));
-        KajbotLogger.info("Bot owner ID: " + ConfigManager.getProperty("ownerid"));
-        KajbotLogger.info("Using command prefix: " + ConfigManager.getProperty("prefix"));
-        KajbotLogger.info("Current ping: " + event.getJDA().getPing() + "ms");
+        KajbotLogger.info(KajbotLogger.bot, "Logged in using token: " + ConfigManager.getProperty("token"));
+        KajbotLogger.info(KajbotLogger.bot, "Bot owner ID: " + ConfigManager.getProperty("ownerid"));
+        KajbotLogger.info(KajbotLogger.bot, "Using command prefix: " + ConfigManager.getProperty("prefix"));
+        KajbotLogger.info(KajbotLogger.bot, "Current ping: " + event.getJDA().getPing() + "ms");
 
     }
 
