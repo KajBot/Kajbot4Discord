@@ -48,6 +48,7 @@ public class eval extends Command {
         engine.put("mentionedRoles", event.getMessage().getMentionedRoles());
         engine.put("mentionedChannels", event.getMessage().getMentionedChannels());
 
+
         Object out;
         try {
             out = engine.eval("(function() { with (imports) {\n" + allArgs + "\n} })();");

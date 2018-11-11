@@ -24,7 +24,7 @@ public class BlacklistListener extends ListenerAdapter {
         }
         if (!ConfigManager.getConfig().getProperty("linkblacklist").equalsIgnoreCase("true") || event.getAuthor().isBot())
             return;
-        if (canControlBot(event.getMember())) return;
+        if (!canControlBot(event.getMember())) return;
 
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
