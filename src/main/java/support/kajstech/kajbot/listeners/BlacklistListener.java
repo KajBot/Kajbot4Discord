@@ -18,10 +18,7 @@ public class BlacklistListener extends ListenerAdapter {
 
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor() == event.getJDA().getSelfUser()) return;
-
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("linkblacklist")) {
-            ConfigManager.setProperty("linkblacklist", "false");
-        }
+        
         if (!ConfigManager.getConfig().getProperty("linkblacklist").equalsIgnoreCase("true") || event.getAuthor().isBot())
             return;
         if (!canControlBot(event.getMember())) return;

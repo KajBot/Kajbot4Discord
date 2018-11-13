@@ -13,10 +13,8 @@ import support.kajstech.kajbot.utils.ConfigManager;
 import support.kajstech.kajbot.utils.CustomCommandsManager;
 import support.kajstech.kajbot.utils.KeywordManager;
 
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Set;
 
 public class Main {
@@ -29,33 +27,23 @@ public class Main {
         ConfigManager.init();
         KeywordManager.init();
         CustomCommandsManager.init();
+        Setup.setUp();
 
-        //Setting server port
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("serverport")) {
-            String token;
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Server port: ");
-            token = br.readLine();
-            ConfigManager.setProperty("serverport", token);
-        }
-
-        Thread webServer = new Thread(() -> {
+        new Thread(() -> {
             try {
                 Server.run(ConfigManager.getProperty("serverport"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
-        webServer.start();
+        }).start();
 
-        Thread bot = new Thread(() -> {
+        new Thread(() -> {
             try {
                 runBot();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
-        bot.start();
+        }).start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(ConfigManager::shutdown, "Shutdown-thread"));
     }
@@ -68,47 +56,13 @@ public class Main {
         //CommandClient builder
         CommandClientBuilder ccBuilder = new CommandClientBuilder();
 
-        //Setting bot token
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("token")) {
-            String token;
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Insert bot token: ");
-            token = br.readLine();
-            ConfigManager.setProperty("token", token);
-        }
+
         builder.setToken(ConfigManager.getProperty("token"));
-
-        //Setting Bot owner ID
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("ownerid")) {
-            String token;
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Bot owner ID: ");
-            token = br.readLine();
-            ConfigManager.setProperty("ownerid", token);
-        }
-
-        //Setting Bot controller role
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("botcontroller")) {
-            String token;
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Bot controller role: ");
-            token = br.readLine();
-            ConfigManager.setProperty("botcontroller", token);
-        }
-
+        ccBuilder.setPrefix(ConfigManager.getProperty("prefix"));
         ccBuilder.setOwnerId(ConfigManager.getProperty("ownerid"));
+
         ccBuilder.useHelpBuilder(false);
         ccBuilder.setGame(Game.playing("Kajbot"));
-
-        //Setting command prefix
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("prefix")) {
-            String token;
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Command prefix: ");
-            token = br.readLine();
-            ConfigManager.setProperty("prefix", token);
-        }
-        ccBuilder.setPrefix(ConfigManager.getProperty("prefix"));
 
 
         //Loading commands
