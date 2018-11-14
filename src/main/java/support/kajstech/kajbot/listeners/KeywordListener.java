@@ -13,7 +13,7 @@ public class KeywordListener extends ListenerAdapter {
             return;
 
         String string = event.getMessage().getContentRaw();
-        String[] args = string.split("\\W+");
+        String[] args = string.split("\\s+");
         for (int i = 0; i <= args.length - 1; i++) {
             if (KeywordManager.kws.containsKey(args[i])) {
                 event.getMessage().getTextChannel().sendMessage(KeywordManager.kws.get(args[i])).queue();
