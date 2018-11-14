@@ -32,8 +32,8 @@ class Server {
 
         JSONObject json = new JSONObject();
         json.put("Status", "ONLINE");
-        json.put("Game Status", Main.jda.getPresence().getGame().getName());
-        json.put("Online Status", Main.jda.getPresence().getStatus());
+        json.put("Game Status", Bot.jda.getPresence().getGame().getName());
+        json.put("Online Status", Bot.jda.getPresence().getStatus());
         json.put("Custom commands", CustomCommandsManager.getCommands());
         json.put("Custom keywords", KeywordManager.getKeywords());
 

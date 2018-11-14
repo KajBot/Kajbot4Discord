@@ -11,7 +11,7 @@ public class command extends Command {
     public command() {
         this.name = "command";
         this.guildOnly = true;
-        this.requiredRole = ConfigManager.getProperty("botcontroller");
+        this.requiredRole = ConfigManager.getProperty("Bot controller role");
     }
 
     @Override

@@ -2,14 +2,14 @@ package support.kajstech.kajbot.listeners;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import support.kajstech.kajbot.Main;
+import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.utils.KeywordManager;
 
 public class KeywordListener extends ListenerAdapter {
 
     public void onMessageReceived(MessageReceivedEvent event) {
 
-        if (event.getMessage().getContentRaw().startsWith(Main.commandClient.getPrefix()) || event.getAuthor() == event.getJDA().getSelfUser())
+        if (event.getMessage().getContentRaw().startsWith(Bot.commandClient.getPrefix()) || event.getAuthor() == event.getJDA().getSelfUser())
             return;
 
         String string = event.getMessage().getContentRaw();

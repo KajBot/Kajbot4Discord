@@ -11,7 +11,7 @@ public class keyword extends Command {
     public keyword() {
         this.name = "keyword";
         this.guildOnly = true;
-        this.requiredRole = ConfigManager.getProperty("botcontroller");
+        this.requiredRole = ConfigManager.getProperty("Bot controller role");
     }
 
     @Override

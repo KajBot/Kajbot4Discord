@@ -13,57 +13,67 @@ public class Setup extends ListenerAdapter {
     private static Properties config = ConfigManager.getConfig();
 
 
-    public static void setUp() throws IOException {
+    static void setUp() throws IOException {
 
-        if (!config.stringPropertyNames().contains("token")) {
+        if (!config.stringPropertyNames().contains("Bot token")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Insert bot token: ");
             token = br.readLine();
-            config.setProperty("token", token);
+            config.setProperty("Bot token", token);
         }
 
-        if (!config.stringPropertyNames().contains("prefix")) {
+        if (!config.stringPropertyNames().contains("Command prefix")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Command prefix: ");
             token = br.readLine();
-            config.setProperty("prefix", token);
+            config.setProperty("Command prefix", token);
         }
 
-        if (!config.stringPropertyNames().contains("ownerid")) {
+        if (!config.stringPropertyNames().contains("Bot owner ID")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot owner ID: ");
             token = br.readLine();
-            config.setProperty("ownerid", token);
+            config.setProperty("Bot owner ID", token);
         }
 
-        if (!config.stringPropertyNames().contains("botcontroller")) {
+        if (!config.stringPropertyNames().contains("Bot controller role")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot controller role: ");
             token = br.readLine();
-            config.setProperty("botcontroller", token);
+            config.setProperty("Bot controller role", token);
         }
 
-        if (!config.stringPropertyNames().contains("serverport")) {
+        if (!config.stringPropertyNames().contains("Server port")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Server port: ");
             token = br.readLine();
-            config.setProperty("serverport", token);
+            config.setProperty("Server port", token);
         }
 
-        if (!config.stringPropertyNames().contains("modlog")) {
-            config.setProperty("modlog", " ");
+        if (!config.stringPropertyNames().contains("Twitch client ID")) {
+            config.setProperty("Twitch client ID", " ");
         }
 
-        if (!config.stringPropertyNames().contains("linkblacklist")) {
-            config.setProperty("linkblacklist", "false");
+        if (!config.stringPropertyNames().contains("Twitch channels")) {
+            config.setProperty("Twitch channels", " ");
         }
 
-        ConfigManager.setProperty("firsttimesetup", "false");
+        if (!config.stringPropertyNames().contains("YouTube channel ID")) {
+            config.setProperty("YouTube channel ID", " ");
+        }
+
+        if (!config.stringPropertyNames().contains("YouTube API key")) {
+            config.setProperty("YouTube API key", " ");
+        }
+
+        if (!config.stringPropertyNames().contains("Link blacklist")) {
+            config.setProperty("Link blacklist", "false");
+        }
 
     }
 
