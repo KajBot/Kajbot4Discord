@@ -26,7 +26,7 @@ public class command extends Command {
                         CustomCommandsManager.removeCommand(args[1]);
                         e.getChannel().sendMessage("The command '``" + args[1].toUpperCase() + "``' has been deleted").queue();
                     }
-                }catch(Exception ignored) {
+                } catch (Exception ignored) {
                     return;
                 }
                 break;
@@ -36,7 +36,7 @@ public class command extends Command {
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split(" ");
                     CustomCommandsManager.addCommand(cmdName, String.join(" ", cmdContext));
                     e.getChannel().sendMessage("'``" + cmdName.toUpperCase() + "``' is now registered as a command").queue();
-                }catch(Exception ignored){
+                } catch (Exception ignored) {
                     return;
                 }
 

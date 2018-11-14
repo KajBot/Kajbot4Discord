@@ -26,7 +26,7 @@ public class keyword extends Command {
                         KeywordManager.removeKeyword(args[1]);
                         e.getChannel().sendMessage("The keyword '``" + args[1].toUpperCase() + "``' has been deleted").queue();
                     }
-                }catch(Exception ignored) {
+                } catch (Exception ignored) {
                     return;
                 }
                 break;
@@ -36,7 +36,7 @@ public class keyword extends Command {
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split(" ");
                     KeywordManager.addKeyword(kwName, String.join(" ", kwContext));
                     e.getChannel().sendMessage("'``" + kwName.toUpperCase() + "``' is now registered as a keyword").queue();
-                }catch(Exception ignored){
+                } catch (Exception ignored) {
                     return;
                 }
                 break;

@@ -3,8 +3,8 @@ package support.kajstech.kajbot;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import org.json.JSONObject;
 import support.kajstech.kajbot.utils.CustomCommandsManager;
+import support.kajstech.kajbot.utils.JSONObject;
 import support.kajstech.kajbot.utils.KajbotLogger;
 import support.kajstech.kajbot.utils.KeywordManager;
 
@@ -43,9 +43,6 @@ class Server {
 
         osw.close();
 
-        String hostIP = httpExchange.getRemoteAddress().getAddress().getHostAddress();
-        int hostPort = httpExchange.getRemoteAddress().getPort();
-
-        KajbotLogger.info(KajbotLogger.server, "Connection established: " + hostIP + ":" + hostPort);
+        KajbotLogger.info(KajbotLogger.server, "Connection established: " + httpExchange.getRemoteAddress().getAddress().getHostAddress() + ":" + httpExchange.getRemoteAddress().getPort());
     }
 }

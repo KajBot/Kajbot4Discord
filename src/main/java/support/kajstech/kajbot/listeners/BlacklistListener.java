@@ -17,11 +17,7 @@ public class BlacklistListener extends ListenerAdapter {
     }
 
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (event.getAuthor() == event.getJDA().getSelfUser()) return;
-        
-        if (!ConfigManager.getConfig().getProperty("linkblacklist").equalsIgnoreCase("true") || event.getAuthor().isBot())
-            return;
-        if (!canControlBot(event.getMember())) return;
+        if (!ConfigManager.getConfig().getProperty("linkblacklist").equalsIgnoreCase("true") || event.getAuthor() == event.getJDA().getSelfUser() || event.getMessage().getAuthor().isBot() || !canControlBot(event.getMember())) return;
 
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
