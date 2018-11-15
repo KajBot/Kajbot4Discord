@@ -33,12 +33,12 @@ public class info extends Command {
 
     @Override
     protected void execute(CommandEvent event) {
-        if(event.getArgs().length() > 0){
+        if (event.getArgs().length() > 0) {
             List<User> userMention = event.getMessage().getMentionedUsers();
             for (User user : userMention) {
                 embedUser(user, event.getGuild().getMember(user), event);
             }
-        }else{
+        } else {
             embedUser(event.getAuthor(), event.getMember(), event);
         }
     }

@@ -1,21 +1,28 @@
 package support.kajstech.kajbot.cc.sites;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
+import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.utils.ConfigManager;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Twitch {
 
+    private static List<String> liveTwitch = new ArrayList<>();
+
     private static String channelUrl;
 
-    public static boolean checkIfOnline(String channel) throws IOException {
+    private static boolean checkIfOnline(String channel) throws IOException {
         channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigManager.getConfig().getProperty("Twitch client ID");
 
         String jsonText = readFromUrl(channelUrl);// reads text from URL
@@ -32,25 +39,52 @@ public class Twitch {
         }
     }
 
-    public static String getGame() throws IOException {
+    private static String getGame() throws IOException {
         String jsonChannels = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonChannels);
 
         return json.getJSONObject("stream").getString("game");
     }
 
-    public static String getThumbnail() throws IOException {
+    private static String getThumbnail() throws IOException {
         String jsonChannels = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonChannels);
 
         return json.getJSONObject("stream").getJSONObject("preview").getString("large");
     }
 
-    public static String getTitle() throws IOException {
+    private static String getTitle() throws IOException {
         String jsonChannels = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonChannels);
 
         return json.getJSONObject("stream").getJSONObject("channel").getString("status");
+    }
+
+
+    public static void checkTwitch() {
+        try {
+            if (ConfigManager.getProperty("Twitch client ID").length() > 1 && ConfigManager.getProperty("Twitch channels").length() > 1) {
+                for (String c : ConfigManager.getProperty("Twitch channels").split(", ")) {
+                    if (Twitch.checkIfOnline(c)) {
+                        if (!liveTwitch.contains(c)) {
+                            liveTwitch.add(c);
+                            EmbedBuilder eb = new EmbedBuilder();
+                            eb.setColor(new Color(0xA6C055));
+                            eb.setTitle("Title", null);
+                            eb.setDescription(Twitch.getTitle());
+                            eb.addField("Now Playing", Twitch.getGame(), false);
+                            eb.setAuthor(c + " just went live on Twitch!", "https://www.twitch.tv/" + c, null);
+                            eb.setImage(Twitch.getThumbnail());
+                            Bot.jda.getTextChannelById(ConfigManager.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
+                        }
+                    } else {
+                        liveTwitch.remove(c);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
