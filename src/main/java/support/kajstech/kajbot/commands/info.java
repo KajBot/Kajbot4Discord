@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
+import support.kajstech.kajbot.utils.ConfigManager;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -16,8 +17,7 @@ public class info extends Command {
     public info() {
         this.name = "info";
         this.guildOnly = true;
-        this.aliases = new String[]{"info"};
-        this.ownerCommand = true;
+        this.requiredRole = ConfigManager.getProperty("Bot controller role");
     }
 
     private static String VariableToString(String regex, String input) {
@@ -33,18 +33,13 @@ public class info extends Command {
 
     @Override
     protected void execute(CommandEvent event) {
-        switch (event.getArgs().length()) {
-            case 0:
-                embedUser(event.getAuthor(), event.getMember(), event);
-                break;
-
-            case 1:
-
-                List<User> userMention = event.getMessage().getMentionedUsers();
-                for (User user : userMention) {
-                    embedUser(user, event.getGuild().getMember(user), event);
-                }
-                break;
+        if(event.getArgs().length() > 0){
+            List<User> userMention = event.getMessage().getMentionedUsers();
+            for (User user : userMention) {
+                embedUser(user, event.getGuild().getMember(user), event);
+            }
+        }else{
+            embedUser(event.getAuthor(), event.getMember(), event);
         }
     }
 

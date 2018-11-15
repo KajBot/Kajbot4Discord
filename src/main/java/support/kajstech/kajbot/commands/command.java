@@ -10,7 +10,7 @@ public class command extends Command {
 
     public command() {
         this.name = "command";
-        this.guildOnly = true;
+        this.guildOnly = false;
         this.requiredRole = ConfigManager.getProperty("Bot controller role");
     }
 

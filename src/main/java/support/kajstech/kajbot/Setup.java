@@ -20,7 +20,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Bot token", token);
         }
 
-        if (!ConfigManager.getConfig().contains("Command prefix")) {
+        if (!ConfigManager.getConfig().stringPropertyNames().contains("Command prefix")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Command prefix: ");
