@@ -15,7 +15,7 @@ import support.kajstech.kajbot.utils.KeywordManager;
 
 import java.util.Set;
 
-public class Bot extends ListenerAdapter {
+public class Bot {
 
     public static JDA jda;
     public static CommandClient commandClient;
