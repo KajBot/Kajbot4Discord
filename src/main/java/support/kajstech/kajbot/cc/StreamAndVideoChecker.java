@@ -24,7 +24,7 @@ public class StreamAndVideoChecker extends ListenerAdapter {
                 Thread.sleep(10000);
             }
 
-            if (ConfigManager.getProperty("Notifications channel ID").length() < 2) {
+            if (ConfigManager.getProperty("Notification channel ID").length() < 2) {
                 return;
             }
 
@@ -41,7 +41,7 @@ public class StreamAndVideoChecker extends ListenerAdapter {
                                 eb.addField("Now Playing", Twitch.getGame(), false);
                                 eb.setAuthor(c + " just went live on Twitch!", "https://www.twitch.tv/" + c, null);
                                 eb.setImage(Twitch.getThumbnail());
-                                Bot.jda.getTextChannelById(ConfigManager.getProperty("Notifications channel ID")).sendMessage(eb.build()).queue();
+                                Bot.jda.getTextChannelById(ConfigManager.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                             }
                         } else {
                             liveTwitch.remove(c);
@@ -64,7 +64,7 @@ public class StreamAndVideoChecker extends ListenerAdapter {
                                 eb.setDescription(YouTube.getTitle());
                                 eb.setAuthor(YouTube.getName() + " just went live on YouTube!", "https://youtu.be/" + YouTube.getId(), null);
                                 eb.setImage(YouTube.getThumbnail());
-                                Bot.jda.getTextChannelById(ConfigManager.getProperty("Notifications channel ID")).sendMessage(eb.build()).queue();
+                                Bot.jda.getTextChannelById(ConfigManager.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                             }
                         } else {
                             liveYoutube.remove(c);

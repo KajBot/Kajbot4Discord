@@ -60,7 +60,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Twitch channels", " ");
         }
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("YouTube channel ID")) {
+        if (!ConfigManager.getConfig().stringPropertyNames().contains("YouTube channels")) {
             ConfigManager.setProperty("YouTube channels", " ");
         }
 
@@ -68,8 +68,8 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("YouTube API key", " ");
         }
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Notifications channel")) {
-            ConfigManager.setProperty("Notifications channel ID", " ");
+        if (!ConfigManager.getConfig().stringPropertyNames().contains("Notification channel ID")) {
+            ConfigManager.setProperty("Notification channel ID", " ");
         }
 
         if (!ConfigManager.getConfig().stringPropertyNames().contains("Link blacklist")) {
