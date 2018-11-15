@@ -39,4 +39,18 @@ public class Twitch {
         return json.getJSONObject("stream").getString("game");
     }
 
+    public static String getThumbnail() throws IOException {
+        String jsonChannels = readFromUrl(channelUrl);
+        JSONObject json = new JSONObject(jsonChannels);
+
+        return json.getJSONObject("stream").getJSONObject("preview").getString("large");
+    }
+
+    public static String getTitle() throws IOException {
+        String jsonChannels = readFromUrl(channelUrl);
+        JSONObject json = new JSONObject(jsonChannels);
+
+        return json.getJSONObject("stream").getJSONObject("channel").getString("status");
+    }
+
 }

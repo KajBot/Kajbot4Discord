@@ -1,5 +1,6 @@
 package support.kajstech.kajbot;
 
+import support.kajstech.kajbot.cc.StreamAndVideoChecker;
 import support.kajstech.kajbot.utils.ConfigManager;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class Main {
         //CC
         new Thread(() -> {
             try {
-                //StreamAndVideoChecker.run();
+                StreamAndVideoChecker.run();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -45,4 +46,5 @@ public class Main {
         //SHUTDOWN HOOK
         Runtime.getRuntime().addShutdownHook(new Thread(ConfigManager::shutdown, "Shutdown-thread"));
     }
+
 }

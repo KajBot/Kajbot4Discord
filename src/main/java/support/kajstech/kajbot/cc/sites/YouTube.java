@@ -32,18 +32,32 @@ public class YouTube {
         }
     }
 
-    private static String getId() throws IOException {
+    public static String getTitle() throws IOException {
+        String jsonChannels = readFromUrl(channelUrl);
+        JSONObject json = new JSONObject(jsonChannels);
+
+        return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("title");
+    }
+
+    public static String getId() throws IOException {
         String jsonChannels = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonChannels);
 
         return json.getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
     }
 
-    private static String getName() throws IOException {
+    public static String getName() throws IOException {
         String jsonChannels = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonChannels);
 
         return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
+    }
+
+    public static String getThumbnail() throws IOException {
+        String jsonChannels = readFromUrl(channelUrl);
+        JSONObject json = new JSONObject(jsonChannels);
+
+        return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
     }
 
 }
