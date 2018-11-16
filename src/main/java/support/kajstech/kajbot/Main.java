@@ -9,7 +9,12 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //CONFIG
         ConfigManager.init();
+
+        //LANGUAGE
+        Language.run();
+
         try {
             Setup.setUp();
         } catch (IOException e) {

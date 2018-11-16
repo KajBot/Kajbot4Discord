@@ -12,7 +12,7 @@ class Setup extends ListenerAdapter {
 
     static void setUp() throws IOException {
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Bot token")) {
+        if (ConfigManager.getProperty("Bot token").isEmpty()) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Insert bot token: ");
@@ -20,7 +20,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Bot token", token);
         }
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Command prefix")) {
+        if (ConfigManager.getProperty("Command prefix").isEmpty()) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Command prefix: ");
@@ -28,7 +28,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Command prefix", token);
         }
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Bot owner ID")) {
+        if (ConfigManager.getProperty("Bot owner ID").isEmpty()) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot owner ID: ");
@@ -36,7 +36,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Bot owner ID", token);
         }
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Bot controller role")) {
+        if (ConfigManager.getProperty("Bot controller role").isEmpty()) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot controller role: ");
@@ -44,36 +44,12 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Bot controller role", token);
         }
 
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Server port")) {
+        if (ConfigManager.getProperty("Server port").isEmpty()) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Server port: ");
             token = br.readLine();
             ConfigManager.setProperty("Server port", token);
-        }
-
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Twitch client ID")) {
-            ConfigManager.setProperty("Twitch client ID", " ");
-        }
-
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Twitch channels")) {
-            ConfigManager.setProperty("Twitch channels", " ");
-        }
-
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("YouTube channels")) {
-            ConfigManager.setProperty("YouTube channels", " ");
-        }
-
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("YouTube API key")) {
-            ConfigManager.setProperty("YouTube API key", " ");
-        }
-
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Notification channel ID")) {
-            ConfigManager.setProperty("Notification channel ID", " ");
-        }
-
-        if (!ConfigManager.getConfig().stringPropertyNames().contains("Link blacklist")) {
-            ConfigManager.setProperty("Link blacklist", "false");
         }
 
     }

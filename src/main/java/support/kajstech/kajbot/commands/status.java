@@ -4,6 +4,7 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.OnlineStatus;
 import support.kajstech.kajbot.Bot;
+import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.utils.ConfigManager;
 
 public class status extends Command {
@@ -27,7 +28,7 @@ public class status extends Command {
 
 
         Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(args[0].toUpperCase()));
-        e.getChannel().sendMessage("Online status set to: ``" + args[0].toUpperCase() + "``").queue();
+        e.getChannel().sendMessage((Language.messages.getProperty("Status.SET")).replace("%STATUS%", args[0].toUpperCase())).queue();
 
     }
 }

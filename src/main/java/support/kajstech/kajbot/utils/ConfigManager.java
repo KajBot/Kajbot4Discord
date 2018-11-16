@@ -1,9 +1,6 @@
 package support.kajstech.kajbot.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class ConfigManager {
@@ -11,21 +8,20 @@ public class ConfigManager {
     private static File cfgFile = new File("config.xml");
 
     public static void init() {
-        if (!cfgFile.exists()) {
-            try {
-                config.storeToXML(new FileOutputStream(cfgFile), null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            KajbotLogger.info(KajbotLogger.bot, "Config file missing, generating a new");
-        }
-
         try {
             config.loadFromXML(new FileInputStream(cfgFile));
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                InputStream in = ClassLoader.getSystemResourceAsStream("config.xml");
+                byte[] buffer = new byte[in.available()];
+                OutputStream out = new FileOutputStream(cfgFile);
+                in.read(buffer);
+                out.write(buffer);
+                config.load(new FileInputStream(cfgFile));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
-
     }
 
     public static void shutdown() {
@@ -59,14 +55,5 @@ public class ConfigManager {
         }
 
         return key;
-    }
-
-    public static void removeProperty(String key) {
-        config.remove(key);
-        try {
-            config.storeToXML(new FileOutputStream(cfgFile), null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

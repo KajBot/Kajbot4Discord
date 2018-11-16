@@ -2,6 +2,7 @@ package support.kajstech.kajbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.utils.ConfigManager;
 import support.kajstech.kajbot.utils.KeywordManager;
 
@@ -24,7 +25,7 @@ public class keyword extends Command {
                 try {
                     if (KeywordManager.kws.containsKey(args[1])) {
                         KeywordManager.removeKeyword(args[1]);
-                        e.getChannel().sendMessage("The keyword '``" + args[1].toUpperCase() + "``' has been deleted").queue();
+                        e.getChannel().sendMessage((Language.messages.getProperty("Keyword.UNREGISTERED")).replace("%KW%", args[1].toUpperCase())).queue();
                     }
                 } catch (Exception ignored) {
                     return;
@@ -35,7 +36,7 @@ public class keyword extends Command {
                     String kwName = args[1];
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split(" ");
                     KeywordManager.addKeyword(kwName, String.join(" ", kwContext));
-                    e.getChannel().sendMessage("'``" + kwName.toUpperCase() + "``' is now registered as a keyword").queue();
+                    e.getChannel().sendMessage((Language.messages.getProperty("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase())).queue();
                 } catch (Exception ignored) {
                     return;
                 }

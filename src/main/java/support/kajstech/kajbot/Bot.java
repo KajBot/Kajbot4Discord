@@ -13,6 +13,7 @@ import support.kajstech.kajbot.utils.ConfigManager;
 import support.kajstech.kajbot.utils.CustomCommandsManager;
 import support.kajstech.kajbot.utils.KeywordManager;
 
+import javax.security.auth.login.LoginException;
 import java.util.Set;
 
 public class Bot {
@@ -20,7 +21,7 @@ public class Bot {
     public static JDA jda;
     public static CommandClient commandClient;
 
-    static void run() throws Exception {
+    static void run() {
 
         KeywordManager.init();
         CustomCommandsManager.init();
@@ -73,6 +74,10 @@ public class Bot {
         builder.setAudioEnabled(false);
 
         //Building JDA
-        jda = builder.build();
+        try {
+            jda = builder.build();
+        } catch (LoginException e) {
+            e.printStackTrace();
+        }
     }
 }

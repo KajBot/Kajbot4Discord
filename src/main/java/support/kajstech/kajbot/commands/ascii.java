@@ -2,6 +2,7 @@ package support.kajstech.kajbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.utils.ConfigManager;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class ascii extends Command {
                     (font == null || font.isEmpty() ? "" : "&font=" + font);
             return new Scanner(new URL(url).openStream(), "UTF-8").useDelimiter("\\A").next();
         } catch (IOException e) {
-            return "Fejl i at hente ASCII tekst.";
+            return Language.messages.getProperty("ASCII.ERROR_RETRIEVING_TEXT");
         }
     }
 
@@ -71,13 +72,13 @@ public class ascii extends Command {
                 String ascii = getAsciiArt(input.toString(), font);
 
                 if (ascii.length() > 1900) {
-                    e.getChannel().sendMessage("```fix\n\nAscii teksten er for stor```").queue();
+                    e.getChannel().sendMessage("```fix\n\n " + Language.messages.getProperty("ASCII.TOO_BIG") + "```").queue();
                     return;
                 }
 
                 e.getChannel().sendMessage("**Font:** " + font + "\n```fix\n\n" + ascii + "```").queue();
             } catch (IllegalArgumentException iae) {
-                e.getChannel().sendMessage("```fix\n\nDin tekst indeholder ugyldige tegn!```").queue();
+                e.getChannel().sendMessage("```fix\n\n" + Language.messages.getProperty("ASCII.INVALID_CHARACTERS") + "```").queue();
             }
         }
     }
