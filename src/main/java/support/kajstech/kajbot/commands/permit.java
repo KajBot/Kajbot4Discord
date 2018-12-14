@@ -24,7 +24,7 @@ public class permit extends Command {
     @Override
     protected void execute(CommandEvent e) {
         if (e.getArgs().length() < 1) return;
-        if (!ConfigManager.getConfig().getProperty("Link blacklist").equalsIgnoreCase("true")) return;
+        if (!ConfigManager.getProperty("Link blacklist").equalsIgnoreCase("true")) return;
 
         List<Member> memberMention = e.getMessage().getMentionedMembers();
 

@@ -1,5 +1,6 @@
 package support.kajstech.kajbot;
 
+import support.kajstech.kajbot.API.Server;
 import support.kajstech.kajbot.cc.StreamAndVideoChecker;
 import support.kajstech.kajbot.utils.ConfigManager;
 
@@ -24,7 +25,7 @@ public class Main {
         //API
         new Thread(() -> {
             try {
-                Server.run(ConfigManager.getProperty("Server port"));
+                Server.run(Integer.parseInt(ConfigManager.getProperty("API port")));
             } catch (Exception e) {
                 e.printStackTrace();
             }

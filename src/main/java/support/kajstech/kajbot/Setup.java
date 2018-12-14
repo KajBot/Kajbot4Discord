@@ -12,7 +12,7 @@ class Setup extends ListenerAdapter {
 
     static void setUp() throws IOException {
 
-        if (ConfigManager.getProperty("Bot token").isEmpty()) {
+        if (!ConfigManager.containsProperty("Bot token")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Insert bot token: ");
@@ -20,7 +20,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Bot token", token);
         }
 
-        if (ConfigManager.getProperty("Command prefix").isEmpty()) {
+        if (!ConfigManager.containsProperty("Command prefix")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Command prefix: ");
@@ -28,7 +28,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Command prefix", token);
         }
 
-        if (ConfigManager.getProperty("Bot owner ID").isEmpty()) {
+        if (!ConfigManager.containsProperty("Bot owner ID")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot owner ID: ");
@@ -36,7 +36,7 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Bot owner ID", token);
         }
 
-        if (ConfigManager.getProperty("Bot controller role").isEmpty()) {
+        if (!ConfigManager.containsProperty("Bot controller role")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot controller role: ");
@@ -44,12 +44,12 @@ class Setup extends ListenerAdapter {
             ConfigManager.setProperty("Bot controller role", token);
         }
 
-        if (ConfigManager.getProperty("Server port").isEmpty()) {
+        if (!ConfigManager.containsProperty("API port")) {
             String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Server port: ");
+            System.out.print("API port: ");
             token = br.readLine();
-            ConfigManager.setProperty("Server port", token);
+            ConfigManager.setProperty("API port", token);
         }
 
     }

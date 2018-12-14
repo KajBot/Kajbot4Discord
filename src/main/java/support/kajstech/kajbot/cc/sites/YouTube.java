@@ -31,7 +31,7 @@ class YouTubeVideo {
     private static List<String> video = new ArrayList<>();
 
     private static boolean checkVideo(String channel) throws IOException {
-        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + ConfigManager.getConfig().getProperty("YouTube API key");
+        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + ConfigManager.getProperty("YouTube API key");
 
         String jsonText = readFromUrl(channelUrl);// reads text from URL
         JSONObject json = new JSONObject(jsonText);
@@ -109,7 +109,7 @@ class YouTubeLive {
     private static String channelUrl;
 
     private static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + ConfigManager.getConfig().getProperty("YouTube API key");
+        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + ConfigManager.getProperty("YouTube API key");
 
         String jsonText = readFromUrl(channelUrl);// reads text from URL
         JSONObject json = new JSONObject(jsonText);

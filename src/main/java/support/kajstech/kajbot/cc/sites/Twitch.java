@@ -23,7 +23,7 @@ public class Twitch {
     private static String channelUrl;
 
     private static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigManager.getConfig().getProperty("Twitch client ID");
+        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigManager.getProperty("Twitch client ID");
 
         String jsonText = readFromUrl(channelUrl);// reads text from URL
         JSONObject json = new JSONObject(jsonText);

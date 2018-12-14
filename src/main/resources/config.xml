@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <entry key="Language">en_US</entry>
-    <entry key="Server port"></entry>
+    <entry key="API port"></entry>
     <entry key="Bot token"></entry>
     <entry key="Command prefix"></entry>
     <entry key="Bot owner ID"></entry>
@@ -13,4 +13,5 @@
     <entry key="Twitch channels"></entry>
     <entry key="YouTube API key"></entry>
     <entry key="YouTube channels"></entry>
+    <entry key="API token"></entry>
 </properties>
