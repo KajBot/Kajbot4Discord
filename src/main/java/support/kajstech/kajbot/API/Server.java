@@ -1,8 +1,7 @@
 package support.kajstech.kajbot.API;
 
 import com.sun.net.httpserver.HttpServer;
-import support.kajstech.kajbot.API.rev.APIv1;
-import support.kajstech.kajbot.API.rev.APIv2;
+import support.kajstech.kajbot.API.context.APIv1;
 import support.kajstech.kajbot.utils.ConfigManager;
 
 import java.net.InetSocketAddress;
@@ -18,7 +17,6 @@ public class Server {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/api/v1", APIv1::v1);
-        server.createContext("/api/v2", APIv2::v2);
         server.setExecutor(null);
         server.start();
 

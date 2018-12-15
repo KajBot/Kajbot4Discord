@@ -13,43 +13,33 @@ class Setup extends ListenerAdapter {
     static void setUp() throws IOException {
 
         if (!ConfigManager.containsProperty("Bot token")) {
-            String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Insert bot token: ");
-            token = br.readLine();
-            ConfigManager.setProperty("Bot token", token);
+            ConfigManager.setProperty("Bot token", br.readLine());
         }
 
         if (!ConfigManager.containsProperty("Command prefix")) {
-            String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Command prefix: ");
-            token = br.readLine();
-            ConfigManager.setProperty("Command prefix", token);
+            ConfigManager.setProperty("Command prefix", br.readLine());
         }
 
         if (!ConfigManager.containsProperty("Bot owner ID")) {
-            String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot owner ID: ");
-            token = br.readLine();
-            ConfigManager.setProperty("Bot owner ID", token);
+            ConfigManager.setProperty("Bot owner ID", br.readLine());
         }
 
         if (!ConfigManager.containsProperty("Bot controller role")) {
-            String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Bot controller role: ");
-            token = br.readLine();
-            ConfigManager.setProperty("Bot controller role", token);
+            ConfigManager.setProperty("Bot controller role", br.readLine());
         }
 
         if (!ConfigManager.containsProperty("API port")) {
-            String token;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("API port: ");
-            token = br.readLine();
-            ConfigManager.setProperty("API port", token);
+            ConfigManager.setProperty("API port", br.readLine());
         }
 
     }

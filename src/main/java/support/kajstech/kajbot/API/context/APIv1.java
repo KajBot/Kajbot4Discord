@@ -1,4 +1,4 @@
-package support.kajstech.kajbot.API.rev;
+package support.kajstech.kajbot.API.context;
 
 import com.sun.net.httpserver.HttpExchange;
 import org.json.JSONObject;

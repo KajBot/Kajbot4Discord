@@ -14,10 +14,10 @@ public class ConfigManager {
             try {
                 InputStream in = ClassLoader.getSystemResourceAsStream(cfgFile.getName());
                 byte[] buffer = new byte[in.available()];
-                OutputStream out = new FileOutputStream(cfgFile);
                 in.read(buffer);
-                out.write(buffer);
-                config.load(new FileInputStream(cfgFile));
+                new FileOutputStream(cfgFile).write(buffer);
+
+                config.loadFromXML(new FileInputStream(cfgFile));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -30,6 +30,10 @@ public class ConfigManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Properties getConfig() {
+        return config;
     }
 
     public static void init() {
@@ -47,20 +51,15 @@ public class ConfigManager {
     }
 
     public static String getProperty(String key) {
-        if (config.isEmpty()) loadCfg();
 
         return config.getProperty(key);
     }
 
     public static boolean containsProperty(String key) {
-        if (config.isEmpty()) loadCfg();
         try {
-            if (getProperty(key).length() > 0 || !getProperty(key).isEmpty()) {
-                return true;
-            }
+            return getProperty(key).length() > 0 || !getProperty(key).isEmpty();
         } catch (Exception ignored) {
             return false;
         }
-        return false;
     }
 }
