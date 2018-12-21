@@ -1,8 +1,8 @@
 package support.kajstech.kajbot;
 
-import support.kajstech.kajbot.API.Server;
 import support.kajstech.kajbot.cc.StreamAndVideoChecker;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.web.Server;
 
 import java.io.IOException;
 
@@ -11,10 +11,10 @@ public class Main {
     public static void main(String[] args) {
 
         //CONFIG
-        ConfigManager.init();
+        ConfigHandler.loadCfg();
 
         //LANGUAGE
-        Language.run();
+        Language.init();
 
         try {
             Setup.setUp();
@@ -25,7 +25,7 @@ public class Main {
         //API
         new Thread(() -> {
             try {
-                Server.run(Integer.parseInt(ConfigManager.getProperty("API port")));
+                Server.run(Integer.parseInt(ConfigHandler.getProperty("API port")));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -50,7 +50,7 @@ public class Main {
         }).start();
 
         //SHUTDOWN HOOK
-        Runtime.getRuntime().addShutdownHook(new Thread(ConfigManager::shutdown, "Shutdown-thread"));
+        Runtime.getRuntime().addShutdownHook(new Thread(ConfigHandler::storeCfg, "Shutdown-thread"));
     }
 
 }

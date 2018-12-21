@@ -3,8 +3,8 @@ package support.kajstech.kajbot.commands;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.utils.ConfigManager;
-import support.kajstech.kajbot.utils.CustomCommandsManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 
 
 public class command extends Command {
@@ -12,7 +12,7 @@ public class command extends Command {
     public command() {
         this.name = "command";
         this.guildOnly = false;
-        this.requiredRole = ConfigManager.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
     }
 
     @Override
@@ -23,8 +23,8 @@ public class command extends Command {
             case "del":
             case "remove":
                 try {
-                    if (CustomCommandsManager.cmds.containsKey(args[1])) {
-                        CustomCommandsManager.removeCommand(args[1]);
+                    if (CustomCommandsHandler.cmds.containsKey(args[1])) {
+                        CustomCommandsHandler.removeCommand(args[1]);
                         e.getChannel().sendMessage((Language.messages.getProperty("Command.UNREGISTERED")).replace("%CMD%", args[1].toUpperCase())).queue();
                     }
                 } catch (Exception ignored) {
@@ -35,7 +35,7 @@ public class command extends Command {
                 try {
                     String cmdName = args[1];
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split(" ");
-                    CustomCommandsManager.addCommand(cmdName, String.join(" ", cmdContext));
+                    CustomCommandsHandler.addCommand(cmdName, String.join(" ", cmdContext));
                     e.getChannel().sendMessage((Language.messages.getProperty("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase())).queue();
                 } catch (Exception ignored) {
                     return;

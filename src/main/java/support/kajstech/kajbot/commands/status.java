@@ -5,14 +5,14 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.OnlineStatus;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 public class status extends Command {
 
     public status() {
         this.name = "status";
         this.guildOnly = false;
-        this.requiredRole = ConfigManager.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
     }
 
     @Override

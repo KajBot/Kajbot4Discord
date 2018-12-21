@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,7 +17,7 @@ public class info extends Command {
     public info() {
         this.name = "info";
         this.guildOnly = true;
-        this.requiredRole = ConfigManager.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
     }
 
     private static String VariableToString(String regex, String input) {
@@ -63,6 +63,7 @@ public class info extends Command {
         join = member == null ? "N/A" : DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(member.getJoinDate());
         register = DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(user.getCreationTime());
 
+        /* Final */
         EmbedBuilder embed = new EmbedBuilder()
                 .setAuthor(nickname, null, icon).setThumbnail(icon);
 

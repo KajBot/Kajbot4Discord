@@ -3,8 +3,8 @@ package support.kajstech.kajbot.commands;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.utils.ConfigManager;
-import support.kajstech.kajbot.utils.KeywordManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.handlers.KeywordHandler;
 
 
 public class keyword extends Command {
@@ -12,7 +12,7 @@ public class keyword extends Command {
     public keyword() {
         this.name = "keyword";
         this.guildOnly = false;
-        this.requiredRole = ConfigManager.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
     }
 
     @Override
@@ -23,8 +23,8 @@ public class keyword extends Command {
             case "del":
             case "remove":
                 try {
-                    if (KeywordManager.kws.containsKey(args[1])) {
-                        KeywordManager.removeKeyword(args[1]);
+                    if (KeywordHandler.kws.containsKey(args[1])) {
+                        KeywordHandler.removeKeyword(args[1]);
                         e.getChannel().sendMessage((Language.messages.getProperty("Keyword.UNREGISTERED")).replace("%KW%", args[1].toUpperCase())).queue();
                     }
                 } catch (Exception ignored) {
@@ -35,7 +35,7 @@ public class keyword extends Command {
                 try {
                     String kwName = args[1];
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split(" ");
-                    KeywordManager.addKeyword(kwName, String.join(" ", kwContext));
+                    KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
                     e.getChannel().sendMessage((Language.messages.getProperty("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase())).queue();
                 } catch (Exception ignored) {
                     return;

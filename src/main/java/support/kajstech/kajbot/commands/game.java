@@ -5,14 +5,14 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.entities.Game;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 public class game extends Command {
 
     public game() {
         this.name = "game";
         this.guildOnly = false;
-        this.requiredRole = ConfigManager.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
     }
 
     @Override

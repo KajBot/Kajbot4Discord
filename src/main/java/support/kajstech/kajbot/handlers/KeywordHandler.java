@@ -1,4 +1,4 @@
-package support.kajstech.kajbot.utils;
+package support.kajstech.kajbot.handlers;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-public class KeywordManager {
+public class KeywordHandler {
 
     public static Map<String, String> kws = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private static Properties keywords = new Properties();
@@ -45,11 +45,6 @@ public class KeywordManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String getKeyword(String key) {
-        key = keywords.getProperty(key);
-        return key;
     }
 
     public static void removeKeyword(String key) {

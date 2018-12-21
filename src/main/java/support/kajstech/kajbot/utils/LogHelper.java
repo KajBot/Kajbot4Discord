@@ -4,7 +4,7 @@ package support.kajstech.kajbot.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class KajbotLogger {
+public class LogHelper {
 
     public static Logger bot = LoggerFactory.getLogger("[Discord]");
     public static Logger server = LoggerFactory.getLogger("[Server]");

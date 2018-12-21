@@ -4,7 +4,7 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.entities.Member;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,13 @@ public class permit extends Command {
     public permit() {
         this.name = "permit";
         this.guildOnly = false;
-        this.requiredRole = ConfigManager.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
     }
 
     @Override
     protected void execute(CommandEvent e) {
         if (e.getArgs().length() < 1) return;
-        if (!ConfigManager.getProperty("Link blacklist").equalsIgnoreCase("true")) return;
+        if (!ConfigHandler.getProperty("Link blacklist").equalsIgnoreCase("true")) return;
 
         List<Member> memberMention = e.getMessage().getMentionedMembers();
 

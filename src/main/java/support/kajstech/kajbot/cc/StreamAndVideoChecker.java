@@ -4,7 +4,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.cc.sites.Twitch;
 import support.kajstech.kajbot.cc.sites.YouTube;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 public class StreamAndVideoChecker extends ListenerAdapter {
 
@@ -17,7 +17,7 @@ public class StreamAndVideoChecker extends ListenerAdapter {
                 Thread.sleep(10000);
             }
 
-            if (ConfigManager.getProperty("Notification channel ID").length() < 2) {
+            if (ConfigHandler.getProperty("Notification channel ID").length() < 2) {
                 return;
             }
 

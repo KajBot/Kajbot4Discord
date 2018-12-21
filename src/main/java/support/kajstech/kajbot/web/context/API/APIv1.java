@@ -1,12 +1,12 @@
-package support.kajstech.kajbot.API.context;
+package support.kajstech.kajbot.web.context.API;
 
 import com.sun.net.httpserver.HttpExchange;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.utils.ConfigManager;
-import support.kajstech.kajbot.utils.CustomCommandsManager;
-import support.kajstech.kajbot.utils.KajbotLogger;
-import support.kajstech.kajbot.utils.KeywordManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.handlers.CustomCommandsHandler;
+import support.kajstech.kajbot.utils.LogHelper;
+import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -15,21 +15,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class APIv1 {
-    public static void v1(HttpExchange httpExchange) throws IOException {
+    public static void context(HttpExchange httpExchange) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(httpExchange.getResponseBody(), StandardCharsets.UTF_8);
-
-        httpExchange.getResponseHeaders().add("Content-Type", "Application/json");
-        httpExchange.getResponseHeaders().add("Cache-Control", "no-cache, no-store, must-revalidate, private");
 
         JSONObject json = new JSONObject();
 
         try {
             Map<String, String> args = qToM(httpExchange.getRequestURI().getQuery());
-            if (args.containsKey("token") && args.get("token").contentEquals(ConfigManager.getProperty("API token"))) {
+            if (args.containsKey("token") && args.get("token").contentEquals(ConfigHandler.getProperty("API token"))) {
                 json.put("game", Bot.jda.getPresence().getGame().getName());
                 json.put("status", Bot.jda.getPresence().getStatus());
-                json.put("commands", CustomCommandsManager.getCommands());
-                json.put("keywords", KeywordManager.getKeywords());
+                json.put("commands", CustomCommandsHandler.getCommands());
+                json.put("keywords", KeywordHandler.getKeywords());
 
                 httpExchange.sendResponseHeaders(200, 0);
             } else {
@@ -46,7 +43,7 @@ public class APIv1 {
         osw.close();
 
 
-        KajbotLogger.info(KajbotLogger.server, "Connection established: " + httpExchange.getRemoteAddress().getAddress().getHostAddress() + ":" + httpExchange.getRemoteAddress().getPort());
+        LogHelper.info(LogHelper.server, "Connection established: " + httpExchange.getRemoteAddress().getAddress().getHostAddress() + ":" + httpExchange.getRemoteAddress().getPort());
     }
 
     private static Map<String, String> qToM(String query) {

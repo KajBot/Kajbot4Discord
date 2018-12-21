@@ -3,7 +3,7 @@ package support.kajstech.kajbot.listeners;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.utils.CustomCommandsManager;
+import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 
 public class CustomCommandListener extends ListenerAdapter {
 
@@ -21,8 +21,8 @@ public class CustomCommandListener extends ListenerAdapter {
             command = command.substring(0, command.indexOf("\n"));
         }
 
-        if (CustomCommandsManager.cmds.containsKey(command)) {
-            event.getMessage().getTextChannel().sendMessage(CustomCommandsManager.cmds.get(command)).queue();
+        if (CustomCommandsHandler.cmds.containsKey(command)) {
+            event.getMessage().getTextChannel().sendMessage(CustomCommandsHandler.cmds.get(command)).queue();
         }
 
 

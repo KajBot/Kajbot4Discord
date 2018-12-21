@@ -9,9 +9,9 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.reflections.Reflections;
-import support.kajstech.kajbot.utils.ConfigManager;
-import support.kajstech.kajbot.utils.CustomCommandsManager;
-import support.kajstech.kajbot.utils.KeywordManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.handlers.CustomCommandsHandler;
+import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import javax.security.auth.login.LoginException;
 import java.util.Set;
@@ -23,8 +23,8 @@ public class Bot {
 
     static void run() {
 
-        KeywordManager.init();
-        CustomCommandsManager.init();
+        KeywordHandler.init();
+        CustomCommandsHandler.init();
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
@@ -32,9 +32,9 @@ public class Bot {
         CommandClientBuilder ccBuilder = new CommandClientBuilder();
 
 
-        builder.setToken(ConfigManager.getProperty("Bot token"));
-        ccBuilder.setPrefix(ConfigManager.getProperty("Command prefix"));
-        ccBuilder.setOwnerId(ConfigManager.getProperty("Bot owner ID"));
+        builder.setToken(ConfigHandler.getProperty("Bot token"));
+        ccBuilder.setPrefix(ConfigHandler.getProperty("Command prefix"));
+        ccBuilder.setOwnerId(ConfigHandler.getProperty("Bot owner ID"));
 
         ccBuilder.useHelpBuilder(false);
         ccBuilder.setGame(Game.playing("Kajbot"));

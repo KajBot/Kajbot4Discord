@@ -3,7 +3,7 @@ package support.kajstech.kajbot.cc.sites;
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -31,7 +31,7 @@ class YouTubeVideo {
     private static List<String> video = new ArrayList<>();
 
     private static boolean checkVideo(String channel) throws IOException {
-        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + ConfigManager.getProperty("YouTube API key");
+        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + ConfigHandler.getProperty("YouTube API key");
 
         String jsonText = readFromUrl(channelUrl);// reads text from URL
         JSONObject json = new JSONObject(jsonText);
@@ -78,8 +78,8 @@ class YouTubeVideo {
 
     static void checkYouTube() {
         try {
-            if (ConfigManager.getProperty("YouTube API key").length() > 1 && ConfigManager.getProperty("YouTube channels").length() > 1) {
-                for (String c : ConfigManager.getProperty("YouTube channels").split(", ")) {
+            if (ConfigHandler.getProperty("YouTube API key").length() > 1 && ConfigHandler.getProperty("YouTube channels").length() > 1) {
+                for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
                     if (checkVideo(c)) {
                         if (!video.contains(getId())) {
                             video.add(getId());
@@ -89,7 +89,7 @@ class YouTubeVideo {
                             eb.setDescription(getTitle());
                             eb.setAuthor(getName() + " just posted a video on YouTube!", "https://youtu.be/" + getId(), null);
                             eb.setImage(getThumbnail());
-                            Bot.jda.getTextChannelById(ConfigManager.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
+                            Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                         }
                     } else {
                         video.remove(getId());
@@ -109,7 +109,7 @@ class YouTubeLive {
     private static String channelUrl;
 
     private static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + ConfigManager.getProperty("YouTube API key");
+        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + ConfigHandler.getProperty("YouTube API key");
 
         String jsonText = readFromUrl(channelUrl);// reads text from URL
         JSONObject json = new JSONObject(jsonText);
@@ -156,8 +156,8 @@ class YouTubeLive {
 
     static void checkYouTube() {
         try {
-            if (ConfigManager.getProperty("YouTube API key").length() > 1 && ConfigManager.getProperty("YouTube channels").length() > 1) {
-                for (String c : ConfigManager.getProperty("YouTube channels").split(", ")) {
+            if (ConfigHandler.getProperty("YouTube API key").length() > 1 && ConfigHandler.getProperty("YouTube channels").length() > 1) {
+                for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
                     if (checkIfOnline(c)) {
                         if (!liveYoutube.contains(c)) {
                             liveYoutube.add(c);
@@ -167,7 +167,7 @@ class YouTubeLive {
                             eb.setDescription(getTitle());
                             eb.setAuthor(getName() + " just went live on YouTube!", "https://youtu.be/" + getId(), null);
                             eb.setImage(getThumbnail());
-                            Bot.jda.getTextChannelById(ConfigManager.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
+                            Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                         }
                     } else {
                         liveYoutube.remove(c);

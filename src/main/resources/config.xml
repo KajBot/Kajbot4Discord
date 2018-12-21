@@ -4,7 +4,7 @@
     <entry key="Language">en_US</entry>
     <entry key="API port">8080</entry>
     <entry key="Bot token"></entry>
-    <entry key="Command prefix">.</entry>
+    <entry key="Command prefix">-</entry>
     <entry key="Bot owner ID"></entry>
     <entry key="Bot controller role"></entry>
     <entry key="Notification channel ID"></entry>

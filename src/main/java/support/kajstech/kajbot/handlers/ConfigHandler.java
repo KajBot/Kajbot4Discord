@@ -1,13 +1,15 @@
-package support.kajstech.kajbot.utils;
+package support.kajstech.kajbot.handlers;
 
 import java.io.*;
 import java.util.Properties;
 
-public class ConfigManager {
+public class ConfigHandler {
     private static Properties config = new Properties();
+
     private static File cfgFile = new File("config.xml");
 
-    private static void loadCfg() {
+    public static void loadCfg() {
+
         try {
             config.loadFromXML(new FileInputStream(cfgFile));
         } catch (IOException e) {
@@ -24,25 +26,12 @@ public class ConfigManager {
         }
     }
 
-    private static void storeCfg() {
+    public static void storeCfg() {
         try {
             config.storeToXML(new FileOutputStream(cfgFile), null);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static Properties getConfig() {
-        return config;
-    }
-
-    public static void init() {
-        loadCfg();
-    }
-
-    public static void shutdown() {
-        storeCfg();
-
     }
 
     public static void setProperty(String key, String value) {
@@ -51,13 +40,12 @@ public class ConfigManager {
     }
 
     public static String getProperty(String key) {
-
         return config.getProperty(key);
     }
 
     public static boolean containsProperty(String key) {
         try {
-            return getProperty(key).length() > 0 || !getProperty(key).isEmpty();
+            return !getProperty(key).isEmpty();
         } catch (Exception ignored) {
             return false;
         }

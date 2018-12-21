@@ -1,4 +1,4 @@
-package support.kajstech.kajbot.utils;
+package support.kajstech.kajbot.handlers;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-public class CustomCommandsManager {
+public class CustomCommandsHandler {
 
     public static Map<String, String> cmds = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private static Properties commands = new Properties();
@@ -45,11 +45,6 @@ public class CustomCommandsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String getCommand(String key) {
-        key = commands.getProperty(key);
-        return key;
     }
 
     public static void removeCommand(String key) {

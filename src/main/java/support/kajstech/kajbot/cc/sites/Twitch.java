@@ -3,7 +3,7 @@ package support.kajstech.kajbot.cc.sites;
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.utils.ConfigManager;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -23,7 +23,7 @@ public class Twitch {
     private static String channelUrl;
 
     private static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigManager.getProperty("Twitch client ID");
+        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigHandler.getProperty("Twitch client ID");
 
         String jsonText = readFromUrl(channelUrl);// reads text from URL
         JSONObject json = new JSONObject(jsonText);
@@ -63,8 +63,8 @@ public class Twitch {
 
     public static void checkTwitch() {
         try {
-            if (ConfigManager.getProperty("Twitch client ID").length() > 1 && ConfigManager.getProperty("Twitch channels").length() > 1) {
-                for (String c : ConfigManager.getProperty("Twitch channels").split(", ")) {
+            if (ConfigHandler.getProperty("Twitch client ID").length() > 1 && ConfigHandler.getProperty("Twitch channels").length() > 1) {
+                for (String c : ConfigHandler.getProperty("Twitch channels").split(", ")) {
                     if (Twitch.checkIfOnline(c)) {
                         if (!liveTwitch.contains(c)) {
                             liveTwitch.add(c);
@@ -75,7 +75,7 @@ public class Twitch {
                             eb.addField("Now Playing", Twitch.getGame(), false);
                             eb.setAuthor(c + " just went live on Twitch!", "https://www.twitch.tv/" + c, null);
                             eb.setImage(Twitch.getThumbnail());
-                            Bot.jda.getTextChannelById(ConfigManager.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
+                            Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                         }
                     } else {
                         liveTwitch.remove(c);
