@@ -4,11 +4,10 @@ import support.kajstech.kajbot.cc.StreamAndVideoChecker;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.web.Server;
 
-import java.io.IOException;
-
 public class Main {
 
     public static void main(String[] args) {
+
 
         //CONFIG
         ConfigHandler.loadCfg();
@@ -16,13 +15,10 @@ public class Main {
         //LANGUAGE
         Language.init();
 
-        try {
-            Setup.setUp();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //BOT SETUP
+        Setup.setUp();
 
-        //API
+        //API/WEB
         new Thread(() -> {
             try {
                 Server.run(Integer.parseInt(ConfigHandler.getProperty("API port")));
@@ -40,7 +36,7 @@ public class Main {
             }
         }).start();
 
-        //CC
+        //YT/TWITCH
         new Thread(() -> {
             try {
                 StreamAndVideoChecker.run();

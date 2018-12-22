@@ -59,6 +59,7 @@ public class ascii extends Command {
 
     @Override
     protected void execute(CommandEvent e) {
+        if (e.getArgs().length() < 1) return;
         String[] args = e.getArgs().split(" ");
 
         StringBuilder input = new StringBuilder();

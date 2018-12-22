@@ -1,25 +1,25 @@
 package support.kajstech.kajbot.handlers;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class ConfigHandler {
     private static Properties config = new Properties();
 
-    private static File cfgFile = new File("config.xml");
+    private static File cfgPath = new File(System.getProperty("user.dir") + "\\config.properties");
 
     public static void loadCfg() {
-
         try {
-            config.loadFromXML(new FileInputStream(cfgFile));
+            config.load(new BufferedReader(new InputStreamReader(new FileInputStream(cfgPath), StandardCharsets.UTF_8)));
         } catch (IOException e) {
             try {
-                InputStream in = ClassLoader.getSystemResourceAsStream(cfgFile.getName());
+                InputStream in = ClassLoader.getSystemResourceAsStream(cfgPath.getName());
                 byte[] buffer = new byte[in.available()];
                 in.read(buffer);
-                new FileOutputStream(cfgFile).write(buffer);
+                new FileOutputStream(cfgPath).write(buffer);
 
-                config.loadFromXML(new FileInputStream(cfgFile));
+                config.load(new BufferedReader(new InputStreamReader(new FileInputStream(cfgPath), StandardCharsets.UTF_8)));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -28,7 +28,7 @@ public class ConfigHandler {
 
     public static void storeCfg() {
         try {
-            config.storeToXML(new FileOutputStream(cfgFile), null);
+            config.store(new FileOutputStream(cfgPath), null);
         } catch (IOException e) {
             e.printStackTrace();
         }

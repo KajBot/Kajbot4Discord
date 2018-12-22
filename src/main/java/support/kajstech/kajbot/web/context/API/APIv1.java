@@ -5,8 +5,8 @@ import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.CustomCommandsHandler;
-import support.kajstech.kajbot.utils.LogHelper;
 import support.kajstech.kajbot.handlers.KeywordHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

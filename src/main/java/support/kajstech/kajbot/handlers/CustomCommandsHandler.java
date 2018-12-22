@@ -1,9 +1,7 @@
 package support.kajstech.kajbot.handlers;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
@@ -12,19 +10,19 @@ public class CustomCommandsHandler {
 
     public static Map<String, String> cmds = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private static Properties commands = new Properties();
-    private static File cmdFile = new File("commands.xml");
+    private static File cmdPath = new File(System.getProperty("user.dir") + "\\commands.properties");
 
     public static void init() {
-        if (!cmdFile.exists()) {
+        if (!cmdPath.exists()) {
             try {
-                commands.storeToXML(new FileOutputStream(cmdFile), null);
+                commands.store(new FileOutputStream(cmdPath), null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         try {
-            commands.loadFromXML(new FileInputStream(cmdFile));
+            commands.load(new BufferedReader(new InputStreamReader(new FileInputStream(cmdPath), StandardCharsets.UTF_8)));
             for (final String property : commands.stringPropertyNames()) {
                 cmds.put(property, commands.getProperty(property));
             }
@@ -41,7 +39,7 @@ public class CustomCommandsHandler {
         commands.setProperty(key, value);
         cmds.put(key, value);
         try {
-            commands.storeToXML(new FileOutputStream(cmdFile), null);
+            commands.store(new FileOutputStream(cmdPath), null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,7 +49,7 @@ public class CustomCommandsHandler {
         cmds.remove(key);
         commands.remove(key);
         try {
-            commands.storeToXML(new FileOutputStream(cmdFile), null);
+            commands.store(new FileOutputStream(cmdPath), null);
         } catch (IOException e) {
             e.printStackTrace();
         }
