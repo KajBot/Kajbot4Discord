@@ -18,7 +18,6 @@ public class ConfigHandler {
                 byte[] buffer = new byte[in.available()];
                 in.read(buffer);
                 new FileOutputStream(cfgPath).write(buffer);
-
                 config.load(new BufferedReader(new InputStreamReader(new FileInputStream(cfgPath), StandardCharsets.UTF_8)));
             } catch (IOException ex) {
                 ex.printStackTrace();

@@ -19,8 +19,8 @@ public class Language {
             try {
                 InputStream in = Language.class.getResourceAsStream("en_US.properties");
                 byte[] buffer = new byte[in.available()];
-                OutputStream out = new FileOutputStream(langPath);
-                out.write(buffer);
+                in.read(buffer);
+                new FileOutputStream(langPath).write(buffer);
                 messages.load(new BufferedReader(new InputStreamReader(new FileInputStream(langPath), StandardCharsets.UTF_8)));
             } catch (IOException ex) {
                 ex.printStackTrace();
