@@ -5,6 +5,7 @@ import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Properties;
 
 public class Language {
@@ -17,11 +18,8 @@ public class Language {
             messages.load(new BufferedReader(new InputStreamReader(new FileInputStream(langPath), StandardCharsets.UTF_8)));
         } catch (IOException e) {
             try {
-                InputStream in = Language.class.getResourceAsStream("en_US.properties");
-                byte[] buffer = new byte[in.available()];
-                in.read(buffer);
-                new FileOutputStream(langPath).write(buffer);
-                messages.load(new BufferedReader(new InputStreamReader(new FileInputStream(langPath), StandardCharsets.UTF_8)));
+                Files.copy(ClassLoader.getSystemResourceAsStream("en_US.properties"), langPath.getAbsoluteFile().toPath());
+                messages.load(new BufferedReader(new InputStreamReader(new FileInputStream(System.getProperty("user.dir") + "\\" + "en_US.properties"), StandardCharsets.UTF_8)));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

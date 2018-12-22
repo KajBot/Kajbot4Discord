@@ -2,6 +2,7 @@ package support.kajstech.kajbot.handlers;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Properties;
 
 public class ConfigHandler {
@@ -14,10 +15,7 @@ public class ConfigHandler {
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(cfgPath), StandardCharsets.UTF_8)));
         } catch (IOException e) {
             try {
-                InputStream in = ClassLoader.getSystemResourceAsStream(cfgPath.getName());
-                byte[] buffer = new byte[in.available()];
-                in.read(buffer);
-                new FileOutputStream(cfgPath).write(buffer);
+                Files.copy(ClassLoader.getSystemResourceAsStream(cfgPath.getName()), cfgPath.getAbsoluteFile().toPath());
                 config.load(new BufferedReader(new InputStreamReader(new FileInputStream(cfgPath), StandardCharsets.UTF_8)));
             } catch (IOException ex) {
                 ex.printStackTrace();
