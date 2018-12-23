@@ -37,7 +37,7 @@ public class Bot {
         ccBuilder.setOwnerId(ConfigHandler.getProperty("Bot owner ID"));
 
         ccBuilder.useHelpBuilder(false);
-        ccBuilder.setGame(Game.playing("Kajbot"));
+        ccBuilder.setGame(Game.playing("Kajbot-Java ALPHA"));
 
 
         //Loading commands

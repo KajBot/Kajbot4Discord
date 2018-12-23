@@ -19,7 +19,7 @@ public class BlacklistListener extends ListenerAdapter {
 
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
-            event.getChannel().sendMessage((Language.messages.getProperty("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
+            event.getChannel().sendMessage((Language.getMessage("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
             event.getMessage().delete().queue();
         }
     }

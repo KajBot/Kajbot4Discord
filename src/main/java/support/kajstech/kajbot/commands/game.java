@@ -20,7 +20,7 @@ public class game extends Command {
         if (e.getArgs().length() < 1) return;
 
         Bot.jda.getPresence().setGame(Game.playing(e.getArgs()));
-        e.getChannel().sendMessage((Language.messages.getProperty("Game.SET")).replace("%GAME%", e.getArgs())).queue();
+        e.getChannel().sendMessage((Language.getMessage("Game.SET")).replace("%GAME%", e.getArgs())).queue();
 
     }
 }

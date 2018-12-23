@@ -25,7 +25,7 @@ public class command extends Command {
                 try {
                     if (CustomCommandsHandler.cmds.containsKey(args[1])) {
                         CustomCommandsHandler.removeCommand(args[1]);
-                        e.getChannel().sendMessage((Language.messages.getProperty("Command.UNREGISTERED")).replace("%CMD%", args[1].toUpperCase())).queue();
+                        e.getChannel().sendMessage((Language.getMessage("Command.UNREGISTERED")).replace("%CMD%", args[1].toUpperCase())).queue();
                     }
                 } catch (Exception ignored) {
                     return;
@@ -36,7 +36,7 @@ public class command extends Command {
                     String cmdName = args[1];
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split(" ");
                     CustomCommandsHandler.addCommand(cmdName, String.join(" ", cmdContext));
-                    e.getChannel().sendMessage((Language.messages.getProperty("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase())).queue();
+                    e.getChannel().sendMessage((Language.getMessage("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase())).queue();
                 } catch (Exception ignored) {
                     return;
                 }

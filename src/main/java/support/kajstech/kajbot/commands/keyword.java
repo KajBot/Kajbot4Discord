@@ -25,7 +25,7 @@ public class keyword extends Command {
                 try {
                     if (KeywordHandler.kws.containsKey(args[1])) {
                         KeywordHandler.removeKeyword(args[1]);
-                        e.getChannel().sendMessage((Language.messages.getProperty("Keyword.UNREGISTERED")).replace("%KW%", args[1].toUpperCase())).queue();
+                        e.getChannel().sendMessage((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", args[1].toUpperCase())).queue();
                     }
                 } catch (Exception ignored) {
                     return;
@@ -36,7 +36,7 @@ public class keyword extends Command {
                     String kwName = args[1];
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split(" ");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
-                    e.getChannel().sendMessage((Language.messages.getProperty("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase())).queue();
+                    e.getChannel().sendMessage((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase())).queue();
                 } catch (Exception ignored) {
                     return;
                 }

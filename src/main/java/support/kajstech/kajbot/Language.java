@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class Language {
 
-    public static Properties messages = new Properties();
+    private static Properties messages = new Properties();
     private static File langPath = new File(System.getProperty("user.dir") + "\\" + ConfigHandler.getProperty("Language") + ".properties");
 
     static void init() {
@@ -24,5 +24,9 @@ public class Language {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static String getMessage(String key) {
+        return messages.getProperty(key);
     }
 }

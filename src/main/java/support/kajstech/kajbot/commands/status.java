@@ -28,7 +28,7 @@ public class status extends Command {
 
 
         Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(args[0].toUpperCase()));
-        e.getChannel().sendMessage((Language.messages.getProperty("Status.SET")).replace("%STATUS%", args[0].toUpperCase())).queue();
+        e.getChannel().sendMessage((Language.getMessage("Status.SET")).replace("%STATUS%", args[0].toUpperCase())).queue();
 
     }
 }

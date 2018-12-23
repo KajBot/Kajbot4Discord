@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
+import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.time.format.DateTimeFormatter;
@@ -67,13 +68,10 @@ public class info extends Command {
         EmbedBuilder embed = new EmbedBuilder()
                 .setAuthor(nickname, null, icon).setThumbnail(icon);
 
-        embed.addField(":spy: Identity", "ID: `" + id + "`\n" +
-                "Username: `" + name + "#" + dis + "`", true);
-
-        embed.addField(":first_quarter_moon: Status", "Game: `" + game + "`\nStatus: `" + status + "`\n", true);
-
-        embed.addField(":stopwatch: Time", "Joined server: `" + join + "`\n" +
-                "Account created: `" + register + "`\n", true);
+        //embed.addField(":spy: Identity", "ID: `" + id + "`\n" + "Username: `" + name + "#" + dis + "`", true);
+        embed.addField(":spy: "+ Language.getMessage("Info.IDENTITY"), "ID: `" + id + "`\n" + Language.getMessage("Info.USERNAME") + "`" + name + "#" + dis + "`", true);
+        embed.addField(":first_quarter_moon: Status", Language.getMessage("Info.GAME") + "`" + game + "`\n" + Language.getMessage("Info.STATUS") + "`" + status + "`\n", true);
+        embed.addField(":stopwatch: " + Language.getMessage("Info.TIME"), Language.getMessage("Info.JOINED_SERVER") + "`" + join + "`\n" + Language.getMessage("Info.ACCOUNT_CREATED") + "`" + register + "`\n", true);
 
         e.getChannel().sendMessage(embed.build()).queue();
     }

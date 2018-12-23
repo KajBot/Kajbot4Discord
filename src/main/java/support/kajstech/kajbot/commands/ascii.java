@@ -38,7 +38,7 @@ public class ascii extends Command {
                     (font == null || font.isEmpty() ? "" : "&font=" + font);
             return new Scanner(new URL(url).openStream(), "UTF-8").useDelimiter("\\A").next();
         } catch (IOException e) {
-            return Language.messages.getProperty("ASCII.ERROR_RETRIEVING_TEXT");
+            return Language.getMessage("ASCII.ERROR_RETRIEVING_TEXT");
         }
     }
 
@@ -73,13 +73,13 @@ public class ascii extends Command {
                 String ascii = getAsciiArt(input.toString(), font);
 
                 if (ascii.length() > 1900) {
-                    e.getChannel().sendMessage("```fix\n\n " + Language.messages.getProperty("ASCII.TOO_BIG") + "```").queue();
+                    e.getChannel().sendMessage("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```").queue();
                     return;
                 }
 
                 e.getChannel().sendMessage("**Font:** " + font + "\n```fix\n\n" + ascii + "```").queue();
             } catch (IllegalArgumentException iae) {
-                e.getChannel().sendMessage("```fix\n\n" + Language.messages.getProperty("ASCII.INVALID_CHARACTERS") + "```").queue();
+                e.getChannel().sendMessage("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```").queue();
             }
         }
     }
