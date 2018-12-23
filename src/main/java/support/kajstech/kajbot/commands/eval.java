@@ -20,7 +20,7 @@ public class eval extends Command {
         engine = new ScriptEngineManager().getEngineByName("nashorn");
         try {
             engine.eval("var imports = new JavaImporter(java.io, java.lang, java.util, Packages.net.dv8tion.jda.core, "
-                    + "Packages.net.dv8tion.jda.core.entities, Packages.net.dv8tion.jda.core.managers, Packages.support.kajstech.kajbot.utils.LogHelper, Packages.support.kajstech.kajbot.handlers.ConfigHandler, Packages.support.kajstech.kajbot.handlers.CustomCommandsHandler);");
+                    + "Packages.net.dv8tion.jda.core.entities, Packages.net.dv8tion.jda.core.managers, Packages.support.kajstech.kajbot.utils.LogHelper);");
         } catch (ScriptException ex) {
             ex.printStackTrace();
         }

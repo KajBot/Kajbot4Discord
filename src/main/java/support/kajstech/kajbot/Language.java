@@ -18,8 +18,8 @@ public class Language {
             messages.load(new BufferedReader(new InputStreamReader(new FileInputStream(langPath), StandardCharsets.UTF_8)));
         } catch (IOException e) {
             try {
+                messages.load(new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("en_US.properties"), StandardCharsets.UTF_8)));
                 Files.copy(ClassLoader.getSystemResourceAsStream("en_US.properties"), langPath.getAbsoluteFile().toPath());
-                messages.load(new BufferedReader(new InputStreamReader(new FileInputStream(System.getProperty("user.dir") + "\\" + "en_US.properties"), StandardCharsets.UTF_8)));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

@@ -14,11 +14,7 @@ public class KeywordHandler {
 
     public static void init() {
         if (!kwPath.exists()) {
-            try {
-                keywords.store(new FileOutputStream(kwPath), null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            saveKeywords();
         }
 
         try {
@@ -31,6 +27,14 @@ public class KeywordHandler {
         }
     }
 
+    private static void saveKeywords() {
+        try {
+            keywords.store(new OutputStreamWriter(new FileOutputStream(kwPath), StandardCharsets.UTF_8), null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Properties getKeywords() {
         return keywords;
     }
@@ -38,20 +42,12 @@ public class KeywordHandler {
     public static void addKeyword(String key, String value) {
         keywords.setProperty(key, value);
         kws.put(key, value);
-        try {
-            keywords.store(new FileOutputStream(kwPath), null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveKeywords();
     }
 
     public static void removeKeyword(String key) {
         kws.remove(key);
         keywords.remove(key);
-        try {
-            keywords.store(new FileOutputStream(kwPath), null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveKeywords();
     }
 }

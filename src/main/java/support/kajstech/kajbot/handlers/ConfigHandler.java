@@ -23,9 +23,9 @@ public class ConfigHandler {
         }
     }
 
-    public static void storeCfg() {
+    public static void saveCfg() {
         try {
-            config.store(new FileOutputStream(cfgPath), null);
+            config.store(new OutputStreamWriter(new FileOutputStream(cfgPath), StandardCharsets.UTF_8), null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class ConfigHandler {
 
     public static void setProperty(String key, String value) {
         config.setProperty(key, value);
-        storeCfg();
+        saveCfg();
     }
 
     public static String getProperty(String key) {

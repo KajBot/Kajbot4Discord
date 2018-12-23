@@ -7,6 +7,7 @@ import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class ascii extends Command {
         try {
             String url = asciiArtUrl + "make" + "?text=" + ascii.replaceAll(" ", "+") +
                     (font == null || font.isEmpty() ? "" : "&font=" + font);
-            return new Scanner(new URL(url).openStream(), "UTF-8").useDelimiter("\\A").next();
+            return new Scanner(new URL(url).openStream(), String.valueOf(StandardCharsets.UTF_8)).useDelimiter("\\A").next();
         } catch (IOException e) {
             return Language.getMessage("ASCII.ERROR_RETRIEVING_TEXT");
         }
@@ -46,7 +47,7 @@ public class ascii extends Command {
         String url = asciiArtUrl + "fonts_list";
         List<String> fontList = null;
         try {
-            String list = new Scanner(new URL(url).openStream(), "UTF-8").useDelimiter("\\A").next();
+            String list = new Scanner(new URL(url).openStream(), String.valueOf(StandardCharsets.UTF_8)).useDelimiter("\\A").next();
 
             fontList = Arrays.stream(list.split("\n")).collect(Collectors.toList());
 

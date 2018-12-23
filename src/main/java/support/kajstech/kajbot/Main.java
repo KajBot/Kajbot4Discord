@@ -46,7 +46,7 @@ public class Main {
         }).start();
 
         //SHUTDOWN HOOK
-        Runtime.getRuntime().addShutdownHook(new Thread(ConfigHandler::storeCfg, "Shutdown-thread"));
+        Runtime.getRuntime().addShutdownHook(new Thread(ConfigHandler::saveCfg, "Shutdown-thread"));
     }
 
 }

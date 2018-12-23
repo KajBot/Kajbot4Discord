@@ -65,8 +65,7 @@ public class info extends Command {
         register = DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(user.getCreationTime());
 
         /* Final */
-        EmbedBuilder embed = new EmbedBuilder()
-                .setAuthor(nickname, null, icon).setThumbnail(icon);
+        EmbedBuilder embed = new EmbedBuilder().setAuthor(nickname, null, icon).setThumbnail(icon);
 
         //embed.addField(":spy: Identity", "ID: `" + id + "`\n" + "Username: `" + name + "#" + dis + "`", true);
         embed.addField(":spy: "+ Language.getMessage("Info.IDENTITY"), "ID: `" + id + "`\n" + Language.getMessage("Info.USERNAME") + "`" + name + "#" + dis + "`", true);

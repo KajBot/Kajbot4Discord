@@ -43,7 +43,7 @@ public class APIv1 {
         osw.close();
 
 
-        LogHelper.info(LogHelper.server, "Connection established: " + httpExchange.getRemoteAddress().getAddress().getHostAddress() + ":" + httpExchange.getRemoteAddress().getPort());
+        LogHelper.info("Connection established: " + httpExchange.getRemoteAddress().getAddress().getHostAddress() + ":" + httpExchange.getRemoteAddress().getPort());
     }
 
     private static Map<String, String> qToM(String query) {
