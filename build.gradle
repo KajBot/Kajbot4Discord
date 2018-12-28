@@ -18,7 +18,7 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.8.0-beta2'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
     compile('org.reflections:reflections:0.9.11')
-    compile('net.dv8tion:JDA:3.8.1_448')
-    compile('com.jagrosh:jda-utilities-command:2.1.4')
+    compile('net.dv8tion:JDA:3.8.1_450')
+    compile('com.jagrosh:jda-utilities-command:2.1.5')
 
 }

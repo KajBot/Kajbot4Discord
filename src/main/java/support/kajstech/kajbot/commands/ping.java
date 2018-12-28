@@ -2,8 +2,11 @@ package support.kajstech.kajbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+
+import java.time.temporal.ChronoUnit;
 
 public class ping extends Command {
 
@@ -11,15 +14,15 @@ public class ping extends Command {
         this.name = "ping";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
     protected void execute(CommandEvent e) {
-
-        long time = System.currentTimeMillis();
-        String respond = "Pong: ";
-        e.getChannel().sendMessage(respond).queue((Message m) ->
-                m.editMessageFormat(respond + "`%d` ms.\n Heartbeat: `%d` ms.", System.currentTimeMillis() - time, e.getJDA().getPing()).queue());
+        e.reply("Ping: ...", m -> {
+            long ping = e.getMessage().getCreationTime().until(m.getCreationTime(), ChronoUnit.MILLIS);
+            m.editMessage("Ping: " + ping  + "ms | Websocket: " + e.getJDA().getPing() + "ms").queue();
+        });
 
     }
 }

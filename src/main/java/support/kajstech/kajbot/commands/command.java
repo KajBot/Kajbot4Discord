@@ -2,6 +2,7 @@ package support.kajstech.kajbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import net.dv8tion.jda.core.Permission;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.CustomCommandsHandler;
@@ -13,6 +14,7 @@ public class command extends Command {
         this.name = "command";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
@@ -25,7 +27,7 @@ public class command extends Command {
                 try {
                     if (CustomCommandsHandler.cmds.containsKey(args[1])) {
                         CustomCommandsHandler.removeCommand(args[1]);
-                        e.getChannel().sendMessage((Language.getMessage("Command.UNREGISTERED")).replace("%CMD%", args[1].toUpperCase())).queue();
+                        e.reply((Language.getMessage("Command.UNREGISTERED")).replace("%CMD%", args[1].toUpperCase()));
                     }
                 } catch (Exception ignored) {
                     return;
@@ -36,7 +38,7 @@ public class command extends Command {
                     String cmdName = args[1];
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split(" ");
                     CustomCommandsHandler.addCommand(cmdName, String.join(" ", cmdContext));
-                    e.getChannel().sendMessage((Language.getMessage("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase())).queue();
+                    e.reply((Language.getMessage("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase()));
                 } catch (Exception ignored) {
                     return;
                 }

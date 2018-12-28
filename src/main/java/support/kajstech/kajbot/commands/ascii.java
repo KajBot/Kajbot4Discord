@@ -2,6 +2,7 @@ package support.kajstech.kajbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import net.dv8tion.jda.core.Permission;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
@@ -21,6 +22,7 @@ public class ascii extends Command {
         this.name = "ascii";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     private static int randomNum(int start, int end) {
@@ -74,13 +76,13 @@ public class ascii extends Command {
                 String ascii = getAsciiArt(input.toString(), font);
 
                 if (ascii.length() > 1900) {
-                    e.getChannel().sendMessage("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```").queue();
+                    e.reply("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```");
                     return;
                 }
 
-                e.getChannel().sendMessage("**Font:** " + font + "\n```fix\n\n" + ascii + "```").queue();
+                e.reply("**Font:** " + font + "\n```fix\n\n" + ascii + "```");
             } catch (IllegalArgumentException iae) {
-                e.getChannel().sendMessage("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```").queue();
+                e.reply("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```");
             }
         }
     }

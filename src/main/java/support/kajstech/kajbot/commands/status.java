@@ -3,6 +3,7 @@ package support.kajstech.kajbot.commands;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.OnlineStatus;
+import net.dv8tion.jda.core.Permission;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
@@ -13,6 +14,7 @@ public class status extends Command {
         this.name = "status";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
@@ -28,7 +30,7 @@ public class status extends Command {
 
 
         Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(args[0].toUpperCase()));
-        e.getChannel().sendMessage((Language.getMessage("Status.SET")).replace("%STATUS%", args[0].toUpperCase())).queue();
+        e.reply((Language.getMessage("Status.SET")).replace("%STATUS%", args[0].toUpperCase()));
 
     }
 }

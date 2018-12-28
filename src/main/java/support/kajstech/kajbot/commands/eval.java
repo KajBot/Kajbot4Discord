@@ -3,6 +3,7 @@ package support.kajstech.kajbot.commands;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.Permission;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -16,6 +17,7 @@ public class eval extends Command {
         this.name = "eval";
         this.guildOnly = false;
         this.ownerCommand = true;
+        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
 
         engine = new ScriptEngineManager().getEngineByName("nashorn");
         try {

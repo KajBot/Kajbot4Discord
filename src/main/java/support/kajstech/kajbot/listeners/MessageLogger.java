@@ -17,7 +17,9 @@ public class MessageLogger extends ListenerAdapter {
     private static File logPath = new File(System.getProperty("user.dir") + "\\chat.log");
 
     public void onMessageReceived(MessageReceivedEvent event) {
-        if(!ConfigHandler.getProperty("Chat logging").equalsIgnoreCase("true")) return;
+        if(!ConfigHandler.getProperty("Message logging").equalsIgnoreCase("true")) return;
+        if(event.getMessage().isWebhookMessage()) return;
+        if(!event.getChannelType().isGuild()) return;
 
         try {
             if(!Files.exists(logPath.toPath())){

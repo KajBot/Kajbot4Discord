@@ -2,6 +2,7 @@ package support.kajstech.kajbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import net.dv8tion.jda.core.Permission;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
@@ -13,6 +14,7 @@ public class keyword extends Command {
         this.name = "keyword";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
@@ -25,7 +27,7 @@ public class keyword extends Command {
                 try {
                     if (KeywordHandler.kws.containsKey(args[1])) {
                         KeywordHandler.removeKeyword(args[1]);
-                        e.getChannel().sendMessage((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", args[1].toUpperCase())).queue();
+                        e.reply((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", args[1].toUpperCase()));
                     }
                 } catch (Exception ignored) {
                     return;
@@ -36,7 +38,7 @@ public class keyword extends Command {
                     String kwName = args[1];
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split(" ");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
-                    e.getChannel().sendMessage((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase())).queue();
+                    e.reply((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
                 } catch (Exception ignored) {
                     return;
                 }

@@ -2,6 +2,7 @@ package support.kajstech.kajbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Game;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
@@ -13,6 +14,7 @@ public class game extends Command {
         this.name = "game";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
@@ -20,7 +22,7 @@ public class game extends Command {
         if (e.getArgs().length() < 1) return;
 
         Bot.jda.getPresence().setGame(Game.playing(e.getArgs()));
-        e.getChannel().sendMessage((Language.getMessage("Game.SET")).replace("%GAME%", e.getArgs())).queue();
+        e.reply((Language.getMessage("Game.SET")).replace("%GAME%", e.getArgs()));
 
     }
 }
