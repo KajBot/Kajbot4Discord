@@ -33,8 +33,7 @@ public class Twitch {
 
     private static String readFromUrl(String url) throws IOException {
         URL page = new URL(url);
-        try (Stream<String> stream = new BufferedReader(new InputStreamReader(
-                page.openStream(), StandardCharsets.UTF_8)).lines()) {
+        try (Stream<String> stream = new BufferedReader(new InputStreamReader(page.openStream(), StandardCharsets.UTF_8)).lines()) {
             return stream.collect(Collectors.joining(System.lineSeparator()));
         }
     }
@@ -43,7 +42,7 @@ public class Twitch {
         String jsonChannels = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonChannels);
 
-        return json.getJSONObject("stream").getString("game");
+        return json.getJSONObject("stream").getString("Game");
     }
 
     private static String getThumbnail() throws IOException {
@@ -63,7 +62,7 @@ public class Twitch {
 
     public static void checkTwitch() {
         try {
-            if (ConfigHandler.getProperty("Twitch client ID").length() > 1 && ConfigHandler.getProperty("Twitch channels").length() > 1) {
+            if (ConfigHandler.containsProperty("Twitch client ID") && ConfigHandler.containsProperty("Twitch channels")) {
                 for (String c : ConfigHandler.getProperty("Twitch channels").split(", ")) {
                     if (Twitch.checkIfOnline(c)) {
                         if (!liveTwitch.contains(c)) {

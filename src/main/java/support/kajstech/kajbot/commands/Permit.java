@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class permit extends Command {
+public class Permit extends Command {
 
     public static List<Member> permitted = new ArrayList<>();
 
-    public permit() {
+    public Permit() {
         this.name = "permit";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");

@@ -9,11 +9,11 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-public class eval extends Command {
+public class Eval extends Command {
 
     private final ScriptEngine engine;
 
-    public eval() {
+    public Eval() {
         this.name = "eval";
         this.guildOnly = false;
         this.ownerCommand = true;
@@ -21,8 +21,7 @@ public class eval extends Command {
 
         engine = new ScriptEngineManager().getEngineByName("nashorn");
         try {
-            engine.eval("var imports = new JavaImporter(java.io, java.lang, java.util, Packages.net.dv8tion.jda.core, "
-                    + "Packages.net.dv8tion.jda.core.entities, Packages.net.dv8tion.jda.core.managers, Packages.support.kajstech.kajbot.utils.LogHelper);");
+            engine.eval("var imports = new JavaImporter(java.io, java.lang, java.util, Packages.net.dv8tion.jda.core, Packages.net.dv8tion.jda.core.entities, Packages.net.dv8tion.jda.core.managers, Packages.support.kajstech.kajbot.utils.LogHelper);");
         } catch (ScriptException ex) {
             ex.printStackTrace();
         }
@@ -31,8 +30,6 @@ public class eval extends Command {
 
     @Override
     protected void execute(CommandEvent event) {
-
-        String allArgs = event.getArgs();
 
         engine.put("e", event);
         engine.put("event", event);
@@ -43,7 +40,7 @@ public class eval extends Command {
         engine.put("member", event.getMember());
         engine.put("message", event.getMessage());
         engine.put("guild", event.getGuild());
-        engine.put("input", allArgs);
+        engine.put("input", event.getArgs());
         engine.put("selfUser", event.getJDA().getSelfUser());
         engine.put("selfMember", event.getGuild() == null ? null : event.getGuild().getSelfMember());
         engine.put("mentionedUsers", event.getMessage().getMentionedUsers());
@@ -53,10 +50,10 @@ public class eval extends Command {
 
         Object out;
         try {
-            out = engine.eval("(function() { with (imports) {\n" + allArgs + "\n} })();");
+            out = engine.eval("(function() { with (imports) {\n" + event.getArgs() + "\n} })();");
         } catch (Exception ex) {
             event.getChannel().sendMessage("**Exception**: ```\n" + ex.getLocalizedMessage() + "```").queue();
-            System.out.println(allArgs);
+            System.out.println(event.getArgs());
             return;
         }
 
@@ -70,7 +67,7 @@ public class eval extends Command {
         if (event.getJDA().getStatus() != JDA.Status.SHUTDOWN) {
             event.getChannel().sendMessage(outputS).queue();
         } else {
-            System.exit(0);
+            Runtime.getRuntime().exit(0);
         }
     }
 

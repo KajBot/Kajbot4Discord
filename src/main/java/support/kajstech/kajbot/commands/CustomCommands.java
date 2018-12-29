@@ -8,9 +8,9 @@ import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 
 
-public class command extends Command {
+public class CustomCommands extends Command {
 
-    public command() {
+    public CustomCommands() {
         this.name = "command";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");

@@ -8,9 +8,9 @@ import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
-public class status extends Command {
+public class Status extends Command {
 
-    public status() {
+    public Status() {
         this.name = "status";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");

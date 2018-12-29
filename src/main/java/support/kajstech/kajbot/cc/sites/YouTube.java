@@ -41,8 +41,7 @@ class YouTubeVideo {
 
     private static String readFromUrl(String url) throws IOException {
         URL page = new URL(url);
-        try (Stream<String> stream = new BufferedReader(new InputStreamReader(
-                page.openStream(), StandardCharsets.UTF_8)).lines()) {
+        try (Stream<String> stream = new BufferedReader(new InputStreamReader(page.openStream(), StandardCharsets.UTF_8)).lines()) {
             return stream.collect(Collectors.joining(System.lineSeparator()));
         }
     }
@@ -78,7 +77,7 @@ class YouTubeVideo {
 
     static void checkYouTube() {
         try {
-            if (ConfigHandler.getProperty("YouTube API key").length() > 1 && ConfigHandler.getProperty("YouTube channels").length() > 1) {
+            if (ConfigHandler.containsProperty("YouTube API key") && ConfigHandler.containsProperty("YouTube channels")) {
                 for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
                     if (checkVideo(c)) {
                         if (!video.contains(getId())) {
@@ -119,8 +118,7 @@ class YouTubeLive {
 
     private static String readFromUrl(String url) throws IOException {
         URL page = new URL(url);
-        try (Stream<String> stream = new BufferedReader(new InputStreamReader(
-                page.openStream(), StandardCharsets.UTF_8)).lines()) {
+        try (Stream<String> stream = new BufferedReader(new InputStreamReader(page.openStream(), StandardCharsets.UTF_8)).lines()) {
             return stream.collect(Collectors.joining(System.lineSeparator()));
         }
     }
@@ -156,7 +154,7 @@ class YouTubeLive {
 
     static void checkYouTube() {
         try {
-            if (ConfigHandler.getProperty("YouTube API key").length() > 1 && ConfigHandler.getProperty("YouTube channels").length() > 1) {
+            if (ConfigHandler.containsProperty("YouTube API key") && ConfigHandler.containsProperty("YouTube channels")) {
                 for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
                     if (checkIfOnline(c)) {
                         if (!liveYoutube.contains(c)) {

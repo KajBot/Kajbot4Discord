@@ -5,10 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import support.kajstech.kajbot.Language;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -61,12 +59,12 @@ public class LogHelper {
         logger.trace(cls + ": " + message);
     }
 
-    private static void logToFile(String message){
+    private static void logToFile(String message) {
         try {
-            if(!Files.exists(logPath.toPath())){
-                Files.createFile(logPath.toPath());
-            }
-            Files.write(logPath.toPath(), (LocalDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("MessageLogger.TIME_FORMAT"))) + message).getBytes(), StandardOpenOption.APPEND);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logPath, true), StandardCharsets.UTF_8));
+            writer.newLine();
+            writer.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - " + message);
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

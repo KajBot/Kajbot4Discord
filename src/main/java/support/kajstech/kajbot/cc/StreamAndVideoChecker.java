@@ -17,9 +17,7 @@ public class StreamAndVideoChecker extends ListenerAdapter {
                 Thread.sleep(10000);
             }
 
-            if (ConfigHandler.getProperty("Notification channel ID").length() < 2) {
-                return;
-            }
+            if (!ConfigHandler.containsProperty("Notification channel ID")) return;
 
 
             //SITES

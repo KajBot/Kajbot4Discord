@@ -8,9 +8,9 @@ import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 
 
-public class keyword extends Command {
+public class CustomKeywords extends Command {
 
-    public keyword() {
+    public CustomKeywords() {
         this.name = "keyword";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");

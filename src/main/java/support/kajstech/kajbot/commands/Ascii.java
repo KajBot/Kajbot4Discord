@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class ascii extends Command {
+public class Ascii extends Command {
 
     private final static String asciiArtUrl = "http://artii.herokuapp.com/";
 
-    public ascii() {
+    public Ascii() {
         this.name = "ascii";
         this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot controller role");
