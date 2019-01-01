@@ -3,6 +3,7 @@ package support.kajstech.kajbot.cc.sites;
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
+import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.awt.*;
@@ -42,7 +43,7 @@ public class Twitch {
         String jsonChannels = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonChannels);
 
-        return json.getJSONObject("stream").getString("Game");
+        return json.getJSONObject("stream").getString("game");
     }
 
     private static String getThumbnail() throws IOException {
@@ -68,11 +69,11 @@ public class Twitch {
                         if (!liveTwitch.contains(c)) {
                             liveTwitch.add(c);
                             EmbedBuilder eb = new EmbedBuilder();
-                            eb.setColor(new Color(0xA6C055));
-                            eb.setTitle("Title", null);
+                            eb.setColor(new Color(0x6441A5));
+                            eb.setTitle(Language.getMessage("Twitch.TITLE"), null);
                             eb.setDescription(Twitch.getTitle());
-                            eb.addField("Now Playing", Twitch.getGame(), false);
-                            eb.setAuthor(c + " just went live on Twitch!", "https://www.twitch.tv/" + c, null);
+                            eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), Twitch.getGame(), false);
+                            eb.setAuthor((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c));
                             eb.setImage(Twitch.getThumbnail());
                             Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                         }
