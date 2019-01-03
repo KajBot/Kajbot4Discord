@@ -1,12 +1,10 @@
 package support.kajstech.kajbot.cc.sites;
 
-import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,20 +31,6 @@ public class YouTube {
         }
     }
 
-    static String getTitle(String channel) throws IOException {
-        String jsonChannels = readFromUrl(channel);
-        JSONObject json = new JSONObject(jsonChannels);
-
-        return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("title");
-    }
-
-    static String getDescription(String channel) throws IOException {
-        String jsonChannels = readFromUrl(channel);
-        JSONObject json = new JSONObject(jsonChannels);
-
-        return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("description");
-    }
-
     static String getId(String channel) throws IOException {
         String jsonChannels = readFromUrl(channel);
         JSONObject json = new JSONObject(jsonChannels);
@@ -61,12 +45,6 @@ public class YouTube {
         return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
     }
 
-    static String getThumbnail(String channel) throws IOException {
-        String jsonChannels = readFromUrl(channel);
-        JSONObject json = new JSONObject(jsonChannels);
-
-        return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
-    }
 }
 
 class YouTubeVideo {
@@ -91,14 +69,7 @@ class YouTubeVideo {
                 if (checkVideo(c)) {
                     if (!video.contains(getId(channelUrl))) {
                         video.add(getId(channelUrl));
-                        EmbedBuilder eb = new EmbedBuilder();
-                        eb.setColor(new Color(0xFF0000));
-                        eb.setTitle(Language.getMessage("YouTube.TITLE"), null);
-                        eb.setDescription(getTitle(channelUrl));
-                        eb.addField(Language.getMessage("YouTube.DESCRIPTION"), getDescription(channelUrl), false);
-                        eb.setAuthor((Language.getMessage("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName(channelUrl)));
-                        eb.setImage(getThumbnail(channelUrl));
-                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
+                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage((Language.getMessage("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName(channelUrl)) + "  https://www.youtube.com/watch?v=" + getId(channelUrl)).queue();
                     }
                 } else {
                     video.remove(getId(channelUrl));
@@ -130,14 +101,7 @@ class YouTubeLive {
                 if (checkIfOnline(c)) {
                     if (!liveYoutube.contains(c)) {
                         liveYoutube.add(c);
-                        EmbedBuilder eb = new EmbedBuilder();
-                        eb.setColor(new Color(0xFF0000));
-                        eb.setTitle(Language.getMessage("YouTube.TITLE"), null);
-                        eb.setDescription(getTitle(channelUrl));
-                        eb.addField(Language.getMessage("YouTube.DESCRIPTION"), getDescription(channelUrl), false);
-                        eb.setAuthor((Language.getMessage("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName(channelUrl)));
-                        eb.setImage(getThumbnail(channelUrl));
-                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
+                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage((Language.getMessage("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName(channelUrl)) + "  https://www.youtube.com/watch?v=" + getId(channelUrl)).queue();
                     }
                 } else {
                     liveYoutube.remove(c);

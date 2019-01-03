@@ -26,7 +26,7 @@ public class Twitch {
     private static boolean checkIfOnline(String channel) throws IOException {
         channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigHandler.getProperty("Twitch client ID");
 
-        String jsonText = readFromUrl(channelUrl);// reads text from URL
+        String jsonText = readFromUrl(channelUrl);
         JSONObject json = new JSONObject(jsonText);
 
         return !json.isNull("stream");
@@ -64,16 +64,15 @@ public class Twitch {
     public static void checkTwitch() throws IOException {
         if (ConfigHandler.containsProperty("Twitch client ID") && ConfigHandler.containsProperty("Twitch channels") && ConfigHandler.getProperty("Twitch live notifications").equalsIgnoreCase("true")) {
             for (String c : ConfigHandler.getProperty("Twitch channels").split(", ")) {
-                if (Twitch.checkIfOnline(c)) {
+                if (checkIfOnline(c)) {
                     if (!liveTwitch.contains(c)) {
                         liveTwitch.add(c);
                         EmbedBuilder eb = new EmbedBuilder();
                         eb.setColor(new Color(0x6441A5));
-                        eb.setTitle(Language.getMessage("Twitch.TITLE"), null);
-                        eb.setDescription(Twitch.getTitle());
-                        eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), Twitch.getGame(), false);
-                        eb.setAuthor((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c));
-                        eb.setImage(Twitch.getThumbnail());
+                        eb.setTitle((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
+                        eb.addField(Language.getMessage("Twitch.TITLE"), getTitle(), false);
+                        eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), getGame(), false);
+                        eb.setImage(getThumbnail());
                         Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                     }
                 } else {
