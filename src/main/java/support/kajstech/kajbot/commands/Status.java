@@ -13,14 +13,14 @@ public class Status extends Command {
     public Status() {
         this.name = "status";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
         this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
     protected void execute(CommandEvent e) {
 
-        String[] args = e.getArgs().split("\\W+");
+        String[] args = e.getArgs().split("\\s+");
         if (args[0].length() < 1) return;
 
 

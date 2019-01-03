@@ -14,12 +14,12 @@ import java.util.TimerTask;
 
 public class Permit extends Command {
 
-    public static List<Member> permitted = new ArrayList<>();
+    public static final List<Member> permitted = new ArrayList<>();
 
     public Permit() {
         this.name = "permit";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
         this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 

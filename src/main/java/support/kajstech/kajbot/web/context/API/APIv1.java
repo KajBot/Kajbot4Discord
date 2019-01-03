@@ -49,7 +49,7 @@ public class APIv1 {
     private static Map<String, String> qToM(String query) {
         Map<String, String> result = new HashMap<>();
         for (String param : query.split("&")) {
-            String pair[] = param.split("=");
+            String[] pair = param.split("=");
             if (pair.length > 1) {
                 result.put(pair[0], pair[1]);
             } else {

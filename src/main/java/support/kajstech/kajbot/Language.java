@@ -20,9 +20,10 @@ public class Language {
             try {
                 messages.load(new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("en_US.properties"), StandardCharsets.UTF_8)));
                 Files.copy(ClassLoader.getSystemResourceAsStream("en_US.properties"), langPath.getAbsoluteFile().toPath());
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
+            e.printStackTrace();
         }
     }
 

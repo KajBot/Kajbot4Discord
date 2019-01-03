@@ -13,14 +13,14 @@ public class CustomKeywords extends Command {
     public CustomKeywords() {
         this.name = "keyword";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
         this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
     protected void execute(CommandEvent e) {
 
-        String[] args = e.getArgs().split(" ");
+        String[] args = e.getArgs().split("\\s+");
         switch (args[0]) {
             case "del":
             case "remove":
@@ -36,7 +36,7 @@ public class CustomKeywords extends Command {
             case "add":
                 try {
                     String kwName = args[1];
-                    String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split(" ");
+                    String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split("\\s+");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
                     e.reply((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
                 } catch (Exception ignored) {

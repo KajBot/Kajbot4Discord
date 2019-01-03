@@ -6,9 +6,11 @@ import support.kajstech.kajbot.cc.sites.Twitch;
 import support.kajstech.kajbot.cc.sites.YouTube;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
+import java.io.IOException;
+
 public class StreamAndVideoChecker extends ListenerAdapter {
 
-    public static void run() throws InterruptedException {
+    public static void run() throws InterruptedException, IOException {
 
         while (true) {
             try {

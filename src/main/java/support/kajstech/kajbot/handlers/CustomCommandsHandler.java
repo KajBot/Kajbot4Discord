@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 public class CustomCommandsHandler {
 
-    public static Map<String, String> cmds = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    public static final Map<String, String> cmds = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private static Properties commands = new Properties();
     private static File cmdPath = new File(System.getProperty("user.dir") + "\\commands.properties");
 

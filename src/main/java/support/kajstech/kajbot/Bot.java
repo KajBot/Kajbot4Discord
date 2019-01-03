@@ -14,6 +14,7 @@ import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import javax.security.auth.login.LoginException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 public class Bot {
@@ -25,7 +26,6 @@ public class Bot {
 
         KeywordHandler.init();
         CustomCommandsHandler.init();
-
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
         //CommandClient builder
@@ -37,7 +37,7 @@ public class Bot {
         ccBuilder.setOwnerId(ConfigHandler.getProperty("Bot owner ID"));
 
         ccBuilder.useHelpBuilder(false);
-        ccBuilder.setGame(Game.playing("Kajbot-Java ALPHA"));
+        ccBuilder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
 
 
         //Loading commands
@@ -45,8 +45,8 @@ public class Bot {
         Set<Class<? extends Command>> allCommands = cmdReflections.getSubTypesOf(Command.class);
         for (Class<? extends Command> command : allCommands) {
             try {
-                ccBuilder.addCommand(command.newInstance());
-            } catch (InstantiationException | IllegalAccessException e) {
+                ccBuilder.addCommand(command.getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
         }
@@ -56,8 +56,8 @@ public class Bot {
         Set<Class<? extends ListenerAdapter>> allListeners = listenerReflections.getSubTypesOf(ListenerAdapter.class);
         for (Class<? extends ListenerAdapter> listener : allListeners) {
             try {
-                builder.addEventListener(listener.newInstance());
-            } catch (InstantiationException | IllegalAccessException e) {
+                builder.addEventListener(listener.getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }

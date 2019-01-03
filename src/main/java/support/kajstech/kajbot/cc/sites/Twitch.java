@@ -61,29 +61,25 @@ public class Twitch {
     }
 
 
-    public static void checkTwitch() {
-        try {
-            if (ConfigHandler.containsProperty("Twitch client ID") && ConfigHandler.containsProperty("Twitch channels")) {
-                for (String c : ConfigHandler.getProperty("Twitch channels").split(", ")) {
-                    if (Twitch.checkIfOnline(c)) {
-                        if (!liveTwitch.contains(c)) {
-                            liveTwitch.add(c);
-                            EmbedBuilder eb = new EmbedBuilder();
-                            eb.setColor(new Color(0x6441A5));
-                            eb.setTitle(Language.getMessage("Twitch.TITLE"), null);
-                            eb.setDescription(Twitch.getTitle());
-                            eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), Twitch.getGame(), false);
-                            eb.setAuthor((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c));
-                            eb.setImage(Twitch.getThumbnail());
-                            Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
-                        }
-                    } else {
-                        liveTwitch.remove(c);
+    public static void checkTwitch() throws IOException {
+        if (ConfigHandler.containsProperty("Twitch client ID") && ConfigHandler.containsProperty("Twitch channels") && ConfigHandler.getProperty("Twitch live notifications").equalsIgnoreCase("true")) {
+            for (String c : ConfigHandler.getProperty("Twitch channels").split(", ")) {
+                if (Twitch.checkIfOnline(c)) {
+                    if (!liveTwitch.contains(c)) {
+                        liveTwitch.add(c);
+                        EmbedBuilder eb = new EmbedBuilder();
+                        eb.setColor(new Color(0x6441A5));
+                        eb.setTitle(Language.getMessage("Twitch.TITLE"), null);
+                        eb.setDescription(Twitch.getTitle());
+                        eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), Twitch.getGame(), false);
+                        eb.setAuthor((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c));
+                        eb.setImage(Twitch.getThumbnail());
+                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                     }
+                } else {
+                    liveTwitch.remove(c);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

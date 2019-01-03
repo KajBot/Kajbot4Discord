@@ -41,11 +41,11 @@ class Setup {
             }
         }
 
-        if (!ConfigHandler.containsProperty("Bot controller role")) {
+        if (!ConfigHandler.containsProperty("Bot admin role")) {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-            System.out.print("Bot controller role: ");
+            System.out.print("Bot admin role: ");
             try {
-                ConfigHandler.setProperty("Bot controller role", br.readLine());
+                ConfigHandler.setProperty("Bot admin role", br.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }

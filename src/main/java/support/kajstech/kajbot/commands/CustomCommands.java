@@ -13,14 +13,14 @@ public class CustomCommands extends Command {
     public CustomCommands() {
         this.name = "command";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
         this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
     protected void execute(CommandEvent e) {
 
-        String[] args = e.getArgs().split(" ");
+        String[] args = e.getArgs().split("\\s+");
         switch (args[0]) {
             case "del":
             case "remove":
@@ -36,7 +36,7 @@ public class CustomCommands extends Command {
             case "add":
                 try {
                     String cmdName = args[1];
-                    String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split(" ");
+                    String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split("\\s+");
                     CustomCommandsHandler.addCommand(cmdName, String.join(" ", cmdContext));
                     e.reply((Language.getMessage("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase()));
                 } catch (Exception ignored) {

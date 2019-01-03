@@ -21,7 +21,7 @@ import static support.kajstech.kajbot.cc.sites.YouTube.*;
 
 public class YouTube {
 
-    public static void checkYouTube() {
+    public static void checkYouTube() throws IOException {
         YouTubeLive.check();
         YouTubeVideo.check();
     }
@@ -85,29 +85,25 @@ class YouTubeVideo {
     }
 
 
-    static void check() {
-        try {
-            if (ConfigHandler.containsProperty("YouTube API key") && ConfigHandler.containsProperty("YouTube channels")) {
-                for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
-                    if (checkVideo(c)) {
-                        if (!video.contains(getId(channelUrl))) {
-                            video.add(getId(channelUrl));
-                            EmbedBuilder eb = new EmbedBuilder();
-                            eb.setColor(new Color(0xFF0000));
-                            eb.setTitle(Language.getMessage("YouTube.TITLE"), null);
-                            eb.setDescription(getTitle(channelUrl));
-                            eb.addField(Language.getMessage("YouTube.DESCRIPTION"), getDescription(channelUrl), false);
-                            eb.setAuthor((Language.getMessage("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName(channelUrl)));
-                            eb.setImage(getThumbnail(channelUrl));
-                            Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
-                        }
-                    } else {
-                        video.remove(getId(channelUrl));
+    static void check() throws IOException {
+        if (ConfigHandler.containsProperty("YouTube API key") && ConfigHandler.containsProperty("YouTube channels") && ConfigHandler.getProperty("YouTube video notifications").equalsIgnoreCase("true")) {
+            for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
+                if (checkVideo(c)) {
+                    if (!video.contains(getId(channelUrl))) {
+                        video.add(getId(channelUrl));
+                        EmbedBuilder eb = new EmbedBuilder();
+                        eb.setColor(new Color(0xFF0000));
+                        eb.setTitle(Language.getMessage("YouTube.TITLE"), null);
+                        eb.setDescription(getTitle(channelUrl));
+                        eb.addField(Language.getMessage("YouTube.DESCRIPTION"), getDescription(channelUrl), false);
+                        eb.setAuthor((Language.getMessage("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName(channelUrl)));
+                        eb.setImage(getThumbnail(channelUrl));
+                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                     }
+                } else {
+                    video.remove(getId(channelUrl));
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -128,29 +124,25 @@ class YouTubeLive {
     }
 
 
-    static void check() {
-        try {
-            if (ConfigHandler.containsProperty("YouTube API key") && ConfigHandler.containsProperty("YouTube channels")) {
-                for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
-                    if (checkIfOnline(c)) {
-                        if (!liveYoutube.contains(c)) {
-                            liveYoutube.add(c);
-                            EmbedBuilder eb = new EmbedBuilder();
-                            eb.setColor(new Color(0xFF0000));
-                            eb.setTitle(Language.getMessage("YouTube.TITLE"), null);
-                            eb.setDescription(getTitle(channelUrl));
-                            eb.addField(Language.getMessage("YouTube.DESCRIPTION"), getDescription(channelUrl), false);
-                            eb.setAuthor((Language.getMessage("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName(channelUrl)));
-                            eb.setImage(getThumbnail(channelUrl));
-                            Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
-                        }
-                    } else {
-                        liveYoutube.remove(c);
+    static void check() throws IOException {
+        if (ConfigHandler.containsProperty("YouTube API key") && ConfigHandler.containsProperty("YouTube channels") && ConfigHandler.getProperty("YouTube live notifications").equalsIgnoreCase("true")) {
+            for (String c : ConfigHandler.getProperty("YouTube channels").split(", ")) {
+                if (checkIfOnline(c)) {
+                    if (!liveYoutube.contains(c)) {
+                        liveYoutube.add(c);
+                        EmbedBuilder eb = new EmbedBuilder();
+                        eb.setColor(new Color(0xFF0000));
+                        eb.setTitle(Language.getMessage("YouTube.TITLE"), null);
+                        eb.setDescription(getTitle(channelUrl));
+                        eb.addField(Language.getMessage("YouTube.DESCRIPTION"), getDescription(channelUrl), false);
+                        eb.setAuthor((Language.getMessage("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName(channelUrl)));
+                        eb.setImage(getThumbnail(channelUrl));
+                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                     }
+                } else {
+                    liveYoutube.remove(c);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -12,7 +12,7 @@ public class Ping extends Command {
     public Ping() {
         this.name = "ping";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
         this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 

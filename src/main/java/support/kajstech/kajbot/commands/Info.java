@@ -19,7 +19,7 @@ public class Info extends Command {
     public Info() {
         this.name = "info";
         this.guildOnly = true;
-        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
         this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 

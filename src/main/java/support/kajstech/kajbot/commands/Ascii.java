@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 
 public class Ascii extends Command {
 
-    private final static String asciiArtUrl = "http://artii.herokuapp.com/";
+    private static final String asciiArtUrl = "http://artii.herokuapp.com/";
 
     public Ascii() {
         this.name = "ascii";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot controller role");
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
         this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
-    private static int randomNum(int start, int end) {
+    private int randomNum(int start, int end) {
 
         if (end < start) {
             int temp = end;
@@ -35,24 +35,21 @@ public class Ascii extends Command {
         return (int) Math.floor(Math.random() * (end - start + 1) + start);
     }
 
-    private static String getAsciiArt(String ascii, String font) {
+    private String getAsciiArt(String ascii, String font) {
         try {
-            String url = asciiArtUrl + "make" + "?text=" + ascii.replaceAll(" ", "+") +
-                    (font == null || font.isEmpty() ? "" : "&font=" + font);
+            String url = asciiArtUrl + "make" + "?text=" + ascii.replaceAll(" ", "+") + (font == null || font.isEmpty() ? "" : "&font=" + font);
             return new Scanner(new URL(url).openStream(), String.valueOf(StandardCharsets.UTF_8)).useDelimiter("\\A").next();
         } catch (IOException e) {
             return Language.getMessage("ASCII.ERROR_RETRIEVING_TEXT");
         }
     }
 
-    private static List<String> getAsciiFonts() {
+    private List<String> getAsciiFonts() {
         String url = asciiArtUrl + "fonts_list";
         List<String> fontList = null;
         try {
             String list = new Scanner(new URL(url).openStream(), String.valueOf(StandardCharsets.UTF_8)).useDelimiter("\\A").next();
-
             fontList = Arrays.stream(list.split("\n")).collect(Collectors.toList());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,8 +60,7 @@ public class Ascii extends Command {
     @Override
     protected void execute(CommandEvent e) {
         if (e.getArgs().length() < 1) return;
-        String[] args = e.getArgs().split(" ");
-
+        String[] args = e.getArgs().split("\\s+");
         StringBuilder input = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
             input.append(i == args.length - 1 ? args[i] : args[i] + " ");
