@@ -21,41 +21,11 @@ class Setup {
             }
         }
 
-        if (!ConfigHandler.containsProperty("Command prefix")) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-            System.out.print("Command prefix: ");
-            try {
-                ConfigHandler.setProperty("Command prefix", br.readLine());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         if (!ConfigHandler.containsProperty("Bot owner ID")) {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
             System.out.print("Bot owner ID: ");
             try {
                 ConfigHandler.setProperty("Bot owner ID", br.readLine());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (!ConfigHandler.containsProperty("Bot admin role")) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-            System.out.print("Bot admin role: ");
-            try {
-                ConfigHandler.setProperty("Bot admin role", br.readLine());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (!ConfigHandler.containsProperty("API port")) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-            System.out.print("API port: ");
-            try {
-                ConfigHandler.setProperty("API port", br.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }
