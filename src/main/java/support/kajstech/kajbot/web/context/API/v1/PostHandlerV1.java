@@ -8,6 +8,7 @@ import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,5 +80,7 @@ public class PostHandlerV1 {
         OutputStream os = http.getResponseBody();
         os.write(response.getBytes());
         os.close();
+
+        LogHelper.info("Post request from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort());
     }
 }
