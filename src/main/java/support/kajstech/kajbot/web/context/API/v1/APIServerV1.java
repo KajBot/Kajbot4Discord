@@ -15,35 +15,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class APIServerV1 {
-    public static void context(HttpExchange httpExchange) throws IOException {
-        OutputStreamWriter osw = new OutputStreamWriter(httpExchange.getResponseBody(), StandardCharsets.UTF_8);
+    public static void context(HttpExchange http) throws IOException {
+        LogHelper.info("Connection from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort());
+
+        OutputStreamWriter osw = new OutputStreamWriter(http.getResponseBody(), StandardCharsets.UTF_8);
 
         JSONObject json = new JSONObject();
 
         try {
-            Map<String, String> args = qToM(httpExchange.getRequestURI().getQuery());
+            Map<String, String> args = qToM(http.getRequestURI().getQuery());
             if (args.containsKey("token") && args.get("token").contentEquals(ConfigHandler.getProperty("API token"))) {
                 json.put("game", Bot.jda.getPresence().getGame().getName());
                 json.put("status", Bot.jda.getPresence().getStatus());
                 json.put("commands", CustomCommandsHandler.getCommands());
                 json.put("keywords", KeywordHandler.getKeywords());
 
-                httpExchange.sendResponseHeaders(200, 0);
+                http.sendResponseHeaders(200, 0);
             } else {
                 json.put("401", "Unauthorized");
-                httpExchange.sendResponseHeaders(401, 0);
+                http.sendResponseHeaders(401, 0);
             }
 
         } catch (Exception ignored) {
             json.put("401", "Unauthorized");
-            httpExchange.sendResponseHeaders(401, 0);
+            http.sendResponseHeaders(401, 0);
         }
 
         osw.write(json.toString());
         osw.close();
 
-
-        LogHelper.info("Connection established: " + httpExchange.getRemoteAddress().getAddress().getHostAddress() + ":" + httpExchange.getRemoteAddress().getPort());
     }
 
     private static Map<String, String> qToM(String query) {

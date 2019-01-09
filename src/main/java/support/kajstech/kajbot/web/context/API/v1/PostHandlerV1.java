@@ -19,6 +19,9 @@ import java.nio.charset.StandardCharsets;
 public class PostHandlerV1 {
 
     public static void context(HttpExchange http) throws IOException {
+
+        LogHelper.info("Post request from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort() + " recieved");
+
         InputStreamReader isr = new InputStreamReader(http.getRequestBody(), StandardCharsets.UTF_8);
         BufferedReader br = new BufferedReader(isr);
         int b;
@@ -81,6 +84,5 @@ public class PostHandlerV1 {
         os.write(response.getBytes());
         os.close();
 
-        LogHelper.info("Post request from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort());
     }
 }
