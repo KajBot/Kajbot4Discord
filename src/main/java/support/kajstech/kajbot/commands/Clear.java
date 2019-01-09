@@ -31,7 +31,6 @@ public class Clear extends Command {
             msgs = history.retrievePast(AMOUNT).complete();
             e.getTextChannel().deleteMessages(msgs).queue();
             e.reply((Language.getMessage("Clear.SUCCESS")).replace("%AMOUNT%", args[0]));
-            e.reply("Slettede " + (AMOUNT) + " besked(er)!");
         } catch (Exception ignored) {
             e.reply(Language.getMessage("Clear.ERROR"));
         }
