@@ -24,8 +24,8 @@ public class Status extends Command {
         if (args[0].length() < 1) return;
 
 
-        if (args[0].equalsIgnoreCase("dnd")) args[0] = "DO_NOT_DISTURB";
-        if (!(args[0].equalsIgnoreCase("OFFLINE") || args[0].equalsIgnoreCase("INVISIBLE") || args[0].equalsIgnoreCase("ONLINE") || args[0].equalsIgnoreCase("DO_NOT_DISTURB") || args[0].equalsIgnoreCase("IDLE")))
+        if (args[0].equalsIgnoreCase("dnd")) args[0] = OnlineStatus.DO_NOT_DISTURB.toString();
+        if (!(args[0].equalsIgnoreCase(OnlineStatus.OFFLINE.toString()) || args[0].equalsIgnoreCase(OnlineStatus.INVISIBLE.toString()) || args[0].equalsIgnoreCase(OnlineStatus.ONLINE.toString()) || args[0].equalsIgnoreCase(OnlineStatus.DO_NOT_DISTURB.toString()) || args[0].equalsIgnoreCase(OnlineStatus.IDLE.toString())))
             return;
 
 

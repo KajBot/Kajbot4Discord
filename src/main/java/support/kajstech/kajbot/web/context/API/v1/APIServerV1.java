@@ -1,4 +1,4 @@
-package support.kajstech.kajbot.web.context.API;
+package support.kajstech.kajbot.web.context.API.v1;
 
 import com.sun.net.httpserver.HttpExchange;
 import org.json.JSONObject;
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-public class APIv1 {
+public class APIServerV1 {
     public static void context(HttpExchange httpExchange) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(httpExchange.getResponseBody(), StandardCharsets.UTF_8);
 

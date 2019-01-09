@@ -8,8 +8,6 @@ import net.dv8tion.jda.core.entities.MessageHistory;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.List;
 
 public class Clear extends Command {
