@@ -4,6 +4,7 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -24,6 +25,7 @@ public class Eval extends Command {
             engine.eval("var imports = new JavaImporter(java.io, java.lang, java.util, Packages.net.dv8tion.jda.core, Packages.net.dv8tion.jda.core.entities, Packages.net.dv8tion.jda.core.managers, Packages.support.kajstech.kajbot.utils.LogHelper);");
         } catch (ScriptException ex) {
             ex.printStackTrace();
+            LogHelper.error(Eval.class, ex.toString());
         }
     }
 

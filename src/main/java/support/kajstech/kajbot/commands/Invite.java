@@ -3,6 +3,7 @@ package support.kajstech.kajbot.commands;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.Permission;
+import support.kajstech.kajbot.utils.LogHelper;
 
 public class Invite extends Command {
 
@@ -18,6 +19,7 @@ public class Invite extends Command {
             e.replyInDm(e.getGuild().getTextChannelById(e.getMessage().getChannel().getIdLong()).createInvite().setUnique(true).setMaxUses(1).setMaxAge(1800).complete().getURL());
         } catch (Exception ex) {
             ex.printStackTrace();
+            LogHelper.error(Invite.class, ex.toString());
         }
     }
 }

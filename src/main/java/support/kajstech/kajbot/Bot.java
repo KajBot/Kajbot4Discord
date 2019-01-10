@@ -12,6 +12,7 @@ import org.reflections.Reflections;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.InvocationTargetException;
@@ -48,6 +49,7 @@ public class Bot {
                 ccBuilder.addCommand(command.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
+                LogHelper.error(Bot.class, e.toString());
             }
         }
 
@@ -59,6 +61,7 @@ public class Bot {
                 builder.addEventListener(listener.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
+                LogHelper.error(Bot.class, e.toString());
             }
         }
 

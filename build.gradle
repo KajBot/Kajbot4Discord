@@ -35,7 +35,7 @@ task proguard(type: ProGuardTask) {
     configuration 'proguard.txt'
 
     injars shadowJar
-    outjars 'build/libs/Kajbot-obf.jar'
+    outjars 'build/libs/Kajbot-release.jar'
 
     dontwarn()
 }

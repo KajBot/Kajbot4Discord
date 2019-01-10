@@ -3,7 +3,9 @@ package support.kajstech.kajbot.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -48,6 +50,9 @@ public class LogHelper {
     public static void error(Class cls, String message) {
         logToFile(cls + ": " + message);
         logger.error(cls + ": " + message);
+        Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> {
+            channel.sendMessage("Exception: ``" + cls + ": " + message + "``").queue();
+        });
     }
 
 

@@ -6,12 +6,13 @@ import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.cc.sites.Twitch;
 import support.kajstech.kajbot.cc.sites.YouTube;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.IOException;
 
 public class StreamAndVideoChecker extends ListenerAdapter {
 
-    public static void run() throws InterruptedException, IOException {
+    public static void run() throws InterruptedException {
 
         while (true) {
             if (!ConfigHandler.containsProperty("Notification channel ID")) return;
@@ -24,14 +25,20 @@ public class StreamAndVideoChecker extends ListenerAdapter {
 
 
             //SITES
-            Twitch.checkTwitch();
-            YouTube.checkYouTube();
+            try {
+                Twitch.checkTwitch();
+                YouTube.checkYouTube();
+            } catch (IOException e) {
+                LogHelper.error(StreamAndVideoChecker.class, e.toString());
+                e.printStackTrace();
+            }
 
 
             try {
                 Thread.sleep(60000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                LogHelper.error(StreamAndVideoChecker.class, e.toString());
             }
         }
 

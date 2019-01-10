@@ -5,6 +5,7 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import net.dv8tion.jda.core.Permission;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -52,6 +53,7 @@ public class Ascii extends Command {
             fontList = Arrays.stream(list.split("\n")).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
+            LogHelper.error(Ascii.class, e.toString());
         }
 
         return fontList;
