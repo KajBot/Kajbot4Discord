@@ -30,6 +30,7 @@ public class APIServerV1 {
                 json.put("commands", CustomCommandsHandler.getCommands());
                 json.put("keywords", KeywordHandler.getKeywords());
 
+                http.getResponseHeaders().add("Content-Type", "application/json");
                 http.sendResponseHeaders(200, 0);
             } else {
                 json.put("401", "Unauthorized");

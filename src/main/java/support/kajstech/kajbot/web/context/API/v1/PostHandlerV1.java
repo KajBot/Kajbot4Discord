@@ -20,15 +20,13 @@ public class PostHandlerV1 {
 
     public static void context(HttpExchange http) throws IOException {
 
-        LogHelper.info("Post request from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort() + " recieved");
+        LogHelper.info("Post request from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort());
 
-        InputStreamReader isr = new InputStreamReader(http.getRequestBody(), StandardCharsets.UTF_8);
-        BufferedReader br = new BufferedReader(isr);
         int b;
         StringBuilder buf = new StringBuilder(512);
-        while ((b = br.read()) != -1) {
+        while ((b = new BufferedReader(new InputStreamReader(http.getRequestBody(), StandardCharsets.UTF_8)).read()) != -1)
             buf.append((char) b);
-        }
+
         JSONObject body = new JSONObject(buf.toString());
 
         if (!http.getRequestHeaders().containsKey("token") || !http.getRequestHeaders().get("token").get(0).equals(ConfigHandler.getProperty("API token")) || body.length() < 1)
