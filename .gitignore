@@ -28,3 +28,4 @@ build/
 out/
 kajbot.iml
 src/test/
+.github/ISSUE_TEMPLATE
