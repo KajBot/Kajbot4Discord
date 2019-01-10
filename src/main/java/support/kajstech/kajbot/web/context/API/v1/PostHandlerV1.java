@@ -69,7 +69,7 @@ public class PostHandlerV1 {
             if (!body.getJSONObject("set_status").isNull("online")) {
                 String status = body.getJSONObject("set_status").getString("online");
                 if (status.equalsIgnoreCase("dnd")) status = OnlineStatus.DO_NOT_DISTURB.toString();
-                if (!(status.equalsIgnoreCase(OnlineStatus.OFFLINE.toString()) || status.equalsIgnoreCase(OnlineStatus.INVISIBLE.toString()) || status.equalsIgnoreCase(OnlineStatus.ONLINE.toString()) || status.equalsIgnoreCase(OnlineStatus.DO_NOT_DISTURB.toString()) || status.equalsIgnoreCase(OnlineStatus.IDLE.toString())))
+                if (!(status.equalsIgnoreCase(OnlineStatus.INVISIBLE.toString()) || status.equalsIgnoreCase(OnlineStatus.ONLINE.toString()) || status.equalsIgnoreCase(OnlineStatus.DO_NOT_DISTURB.toString()) || status.equalsIgnoreCase(OnlineStatus.IDLE.toString())))
                     return;
                 Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(status.toUpperCase()));
             }

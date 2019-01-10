@@ -38,6 +38,12 @@ public class Blacklist extends ListenerAdapter {
         if (!ConfigHandler.getProperty("Link blacklist").equalsIgnoreCase("true") || Permit.permitted.contains(event.getMessage().getMember()) || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot())
             return;
 
+        for (String c : ConfigHandler.getProperty("Blacklist bypass roles").split(", ")) {
+            if (event.getMember().getRoles().stream().anyMatch(r -> r.getName().equals(c))) {
+                return;
+            }
+        }
+
 
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {

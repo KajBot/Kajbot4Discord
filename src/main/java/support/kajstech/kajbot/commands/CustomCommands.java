@@ -29,9 +29,7 @@ public class CustomCommands extends Command {
                 try {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0xA6C055));
-                    CustomCommandsHandler.getCommands().forEach((k, v) -> {
-                        eb.addField(String.valueOf(k), String.valueOf(v), false);
-                    });
+                    CustomCommandsHandler.getCommands().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
                     e.reply(eb.build());
                 } catch (Exception ignored) {
                     return;
