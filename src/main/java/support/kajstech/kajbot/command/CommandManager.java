@@ -25,9 +25,10 @@ public class CommandManager {
         final String invoke = split[0].toLowerCase();
 
         if (commands.containsKey(invoke)) {
-            final List<String> args = Arrays.asList(split).subList(1, split.length);
+            final List<String> argsSplit = Arrays.asList(split).subList(1, split.length);
+            final String args = String.join(" ", argsSplit);
 
-            commands.get(invoke).handle(args, event);
+            commands.get(invoke).handle(argsSplit, args, event);
         }
     }
 }

@@ -6,9 +6,7 @@ import java.util.List;
 
 public interface ICommand {
 
-    void handle(List<String> args, MessageReceivedEvent event);
-
-    String getHelp();
+    void handle(List<String> argsSplit, String args, MessageReceivedEvent event);
 
     String getName();
 

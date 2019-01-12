@@ -52,10 +52,11 @@ public class Ascii implements ICommand {
 
 
     @Override
-    public void handle(List<String> args, MessageReceivedEvent event) {
+    public void handle(List<String> argsSplit, String args, MessageReceivedEvent event) {
+        if (args.length() < 1) return;
         StringBuilder input = new StringBuilder();
-        for (int i = 0; i < args.toArray().length; i++) {
-            input.append(i == args.toArray().length - 1 ? args.get(i) : args.get(i) + " ");
+        for (int i = 0; i < argsSplit.toArray().length; i++) {
+            input.append(i == argsSplit.toArray().length - 1 ? argsSplit.get(i) : argsSplit.get(i) + " ");
 
             List<String> fonts = getAsciiFonts();
             String font = fonts.get(randomNum(0, fonts.size() - 1));
@@ -73,11 +74,6 @@ public class Ascii implements ICommand {
                 event.getChannel().sendMessage("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```").queue();
             }
         }
-    }
-
-    @Override
-    public String getHelp() {
-        return null;
     }
 
     @Override
