@@ -1,10 +1,8 @@
-package support.kajstech.kajbot.commands;
+package support.kajstech.kajbot.command.commands;
 
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
-import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.command.ICommand;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.IOException;
@@ -15,16 +13,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Ascii extends Command {
+public class Ascii implements ICommand {
 
     private static final String asciiArtUrl = "http://artii.herokuapp.com/";
-
-    public Ascii() {
-        this.name = "ascii";
-        this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
-        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
-    }
 
     private int randomNum(int start, int end) {
 
@@ -59,13 +50,12 @@ public class Ascii extends Command {
         return fontList;
     }
 
+
     @Override
-    protected void execute(CommandEvent e) {
-        if (e.getArgs().length() < 1) return;
-        String[] args = e.getArgs().split("\\s+");
+    public void handle(List<String> args, MessageReceivedEvent event) {
         StringBuilder input = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            input.append(i == args.length - 1 ? args[i] : args[i] + " ");
+        for (int i = 0; i < args.toArray().length; i++) {
+            input.append(i == args.toArray().length - 1 ? args.get(i) : args.get(i) + " ");
 
             List<String> fonts = getAsciiFonts();
             String font = fonts.get(randomNum(0, fonts.size() - 1));
@@ -74,15 +64,24 @@ public class Ascii extends Command {
                 String ascii = getAsciiArt(input.toString(), font);
 
                 if (ascii.length() > 1900) {
-                    e.reply("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```");
+                    event.getChannel().sendMessage("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```").queue();
                     return;
                 }
 
-                e.reply("**Font:** " + font + "\n```fix\n\n" + ascii + "```");
+                event.getChannel().sendMessage("**Font:** " + font + "\n```fix\n\n" + ascii + "```").queue();
             } catch (IllegalArgumentException iae) {
-                e.reply("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```");
+                event.getChannel().sendMessage("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```").queue();
             }
         }
     }
 
+    @Override
+    public String getHelp() {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return "ascii";
+    }
 }

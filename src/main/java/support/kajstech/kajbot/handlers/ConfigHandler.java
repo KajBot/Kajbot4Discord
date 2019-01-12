@@ -36,6 +36,11 @@ public class ConfigHandler {
         saveCfg();
     }
 
+    public static void removeProperty(String key) {
+        config.remove(key);
+        saveCfg();
+    }
+
     public static String getProperty(String key) {
         return config.getProperty(key);
     }

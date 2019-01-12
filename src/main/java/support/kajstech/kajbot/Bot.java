@@ -1,6 +1,5 @@
 package support.kajstech.kajbot;
 
-import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import net.dv8tion.jda.core.AccountType;
@@ -9,6 +8,8 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.reflections.Reflections;
+import support.kajstech.kajbot.command.CommandManager;
+import support.kajstech.kajbot.command.ICommand;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
@@ -27,8 +28,10 @@ public class Bot {
 
         KeywordHandler.init();
         CustomCommandsHandler.init();
+
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
+
         //CommandClient builder
         CommandClientBuilder ccBuilder = new CommandClientBuilder();
 
@@ -40,16 +43,27 @@ public class Bot {
         ccBuilder.useHelpBuilder(false);
         ccBuilder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
 
-
+/*
         //Loading commands
         Reflections cmdReflections = new Reflections("support.kajstech.kajbot.commands");
-        Set<Class<? extends Command>> allCommands = cmdReflections.getSubTypesOf(Command.class);
-        for (Class<? extends Command> command : allCommands) {
+        Set<Class<? extends command>> allCommands = cmdReflections.getSubTypesOf(command.class);
+        for (Class<? extends command> command : allCommands) {
             try {
                 ccBuilder.addCommand(command.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
                 LogHelper.error(Bot.class, e.toString());
+            }
+        }
+*/
+        //Loading commands
+        Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
+        Set<Class<? extends ICommand>> allCommands = cmdReflections.getSubTypesOf(ICommand.class);
+        for (Class<? extends ICommand> command : allCommands) {
+            try {
+                CommandManager.addCommand(command.newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
 
@@ -70,7 +84,7 @@ public class Bot {
         commandClient = ccBuilder.build();
 
         //Adding CommandClient listener
-        builder.addEventListener(commandClient);
+        //builder.addEventListener(commandClient);
 
         //Random builder settings
         builder.setBulkDeleteSplittingEnabled(false);
