@@ -11,12 +11,12 @@ import java.util.regex.Pattern;
 
 public class CommandManager {
 
-    private static final Map<String, ICommand> commands = new HashMap<>();
+    private static final Map<String, Command> commands = new HashMap<>();
 
 
-    public static void addCommand(ICommand command) {
-        if (!commands.containsKey(command.getName())) {
-            commands.put(command.getName(), command);
+    public static void addCommand(Command command) {
+        if (!commands.containsKey(command.name)) {
+            commands.put(command.name, command);
         }
     }
 
@@ -28,7 +28,7 @@ public class CommandManager {
             final List<String> argsSplit = Arrays.asList(split).subList(1, split.length);
             final String args = String.join(" ", argsSplit);
 
-            commands.get(invoke).handle(argsSplit, args, event);
+            commands.get(invoke).run(new CommandEvent(argsSplit, args, event));
         }
     }
 }

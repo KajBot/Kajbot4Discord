@@ -1,26 +1,23 @@
 package support.kajstech.kajbot.command.commands;
 
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.command.ICommand;
+import support.kajstech.kajbot.command.Command;
+import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
-import java.util.List;
-
-public class GameStatus implements ICommand {
-    @Override
-    public void handle(List<String> argsSplit, String args, MessageReceivedEvent event) {
-        if (argsSplit.get(0).length() < 1) return;
-
-        Bot.jda.getPresence().setGame(Game.playing(args));
-        ConfigHandler.setProperty("Bot game", args);
-        event.getChannel().sendMessage((Language.getMessage("Game.SET")).replace("%GAME%", args)).queue();
+public class GameStatus extends Command {
+    public GameStatus() {
+        this.name = "game";
     }
 
     @Override
-    public String getName() {
-        return "game";
+    public void execute(CommandEvent e) {
+        if (e.getArgsSplit().get(0).length() < 1) return;
+
+        Bot.jda.getPresence().setGame(Game.playing(e.getArgs()));
+        ConfigHandler.setProperty("Bot game", e.getArgs());
+        e.getEvent().getChannel().sendMessage((Language.getMessage("Game.SET")).replace("%GAME%", e.getArgs())).queue();
     }
 }

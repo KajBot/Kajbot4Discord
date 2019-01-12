@@ -1,22 +1,23 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import support.kajstech.kajbot.command.ICommand;
+import support.kajstech.kajbot.command.Command;
+import support.kajstech.kajbot.command.CommandEvent;
 
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
-public class Ping implements ICommand {
+public class Ping extends Command {
+    public Ping() {
+        this.name = "ping";
+        this.guildOnly = true;
+    }
+
+
     @Override
-    public void handle(List<String> argsSplit, String args, MessageReceivedEvent event) {
-        event.getChannel().sendMessage("Ping ...").queue(m -> {
-            long ping = event.getMessage().getCreationTime().until(m.getCreationTime(), ChronoUnit.MILLIS);
-            m.editMessage("Ping: " + ping + "ms | Websocket: " + event.getJDA().getPing() + "ms").queue();
+    public void execute(CommandEvent e) {
+        e.getEvent().getChannel().sendMessage("Ping ...").queue(m -> {
+            long ping = e.getEvent().getMessage().getCreationTime().until(m.getCreationTime(), ChronoUnit.MILLIS);
+            m.editMessage("Ping: " + ping + "ms | Websocket: " + e.getEvent().getJDA().getPing() + "ms").queue();
         });
     }
 
-    @Override
-    public String getName() {
-        return "ping";
-    }
 }

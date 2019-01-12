@@ -1,14 +1,14 @@
-package support.kajstech.kajbot.commands;
+package support.kajstech.kajbot.command.commands;
 
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.command.Command;
+import support.kajstech.kajbot.command.CommandEvent;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -18,9 +18,6 @@ public class Info extends Command {
 
     public Info() {
         this.name = "info";
-        this.guildOnly = true;
-        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
-        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     private static String VariableToString(String regex, String input) {
@@ -35,18 +32,18 @@ public class Info extends Command {
     }
 
     @Override
-    protected void execute(CommandEvent event) {
-        if (event.getArgs().length() > 0) {
-            List<User> userMention = event.getMessage().getMentionedUsers();
+    public void execute(CommandEvent e) {
+        if (e.getArgs().length() > 0) {
+            List<User> userMention = e.getEvent().getMessage().getMentionedUsers();
             for (User user : userMention) {
-                embedUser(user, event.getGuild().getMember(user), event);
+                embedUser(user, e.getEvent().getGuild().getMember(user), e.getEvent());
             }
         } else {
-            embedUser(event.getAuthor(), event.getMember(), event);
+            embedUser(e.getEvent().getAuthor(), e.getEvent().getMember(), e.getEvent());
         }
     }
 
-    private void embedUser(User user, Member member, CommandEvent e) {
+    private void embedUser(User user, Member member, MessageReceivedEvent e) {
         String name, id, dis, nickname, icon, status, game, join, register;
 
         icon = user.getEffectiveAvatarUrl();
@@ -74,7 +71,7 @@ public class Info extends Command {
         embed.addField(":first_quarter_moon: Status", Language.getMessage("Info.GAME") + "`" + game + "`\n" + Language.getMessage("Info.STATUS") + "`" + status + "`\n", true);
         embed.addField(":stopwatch: " + Language.getMessage("Info.TIME"), Language.getMessage("Info.JOINED_SERVER") + "`" + join + "`\n" + Language.getMessage("Info.ACCOUNT_CREATED") + "`" + register + "`\n", true);
 
-        e.reply(embed.build());
+        e.getChannel().sendMessage(embed.build()).queue();
     }
 
 }

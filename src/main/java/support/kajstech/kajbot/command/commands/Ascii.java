@@ -1,8 +1,8 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.command.ICommand;
+import support.kajstech.kajbot.command.Command;
+import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.IOException;
@@ -13,9 +13,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Ascii implements ICommand {
-
+public class Ascii extends Command {
     private static final String asciiArtUrl = "http://artii.herokuapp.com/";
+
+    public Ascii() {
+        this.name = "ascii";
+    }
 
     private int randomNum(int start, int end) {
 
@@ -52,11 +55,11 @@ public class Ascii implements ICommand {
 
 
     @Override
-    public void handle(List<String> argsSplit, String args, MessageReceivedEvent event) {
-        if (args.length() < 1) return;
+    public void execute(CommandEvent e) {
+        if (e.getArgs().length() < 1) return;
         StringBuilder input = new StringBuilder();
-        for (int i = 0; i < argsSplit.toArray().length; i++) {
-            input.append(i == argsSplit.toArray().length - 1 ? argsSplit.get(i) : argsSplit.get(i) + " ");
+        for (int i = 0; i < e.getArgsSplit().toArray().length; i++) {
+            input.append(i == e.getArgsSplit().toArray().length - 1 ? e.getArgsSplit().get(i) : e.getArgsSplit().get(i) + " ");
 
             List<String> fonts = getAsciiFonts();
             String font = fonts.get(randomNum(0, fonts.size() - 1));
@@ -65,19 +68,14 @@ public class Ascii implements ICommand {
                 String ascii = getAsciiArt(input.toString(), font);
 
                 if (ascii.length() > 1900) {
-                    event.getChannel().sendMessage("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```").queue();
+                    e.getEvent().getChannel().sendMessage("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```").queue();
                     return;
                 }
 
-                event.getChannel().sendMessage("**Font:** " + font + "\n```fix\n\n" + ascii + "```").queue();
+                e.getEvent().getChannel().sendMessage("**Font:** " + font + "\n```fix\n\n" + ascii + "```").queue();
             } catch (IllegalArgumentException iae) {
-                event.getChannel().sendMessage("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```").queue();
+                e.getEvent().getChannel().sendMessage("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```").queue();
             }
         }
-    }
-
-    @Override
-    public String getName() {
-        return "ascii";
     }
 }

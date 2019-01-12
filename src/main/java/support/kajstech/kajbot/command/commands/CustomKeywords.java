@@ -1,11 +1,10 @@
-package support.kajstech.kajbot.commands;
+package support.kajstech.kajbot.command.commands;
 
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.command.Command;
+import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import java.awt.*;
@@ -15,22 +14,18 @@ public class CustomKeywords extends Command {
 
     public CustomKeywords() {
         this.name = "keyword";
-        this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
-        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
-    protected void execute(CommandEvent e) {
+    public void execute(CommandEvent e) {
 
-        String[] args = e.getArgs().split("\\s+");
-        switch (args[0]) {
+        switch (e.getArgsSplit().get(0)) {
             case "list":
                 try {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0xA6C055));
                     KeywordHandler.getKeywords().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
-                    e.reply(eb.build());
+                    e.getEvent().getChannel().sendMessage(eb.build()).queue();
                 } catch (Exception ignored) {
                     return;
                 }
@@ -40,9 +35,9 @@ public class CustomKeywords extends Command {
             case "del":
             case "remove":
                 try {
-                    if (KeywordHandler.kws.containsKey(args[1])) {
-                        KeywordHandler.removeKeyword(args[1]);
-                        e.reply((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", args[1].toUpperCase()));
+                    if (KeywordHandler.kws.containsKey(e.getArgsSplit().get(1))) {
+                        KeywordHandler.removeKeyword(e.getArgsSplit().get(1));
+                        e.getEvent().getChannel().sendMessage((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase())).queue();
                     }
                 } catch (Exception ignored) {
                     return;
@@ -50,10 +45,10 @@ public class CustomKeywords extends Command {
                 break;
             case "add":
                 try {
-                    String kwName = args[1];
+                    String kwName = e.getArgsSplit().get(1);
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split("\\s+");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
-                    e.reply((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
+                    e.getEvent().getChannel().sendMessage((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase())).queue();
                 } catch (Exception ignored) {
                     return;
                 }

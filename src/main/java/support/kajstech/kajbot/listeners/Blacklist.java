@@ -4,7 +4,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.commands.Permit;
+import support.kajstech.kajbot.command.commands.Permit;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.utils.LogHelper;
 

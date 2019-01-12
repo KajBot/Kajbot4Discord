@@ -1,10 +1,9 @@
-package support.kajstech.kajbot.commands;
+package support.kajstech.kajbot.command.commands;
 
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import support.kajstech.kajbot.Language;
+import support.kajstech.kajbot.command.Command;
+import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.util.ArrayList;
@@ -18,22 +17,19 @@ public class Permit extends Command {
 
     public Permit() {
         this.name = "permit";
-        this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
-        this.botPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
 
     @Override
-    protected void execute(CommandEvent e) {
+    public void execute(CommandEvent e) {
         if (e.getArgs().length() < 1) return;
         if (!ConfigHandler.getProperty("Link blacklist").equalsIgnoreCase("true")) return;
 
-        List<Member> memberMention = e.getMessage().getMentionedMembers();
+        List<Member> memberMention = e.getEvent().getMessage().getMentionedMembers();
 
-        if (!e.getMessage().getMentionedMembers().isEmpty()) {
+        if (!e.getEvent().getMessage().getMentionedMembers().isEmpty()) {
             for (Member member : memberMention) {
                 permitted.add(member);
-                e.reply((Language.getMessage("Permit.PERMITTED")).replace("%USER%", member.getAsMention()));
+                e.getEvent().getChannel().sendMessage((Language.getMessage("Permit.PERMITTED")).replace("%USER%", member.getAsMention())).queue();
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
