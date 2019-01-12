@@ -13,7 +13,7 @@ public class CommandEvent {
 
     public CommandEvent(List<String> argsSplit, String args, MessageReceivedEvent event) {
         this.event = event;
-        this.args = args == null ? "" : args;
+        this.args = args;
         this.argsSplit = argsSplit;
     }
 
