@@ -5,10 +5,13 @@ import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 public class Status extends Command {
     public Status() {
         this.name = "status";
+        this.guildOnly = false;
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
     @Override

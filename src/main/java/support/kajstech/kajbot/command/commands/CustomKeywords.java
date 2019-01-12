@@ -5,6 +5,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import java.awt.*;
@@ -14,6 +15,8 @@ public class CustomKeywords extends Command {
 
     public CustomKeywords() {
         this.name = "keyword";
+        this.guildOnly = false;
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
     @Override

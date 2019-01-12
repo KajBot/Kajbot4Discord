@@ -3,11 +3,14 @@ package support.kajstech.kajbot.command.commands;
 
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.utils.LogHelper;
 
 public class Invite extends Command {
     public Invite() {
-        this.name = "invite";
+        this.name = "info";
+        this.guildOnly = true;
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
     @Override

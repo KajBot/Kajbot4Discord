@@ -17,6 +17,8 @@ public class Permit extends Command {
 
     public Permit() {
         this.name = "permit";
+        this.guildOnly = false;
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
     @Override

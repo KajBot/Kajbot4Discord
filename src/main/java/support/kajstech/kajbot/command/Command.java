@@ -15,12 +15,12 @@ public abstract class Command {
             return;
         }
 
-        if (requiredRole != null)
+        if (requiredRole != null) {
             if (!event.getEvent().isFromType(ChannelType.TEXT) || event.getEvent().getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(requiredRole))) {
                 event.getEvent().getChannel().sendMessage("You must have a role called `" + requiredRole + "` to use that!").queue();
-
                 return;
             }
+        }
 
 
         if (guildOnly && (event.getEvent().isFromType(ChannelType.PRIVATE) || event.getEvent().isFromType(ChannelType.GROUP))) {

@@ -14,6 +14,8 @@ public class CustomCommands extends Command {
 
     public CustomCommands() {
         this.name = "command";
+        this.guildOnly = false;
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
     @Override

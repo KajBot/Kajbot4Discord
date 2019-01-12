@@ -10,6 +10,8 @@ import support.kajstech.kajbot.handlers.ConfigHandler;
 public class GameStatus extends Command {
     public GameStatus() {
         this.name = "game";
+        this.guildOnly = false;
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
     @Override

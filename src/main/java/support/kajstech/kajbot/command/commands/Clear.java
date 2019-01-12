@@ -5,12 +5,15 @@ import net.dv8tion.jda.core.entities.MessageHistory;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
+import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.util.List;
 
 public class Clear extends Command {
     public Clear() {
         this.name = "clear";
+        this.guildOnly = false;
+        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
     @Override
