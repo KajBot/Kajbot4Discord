@@ -19,7 +19,7 @@ public class Ascii extends Command {
 
     public Ascii() {
         this.name = "ascii";
-        this.guildOnly = true;
+        this.guildOnly = false;
         this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 

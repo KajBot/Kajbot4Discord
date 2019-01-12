@@ -23,8 +23,10 @@ public abstract class Command {
 
         if (requiredRole != null) {
             if (!event.getEvent().isFromType(ChannelType.TEXT) || event.getEvent().getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(requiredRole))) {
-                event.getEvent().getChannel().sendMessage((Language.getMessage("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole)).queue();
-                return;
+                if(!(event.getEvent().isFromType(ChannelType.PRIVATE) || event.getEvent().isFromType(ChannelType.GROUP))) {
+                    event.getEvent().getChannel().sendMessage((Language.getMessage("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole)).queue();
+                    return;
+                }
             }
         }
 
