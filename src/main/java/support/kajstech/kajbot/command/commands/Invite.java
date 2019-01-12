@@ -8,7 +8,7 @@ import support.kajstech.kajbot.utils.LogHelper;
 
 public class Invite extends Command {
     public Invite() {
-        this.name = "info";
+        this.name = "invite";
         this.guildOnly = true;
         this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }

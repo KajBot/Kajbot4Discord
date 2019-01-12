@@ -20,8 +20,6 @@ public class CustomCommands extends Command {
 
     @Override
     public void execute(CommandEvent e) {
-        System.out.println(e.getArgs());
-        System.out.println(e.getArgsSplit());
 
         switch (e.getArgsSplit().get(0)) {
             case "list":

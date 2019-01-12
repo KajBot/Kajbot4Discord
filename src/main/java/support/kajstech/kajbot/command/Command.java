@@ -1,6 +1,7 @@
 package support.kajstech.kajbot.command;
 
 import net.dv8tion.jda.core.entities.ChannelType;
+import support.kajstech.kajbot.Language;
 
 public abstract class Command {
 
@@ -11,21 +12,20 @@ public abstract class Command {
 
     protected final void run(CommandEvent event) {
 
+        if (guildOnly && (event.getEvent().isFromType(ChannelType.PRIVATE) || event.getEvent().isFromType(ChannelType.GROUP))) {
+            event.getEvent().getChannel().sendMessage(Language.getMessage("CommandSystem.DIRECT_ERROR")).queue();
+            return;
+        }
+
         if (ownerCommand && !event.isOwner()) {
             return;
         }
 
         if (requiredRole != null) {
             if (!event.getEvent().isFromType(ChannelType.TEXT) || event.getEvent().getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(requiredRole))) {
-                event.getEvent().getChannel().sendMessage("You must have a role called `" + requiredRole + "` to use that!").queue();
+                event.getEvent().getChannel().sendMessage((Language.getMessage("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole)).queue();
                 return;
             }
-        }
-
-
-        if (guildOnly && (event.getEvent().isFromType(ChannelType.PRIVATE) || event.getEvent().isFromType(ChannelType.GROUP))) {
-            event.getEvent().getChannel().sendMessage("This command cannot be used in Direct messages").queue();
-            return;
         }
 
 

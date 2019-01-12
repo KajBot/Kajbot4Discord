@@ -12,7 +12,7 @@ import java.util.List;
 public class Clear extends Command {
     public Clear() {
         this.name = "clear";
-        this.guildOnly = false;
+        this.guildOnly = true;
         this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
