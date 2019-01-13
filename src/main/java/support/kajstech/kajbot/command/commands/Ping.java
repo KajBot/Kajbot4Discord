@@ -16,9 +16,9 @@ public class Ping extends Command {
 
     @Override
     public void execute(CommandEvent e) {
-        e.getEvent().getChannel().sendMessage("Ping ...").queue(m -> {
-            long ping = e.getEvent().getMessage().getCreationTime().until(m.getCreationTime(), ChronoUnit.MILLIS);
-            m.editMessage("Ping: " + ping + "ms | Websocket: " + e.getEvent().getJDA().getPing() + "ms").queue();
+        e.reply("Ping: ...", m -> {
+            long ping = e.getMessage().getCreationTime().until(m.getCreationTime(), ChronoUnit.MILLIS);
+            m.editMessage("Ping: " + ping + "ms | Websocket: " + e.getJDA().getPing() + "ms").queue();
         });
     }
 

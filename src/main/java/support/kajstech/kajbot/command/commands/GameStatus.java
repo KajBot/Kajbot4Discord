@@ -20,6 +20,6 @@ public class GameStatus extends Command {
 
         Bot.jda.getPresence().setGame(Game.playing(e.getArgs()));
         ConfigHandler.setProperty("Bot game", e.getArgs());
-        e.getEvent().getChannel().sendMessage((Language.getMessage("Game.SET")).replace("%GAME%", e.getArgs())).queue();
+        e.reply((Language.getMessage("Game.SET")).replace("%GAME%", e.getArgs()));
     }
 }

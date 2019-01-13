@@ -71,13 +71,13 @@ public class Ascii extends Command {
                 String ascii = getAsciiArt(input.toString(), font);
 
                 if (ascii.length() > 1900) {
-                    e.getEvent().getChannel().sendMessage("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```").queue();
+                    e.reply("```fix\n\n " + Language.getMessage("ASCII.TOO_BIG") + "```");
                     return;
                 }
 
-                e.getEvent().getChannel().sendMessage("**Font:** " + font + "\n```fix\n\n" + ascii + "```").queue();
+                e.reply("**Font:** " + font + "\n```fix\n\n" + ascii + "```");
             } catch (IllegalArgumentException iae) {
-                e.getEvent().getChannel().sendMessage("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```").queue();
+                e.reply("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```");
             }
         }
     }

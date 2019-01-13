@@ -23,10 +23,10 @@ public class Clear extends Command {
             MessageHistory history = new MessageHistory(e.getEvent().getTextChannel());
             List<Message> msgs;
             msgs = history.retrievePast(AMOUNT).complete();
-            e.getEvent().getTextChannel().deleteMessages(msgs).queue();
-            e.getEvent().getChannel().sendMessage((Language.getMessage("Clear.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0))).queue();
+            e.getChannel().deleteMessages(msgs).queue();
+            e.reply((Language.getMessage("Clear.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
         } catch (Exception ignored) {
-            e.getEvent().getChannel().sendMessage(Language.getMessage("Clear.ERROR")).queue();
+            e.reply(Language.getMessage("Clear.ERROR"));
         }
     }
 

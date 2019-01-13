@@ -32,7 +32,7 @@ public class Bot {
         builder.setToken(ConfigHandler.getProperty("Bot token"));
         builder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
 
-        //Loading commands
+        //Adding commands
         Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
         Set<Class<? extends Command>> allCommands = cmdReflections.getSubTypesOf(Command.class);
         for (Class<? extends Command> command : allCommands) {
@@ -43,7 +43,10 @@ public class Bot {
             }
         }
 
-        //Adding event listeners using ListenerAdaper
+        //Adding custom commands
+        CustomCommandsHandler.getCommands().forEach((k, v) -> CommandManager.addCommand(k.toString(), v.toString()));
+
+        //Adding listeners using ListenerAdaper
         Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");
         Set<Class<? extends ListenerAdapter>> allListeners = listenerReflections.getSubTypesOf(ListenerAdapter.class);
         for (Class<? extends ListenerAdapter> listener : allListeners) {
@@ -54,7 +57,7 @@ public class Bot {
             }
         }
 
-        //Random builder settings
+        //Builder settings
         builder.setBulkDeleteSplittingEnabled(false);
         builder.setAudioEnabled(false);
 

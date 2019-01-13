@@ -11,12 +11,23 @@ import java.util.regex.Pattern;
 
 public class CommandManager {
 
-    private static final Map<String, Command> commands = new HashMap<>();
+    public static final Map<String, Command> commands = new HashMap<>();
 
 
     public static void addCommand(Command command) {
         if (!commands.containsKey(command.name)) {
             commands.put(command.name, command);
+        }
+    }
+
+    public static void addCommand(String key, String value) {
+        if (!commands.containsKey(key)) {
+            commands.put(key, new Command() {
+                @Override
+                protected void execute(CommandEvent e) {
+                    e.reply(value);
+                }
+            });
         }
     }
 

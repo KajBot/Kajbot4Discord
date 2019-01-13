@@ -5,7 +5,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
@@ -37,16 +36,16 @@ public class Info extends Command {
     @Override
     public void execute(CommandEvent e) {
         if (e.getArgs().length() > 0) {
-            List<User> userMention = e.getEvent().getMessage().getMentionedUsers();
+            List<User> userMention = e.getMessage().getMentionedUsers();
             for (User user : userMention) {
-                embedUser(user, e.getEvent().getGuild().getMember(user), e.getEvent());
+                embedUser(user, e.getGuild().getMember(user), e);
             }
         } else {
-            embedUser(e.getEvent().getAuthor(), e.getEvent().getMember(), e.getEvent());
+            embedUser(e.getEvent().getAuthor(), e.getEvent().getMember(), e);
         }
     }
 
-    private void embedUser(User user, Member member, MessageReceivedEvent e) {
+    private void embedUser(User user, Member member, CommandEvent e) {
         String name, id, dis, nickname, icon, status, game, join, register;
 
         icon = user.getEffectiveAvatarUrl();
@@ -74,7 +73,7 @@ public class Info extends Command {
         embed.addField(":first_quarter_moon: Status", Language.getMessage("Info.GAME") + "`" + game + "`\n" + Language.getMessage("Info.STATUS") + "`" + status + "`\n", true);
         embed.addField(":stopwatch: " + Language.getMessage("Info.TIME"), Language.getMessage("Info.JOINED_SERVER") + "`" + join + "`\n" + Language.getMessage("Info.ACCOUNT_CREATED") + "`" + register + "`\n", true);
 
-        e.getChannel().sendMessage(embed.build()).queue();
+        e.reply(embed.build());
     }
 
 }

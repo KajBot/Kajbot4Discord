@@ -52,7 +52,7 @@ public class Eval extends Command {
         try {
             out = engine.eval("(function() { with (imports) {\n" + e.getArgs() + "\n} })();");
         } catch (Exception ex) {
-            e.getEvent().getChannel().sendMessage("**Exception**: ```\n" + ex.getLocalizedMessage() + "```").queue();
+            e.reply("**Exception**: ```\n" + ex.getLocalizedMessage() + "```");
             System.out.println(e.getArgs());
             return;
         }
@@ -65,7 +65,7 @@ public class Eval extends Command {
         }
 
         if (e.getEvent().getJDA().getStatus() != JDA.Status.SHUTDOWN) {
-            e.getEvent().getChannel().sendMessage(outputS).queue();
+            e.reply(outputS);
         } else {
             Runtime.getRuntime().exit(0);
         }

@@ -28,7 +28,7 @@ public class CustomKeywords extends Command {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0xA6C055));
                     KeywordHandler.getKeywords().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
-                    e.getEvent().getChannel().sendMessage(eb.build()).queue();
+                    e.reply(eb.build());
                 } catch (Exception ignored) {
                     return;
                 }
@@ -40,7 +40,7 @@ public class CustomKeywords extends Command {
                 try {
                     if (KeywordHandler.kws.containsKey(e.getArgsSplit().get(1))) {
                         KeywordHandler.removeKeyword(e.getArgsSplit().get(1));
-                        e.getEvent().getChannel().sendMessage((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase())).queue();
+                        e.reply((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase()));
                     }
                 } catch (Exception ignored) {
                     return;
@@ -51,7 +51,7 @@ public class CustomKeywords extends Command {
                     String kwName = e.getArgsSplit().get(1);
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split("\\s+");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
-                    e.getEvent().getChannel().sendMessage((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase())).queue();
+                    e.reply((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
                 } catch (Exception ignored) {
                     return;
                 }

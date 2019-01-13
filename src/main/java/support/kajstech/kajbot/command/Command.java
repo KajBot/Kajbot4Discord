@@ -10,10 +10,10 @@ public abstract class Command {
     protected String requiredRole = null;
     protected boolean guildOnly = true;
 
-    protected final void run(CommandEvent event) {
+    final void run(CommandEvent event) {
 
         if (guildOnly && (event.getEvent().isFromType(ChannelType.PRIVATE) || event.getEvent().isFromType(ChannelType.GROUP))) {
-            event.getEvent().getChannel().sendMessage(Language.getMessage("CommandSystem.DIRECT_ERROR")).queue();
+            event.reply(Language.getMessage("CommandSystem.DIRECT_ERROR"));
             return;
         }
 
@@ -23,7 +23,7 @@ public abstract class Command {
 
         if (requiredRole != null) {
             if (!event.getEvent().isFromType(ChannelType.TEXT) || event.getEvent().getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(requiredRole))) {
-                event.getEvent().getChannel().sendMessage((Language.getMessage("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole)).queue();
+                event.reply((Language.getMessage("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole));
                 return;
             }
         }

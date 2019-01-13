@@ -31,7 +31,7 @@ public class Permit extends Command {
         if (!e.getEvent().getMessage().getMentionedMembers().isEmpty()) {
             for (Member member : memberMention) {
                 permitted.add(member);
-                e.getEvent().getChannel().sendMessage((Language.getMessage("Permit.PERMITTED")).replace("%USER%", member.getAsMention())).queue();
+                e.reply((Language.getMessage("Permit.PERMITTED")).replace("%USER%", member.getAsMention()));
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {

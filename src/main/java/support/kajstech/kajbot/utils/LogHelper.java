@@ -51,9 +51,7 @@ public class LogHelper {
         logToFile(cls + ": " + message);
         logger.error(cls + ": " + message);
         try {
-            Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> {
-                channel.sendMessage("Exception: ``" + cls + ": " + message + "``").queue();
-            });
+            Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage("Exception: ``" + cls + ": " + message + "``").queue());
         } catch (Exception ignored) {
         }
     }
