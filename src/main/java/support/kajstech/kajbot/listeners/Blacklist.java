@@ -26,7 +26,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setTimestamp(ZonedDateTime.now());
         eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
         eb.setDescription(link);
-        event.getGuild().getTextChannelById(ConfigHandler.getProperty("Log channel ID")).sendMessage(eb.build()).queue();
+        event.getGuild().getTextChannelById(ConfigHandler.getProperty("Modlog channel ID")).sendMessage(eb.build()).queue();
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
