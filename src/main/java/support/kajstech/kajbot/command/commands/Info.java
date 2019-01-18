@@ -1,15 +1,16 @@
 package support.kajstech.kajbot.command.commands;
 
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -59,11 +60,11 @@ public class Info extends Command {
         /* Status */
         OnlineStatus stat = member == null ? null : member.getOnlineStatus();
         status = stat == null ? "N/A" : VariableToString("_", stat.getKey());
-        game = stat == null ? "N/A" : member.getGame() == null ? "N/A" : member.getGame().getName();
+        game = stat == null ? "N/A" : member.getActivities().size() < 1 ? "N/A" : member.getActivities().get(0).getName();
 
         /* Time */
-        join = member == null ? "N/A" : DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(member.getJoinDate());
-        register = DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(user.getCreationTime());
+        join = member == null ? "N/A" : DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(member.getTimeJoined());
+        register = DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(user.getTimeCreated());
 
         /* Final */
         EmbedBuilder embed = new EmbedBuilder().setAuthor(nickname, null, icon).setThumbnail(icon);
@@ -72,6 +73,7 @@ public class Info extends Command {
         embed.addField(":spy: " + Language.getMessage("Info.IDENTITY"), "ID: `" + id + "`\n" + Language.getMessage("Info.USERNAME") + "`" + name + "#" + dis + "`", true);
         embed.addField(":first_quarter_moon: Status", Language.getMessage("Info.GAME") + "`" + game + "`\n" + Language.getMessage("Info.STATUS") + "`" + status + "`\n", true);
         embed.addField(":stopwatch: " + Language.getMessage("Info.TIME"), Language.getMessage("Info.JOINED_SERVER") + "`" + join + "`\n" + Language.getMessage("Info.ACCOUNT_CREATED") + "`" + register + "`\n", true);
+        embed.setTimestamp(ZonedDateTime.now());
 
         e.reply(embed.build());
     }

@@ -1,8 +1,8 @@
 package support.kajstech.kajbot.web.context.API.v1;
 
 import com.sun.net.httpserver.HttpExchange;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.handlers.ConfigHandler;
@@ -63,7 +63,7 @@ public class PostHandlerV1 {
         if (!body.isNull("set_status")) {
             if (!body.getJSONObject("set_status").isNull("game")) {
                 ConfigHandler.setProperty("Bot game", body.getJSONObject("set_status").getString("game"));
-                Bot.jda.getPresence().setGame(Game.playing(body.getJSONObject("set_status").getString("game")));
+                Bot.jda.getPresence().setActivity(Activity.playing(body.getJSONObject("set_status").getString("game")));
             }
 
             if (!body.getJSONObject("set_status").isNull("online")) {

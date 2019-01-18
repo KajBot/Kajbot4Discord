@@ -1,7 +1,8 @@
 package support.kajstech.kajbot.command;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,14 +22,17 @@ public class CommandManager {
     }
 
     public static void addCommand(String key, String value) {
-        if (!commands.containsKey(key)) {
-            commands.put(key, new Command() {
-                @Override
-                protected void execute(CommandEvent e) {
-                    e.reply(value);
-                }
-            });
-        }
+        if (CommandManager.commands.containsKey(key) || !CustomCommandsHandler.getCommands().contains(key)) return;
+        commands.remove(key);
+        commands.put(key, new Command() {
+            @Override
+            protected void execute(CommandEvent e) {
+                String message = value
+                        .replace(">USER<", e.getEvent().getAuthor().getAsMention())
+                        .replace(">MEMBERCOUNT<", String.valueOf(e.getGuild().getMembers().size()));
+                e.reply(message);
+            }
+        });
     }
 
     public void handleCommand(MessageReceivedEvent event) {

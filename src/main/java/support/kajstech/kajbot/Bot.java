@@ -1,10 +1,10 @@
 package support.kajstech.kajbot;
 
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.AccountType;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
@@ -30,7 +30,8 @@ public class Bot {
 
 
         builder.setToken(ConfigHandler.getProperty("Bot token"));
-        builder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
+        builder.setActivity(Activity.playing(ConfigHandler.getProperty("Bot game")));
+
 
         //Adding commands
         Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
@@ -51,7 +52,7 @@ public class Bot {
         Set<Class<? extends ListenerAdapter>> allListeners = listenerReflections.getSubTypesOf(ListenerAdapter.class);
         for (Class<? extends ListenerAdapter> listener : allListeners) {
             try {
-                builder.addEventListener(listener.getDeclaredConstructor().newInstance());
+                builder.addEventListeners(listener.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
             }

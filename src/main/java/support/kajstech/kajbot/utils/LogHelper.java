@@ -9,12 +9,11 @@ import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogHelper {
 
-    private static File logPath = new File(System.getProperty("user.dir") + "\\kajbot.log");
     private static Logger logger = LoggerFactory.getLogger("[Kajbot]");
 
     /**
@@ -33,7 +32,6 @@ public class LogHelper {
         logToFile(message);
         logger.info(message);
     }
-
 
     /**
      * helper class w() to log warning level information.
@@ -65,11 +63,12 @@ public class LogHelper {
         logger.trace(cls + ": " + message);
     }
 
+
     private static void logToFile(String message) {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logPath, true), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
-            writer.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - " + message);
+            writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - " + message);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package support.kajstech.kajbot.command.commands;
 
 
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
@@ -9,6 +9,7 @@ import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import java.awt.*;
+import java.time.ZonedDateTime;
 
 
 public class CustomKeywords extends Command {
@@ -27,6 +28,7 @@ public class CustomKeywords extends Command {
                 try {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0xA6C055));
+                    eb.setTimestamp(ZonedDateTime.now());
                     KeywordHandler.getKeywords().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
                     e.reply(eb.build());
                 } catch (Exception ignored) {

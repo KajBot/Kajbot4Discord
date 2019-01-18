@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.api.JDA;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.LogHelper;
@@ -20,7 +20,16 @@ public class Eval extends Command {
 
         engine = new ScriptEngineManager().getEngineByName("nashorn");
         try {
-            engine.eval("var imports = new JavaImporter(java.io, java.lang, java.util, Packages.net.dv8tion.jda.core, Packages.net.dv8tion.jda.core.entities, Packages.net.dv8tion.jda.core.managers, Packages.support.kajstech.kajbot.utils.LogHelper);");
+            engine.eval("var imports = new JavaImporter(" +
+                    "java.io," +
+                    "java.lang," +
+                    "java.util," +
+                    "Packages.net.dv8tion.jda.api," +
+                    "Packages.net.dv8tion.jda.api.entities," +
+                    "Packages.net.dv8tion.jda.api.entities.impl," +
+                    "Packages.net.dv8tion.jda.api.managers," +
+                    "Packages.net.dv8tion.jda.api.managers.impl," +
+                    "Packages.net.dv8tion.jda.api.utils);");
         } catch (ScriptException ex) {
             ex.printStackTrace();
             LogHelper.error(Eval.class, ex.toString());
