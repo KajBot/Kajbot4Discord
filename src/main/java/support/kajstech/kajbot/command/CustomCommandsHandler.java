@@ -11,7 +11,7 @@ public class CustomCommandsHandler {
 
     public static void init() {
         if (!cmdPath.exists()) {
-            saveCommands();
+            saveCustomCommands();
         }
 
         try {
@@ -22,7 +22,7 @@ public class CustomCommandsHandler {
         }
     }
 
-    protected static void saveCommands() {
+    protected static void saveCustomCommands() {
         try {
             commands.store(new OutputStreamWriter(new FileOutputStream(cmdPath), StandardCharsets.UTF_8), null);
         } catch (IOException e) {
@@ -30,7 +30,7 @@ public class CustomCommandsHandler {
         }
     }
 
-    public static Properties getCommands() {
+    public static Properties getCustomCommands() {
         return commands;
     }
 }

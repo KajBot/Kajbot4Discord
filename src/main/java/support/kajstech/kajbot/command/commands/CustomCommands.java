@@ -31,7 +31,7 @@ public class CustomCommands extends Command {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0xA6C055));
                     eb.setTimestamp(ZonedDateTime.now());
-                    CustomCommandsHandler.getCommands().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
+                    CustomCommandsHandler.getCustomCommands().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
                     e.reply(eb.build());
                 } catch (Exception ignored) {
                 }

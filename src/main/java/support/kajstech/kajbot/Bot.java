@@ -45,7 +45,7 @@ public class Bot {
         }
 
         //Adding custom commands
-        CustomCommandsHandler.getCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
+        CustomCommandsHandler.getCustomCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
 
         //Adding listeners using ListenerAdaper
         Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");

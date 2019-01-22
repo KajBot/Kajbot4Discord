@@ -34,8 +34,8 @@ public class CommandManager {
                 e.reply(message);
             }
         });
-        CustomCommandsHandler.getCommands().setProperty(key, value);
-        CustomCommandsHandler.saveCommands();
+        CustomCommandsHandler.getCustomCommands().setProperty(key, value);
+        CustomCommandsHandler.saveCustomCommands();
     }
 
     public static void removeCustomCommand(String key) {
@@ -43,8 +43,8 @@ public class CommandManager {
             if (command.getSimpleName().equalsIgnoreCase(key)) return;
         }
         commands.remove(key);
-        CustomCommandsHandler.getCommands().remove(key);
-        CustomCommandsHandler.saveCommands();
+        CustomCommandsHandler.getCustomCommands().remove(key);
+        CustomCommandsHandler.saveCustomCommands();
     }
 
     public void handleCommand(MessageReceivedEvent event) {

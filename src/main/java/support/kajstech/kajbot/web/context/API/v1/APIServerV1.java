@@ -27,7 +27,7 @@ public class APIServerV1 {
             if (args.containsKey("token") && args.get("token").contentEquals(ConfigHandler.getProperty("API token"))) {
                 json.put("game", Bot.jda.getPresence().getActivity().getName());
                 json.put("status", Bot.jda.getPresence().getStatus());
-                json.put("commands", CustomCommandsHandler.getCommands());
+                json.put("commands", CustomCommandsHandler.getCustomCommands());
                 json.put("keywords", KeywordHandler.getKeywords());
 
                 http.getResponseHeaders().add("Content-Type", "application/json");
