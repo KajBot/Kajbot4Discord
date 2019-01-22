@@ -1,7 +1,6 @@
 package support.kajstech.kajbot.web.context.API.v1;
 
 import com.sun.net.httpserver.HttpExchange;
-import javassist.compiler.ast.Keyword;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import org.json.JSONObject;
