@@ -3,8 +3,8 @@ package support.kajstech.kajbot.web.context.API.v1;
 import com.sun.net.httpserver.HttpExchange;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
+import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
-import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 import support.kajstech.kajbot.utils.LogHelper;
 

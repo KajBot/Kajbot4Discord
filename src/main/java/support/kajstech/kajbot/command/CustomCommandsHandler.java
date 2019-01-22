@@ -1,6 +1,4 @@
-package support.kajstech.kajbot.handlers;
-
-import support.kajstech.kajbot.command.CommandManager;
+package support.kajstech.kajbot.command;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -18,13 +16,13 @@ public class CustomCommandsHandler {
 
         try {
             commands.load(new BufferedReader(new InputStreamReader(new FileInputStream(cmdPath), StandardCharsets.UTF_8)));
-            CustomCommandsHandler.getCommands().forEach((k, v) -> CommandManager.addCommand(k.toString(), v.toString()));
+            commands.forEach((k, v) -> CommandManager.addCustomCommand((String) k, (String) v));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void saveCommands() {
+    protected static void saveCommands() {
         try {
             commands.store(new OutputStreamWriter(new FileOutputStream(cmdPath), StandardCharsets.UTF_8), null);
         } catch (IOException e) {
@@ -34,17 +32,5 @@ public class CustomCommandsHandler {
 
     public static Properties getCommands() {
         return commands;
-    }
-
-    public static void addCommand(String key, String value) {
-        commands.setProperty(key, value);
-        CommandManager.addCommand(key, value);
-        saveCommands();
-    }
-
-    public static void removeCommand(String key) {
-        CommandManager.commands.remove(key);
-        commands.remove(key);
-        saveCommands();
     }
 }

@@ -19,9 +19,7 @@ public class KeywordHandler {
 
         try {
             keywords.load(new BufferedReader(new InputStreamReader(new FileInputStream(kwPath), StandardCharsets.UTF_8)));
-            for (final String property : keywords.stringPropertyNames()) {
-                kws.put(property, keywords.getProperty(property));
-            }
+            keywords.stringPropertyNames().forEach((k) -> kws.put(k, keywords.getProperty(k)));
         } catch (IOException e) {
             e.printStackTrace();
         }

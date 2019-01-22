@@ -1,8 +1,8 @@
 package support.kajstech.kajbot.command;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.handlers.ConfigHandler;
-import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class CommandManager {
 
-    public static final Map<String, Command> commands = new HashMap<>();
+    private static final Map<String, Command> commands = new HashMap<>();
 
 
     public static void addCommand(Command command) {
@@ -21,9 +21,10 @@ public class CommandManager {
         }
     }
 
-    public static void addCommand(String key, String value) {
-        if (CommandManager.commands.containsKey(key) || !CustomCommandsHandler.getCommands().contains(key)) return;
-        commands.remove(key);
+    public static void addCustomCommand(String key, String value) {
+        for (Class<? extends Command> command : Bot.internalCommands) {
+            if (command.getSimpleName().equalsIgnoreCase(key)) return;
+        }
         commands.put(key, new Command() {
             @Override
             protected void execute(CommandEvent e) {
@@ -33,6 +34,17 @@ public class CommandManager {
                 e.reply(message);
             }
         });
+        CustomCommandsHandler.getCommands().setProperty(key, value);
+        CustomCommandsHandler.saveCommands();
+    }
+
+    public static void removeCustomCommand(String key) {
+        for (Class<? extends Command> command : Bot.internalCommands) {
+            if (command.getSimpleName().equalsIgnoreCase(key)) return;
+        }
+        commands.remove(key);
+        CustomCommandsHandler.getCommands().remove(key);
+        CustomCommandsHandler.saveCommands();
     }
 
     public void handleCommand(MessageReceivedEvent event) {

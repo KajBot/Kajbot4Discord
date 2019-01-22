@@ -8,8 +8,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
+import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
-import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import javax.security.auth.login.LoginException;
@@ -19,6 +19,9 @@ import java.util.Set;
 public class Bot {
 
     public static JDA jda;
+
+    private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
+    public static Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
     static void run() {
 
@@ -32,11 +35,8 @@ public class Bot {
         builder.setToken(ConfigHandler.getProperty("Bot token"));
         builder.setActivity(Activity.playing(ConfigHandler.getProperty("Bot game")));
 
-
         //Adding commands
-        Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
-        Set<Class<? extends Command>> allCommands = cmdReflections.getSubTypesOf(Command.class);
-        for (Class<? extends Command> command : allCommands) {
+        for (Class<? extends Command> command : internalCommands) {
             try {
                 CommandManager.addCommand(command.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -45,7 +45,7 @@ public class Bot {
         }
 
         //Adding custom commands
-        CustomCommandsHandler.getCommands().forEach((k, v) -> CommandManager.addCommand(k.toString(), v.toString()));
+        CustomCommandsHandler.getCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
 
         //Adding listeners using ListenerAdaper
         Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");
