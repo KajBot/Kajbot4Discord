@@ -22,7 +22,7 @@ public class CustomCommandsHandler {
         }
     }
 
-    protected static void saveCustomCommands() {
+    static void saveCustomCommands() {
         try {
             commands.store(new OutputStreamWriter(new FileOutputStream(cmdPath), StandardCharsets.UTF_8), null);
         } catch (IOException e) {
