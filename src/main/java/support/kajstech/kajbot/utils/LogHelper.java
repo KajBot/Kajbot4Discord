@@ -1,12 +1,14 @@
 package support.kajstech.kajbot.utils;
 
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
@@ -45,13 +47,26 @@ public class LogHelper {
     /**
      * helper class e() to log error information.
      */
+    public static void error(Class cls, Exception ex, String message) {
+        logToFile(cls + ": " + ex);
+        logger.error(cls + ": " + ex);
+        try {
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle("ERROR");
+            eb.setDescription("```" + message + "```");
+            eb.setColor(new Color(0xFF0000));
+            eb.addField("Class:", "```" + cls.getName() + "```", false);
+            eb.addField("Exception: " + ex.getClass().getName(), "```" + ex.getLocalizedMessage() + "```", false);
+            eb.setTimestamp(ZonedDateTime.now());
+
+            Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
+        } catch (Exception ignored) {
+        }
+    }
+
     public static void error(Class cls, String message) {
         logToFile(cls + ": " + message);
         logger.error(cls + ": " + message);
-        try {
-            Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage("Exception: ``" + cls + ": " + message + "``").queue());
-        } catch (Exception ignored) {
-        }
     }
 
 

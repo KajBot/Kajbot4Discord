@@ -7,6 +7,7 @@ import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.awt.*;
 import java.time.ZonedDateTime;
@@ -30,8 +31,8 @@ public class CustomKeywords extends Command {
                     eb.setTimestamp(ZonedDateTime.now());
                     KeywordHandler.getKeywords().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
                     e.reply(eb.build());
-                } catch (Exception ignored) {
-                    return;
+                } catch (Exception ex) {
+                    LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
 
                 break;
@@ -43,8 +44,8 @@ public class CustomKeywords extends Command {
                         KeywordHandler.removeKeyword(e.getArgsSplit().get(1));
                         e.reply((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase()));
                     }
-                } catch (Exception ignored) {
-                    return;
+                } catch (Exception ex) {
+                    LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
                 break;
             case "add":
@@ -53,8 +54,8 @@ public class CustomKeywords extends Command {
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split("\\s+");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
                     e.reply((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
-                } catch (Exception ignored) {
-                    return;
+                } catch (Exception ex) {
+                    LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
                 break;
         }

@@ -8,6 +8,7 @@ import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.awt.*;
 import java.time.ZonedDateTime;
@@ -33,17 +34,23 @@ public class CustomCommands extends Command {
                     eb.setTimestamp(ZonedDateTime.now());
                     CustomCommandsHandler.getCustomCommands().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
                     e.reply(eb.build());
-                } catch (Exception ignored) {
+                } catch (Exception ex) {
+
+                    LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
 
                 break;
             case "del":
             case "remove":
-                for (Class<? extends Command> command : Bot.internalCommands) {
-                    if (command.getSimpleName().equalsIgnoreCase(e.getArgsSplit().get(1))) return;
+                try {
+                    for (Class<? extends Command> command : Bot.internalCommands) {
+                        if (command.getSimpleName().equalsIgnoreCase(e.getArgsSplit().get(1))) return;
+                    }
+                    CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(ConfigHandler.getProperty("Command prefix"), ""));
+                    e.reply((Language.getMessage("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
+                } catch (Exception ex) {
+                    LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
-                CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(ConfigHandler.getProperty("Command prefix"), ""));
-                e.reply((Language.getMessage("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
                 break;
             case "add":
                 try {
@@ -54,7 +61,8 @@ public class CustomCommands extends Command {
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split("\\s+");
                     CommandManager.addCustomCommand(cmdName, String.join(" ", cmdContext));
                     e.reply((Language.getMessage("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase()));
-                } catch (Exception ignored) {
+                } catch (Exception ex) {
+                    LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
                 break;
         }

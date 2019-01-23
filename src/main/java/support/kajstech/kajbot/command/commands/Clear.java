@@ -6,6 +6,7 @@ import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class Clear extends Command {
             msgs = history.retrievePast(AMOUNT).complete();
             e.getChannel().deleteMessages(msgs).queue();
             e.reply((Language.getMessage("Clear.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
             e.reply(Language.getMessage("Clear.ERROR"));
         }
     }

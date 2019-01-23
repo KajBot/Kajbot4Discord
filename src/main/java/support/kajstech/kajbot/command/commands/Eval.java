@@ -32,7 +32,7 @@ public class Eval extends Command {
                     "Packages.net.dv8tion.jda.api.utils);");
         } catch (ScriptException ex) {
             ex.printStackTrace();
-            LogHelper.error(Eval.class, ex.toString());
+            LogHelper.error(this.getClass(), ex.toString());
         }
     }
 

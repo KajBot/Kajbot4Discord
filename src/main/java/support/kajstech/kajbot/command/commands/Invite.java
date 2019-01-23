@@ -18,8 +18,7 @@ public class Invite extends Command {
         try {
             e.reply(e.getGuild().getTextChannelById(e.getChannel().getIdLong()).createInvite().setUnique(true).setMaxUses(1).setMaxAge(1800).complete().getUrl());
         } catch (Exception ex) {
-            ex.printStackTrace();
-            LogHelper.error(Invite.class, ex.toString());
+            LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
         }
     }
 }
