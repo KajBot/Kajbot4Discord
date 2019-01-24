@@ -12,7 +12,13 @@ import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.util.Objects;
 import java.util.Set;
 
 public class Bot {
@@ -36,8 +42,23 @@ public class Bot {
             CommandManager.addCommand(command.getDeclaredConstructor().newInstance());
         }
 
-        //Adding custom commands
+        //Simple custom commands
         CustomCommandsHandler.getCustomCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
+
+        //External custom commands
+        File file = new File(System.getProperty("user.dir") + "\\commands");
+        try {
+            URL url = file.toURI().toURL();
+            URL[] urls = new URL[]{url};
+            if (!file.exists()) Files.createDirectory(file.toPath());
+            for (File clazz : Objects.requireNonNull(file.listFiles())) {
+                CommandManager.addCommand(new URLClassLoader(urls).loadClass(clazz.getName().replace(".class", "")).asSubclass(Command.class).getDeclaredConstructor().newInstance());
+
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+
 
         //Adding listeners using ListenerAdaper
         Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");
