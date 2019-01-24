@@ -42,7 +42,7 @@ public class Info extends Command {
                 embedUser(user, e.getGuild().getMember(user), e);
             }
         } else {
-            embedUser(e.getEvent().getAuthor(), e.getEvent().getMember(), e);
+            embedUser(e.getAuthor(), e.getMember(), e);
         }
     }
 

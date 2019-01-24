@@ -27,6 +27,7 @@ public class CustomCommands extends Command {
         if (e.getArgs().length() < 1) return;
 
         switch (e.getArgsSplit().get(0)) {
+            default:
             case "list":
                 try {
                     EmbedBuilder eb = new EmbedBuilder();
@@ -35,7 +36,6 @@ public class CustomCommands extends Command {
                     CustomCommandsHandler.getCustomCommands().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
                     e.reply(eb.build());
                 } catch (Exception ex) {
-
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
 

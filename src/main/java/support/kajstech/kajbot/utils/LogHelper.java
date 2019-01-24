@@ -60,7 +60,8 @@ public class LogHelper {
             eb.setTimestamp(ZonedDateTime.now());
 
             Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            error(LogHelper.class, e.getLocalizedMessage());
         }
     }
 

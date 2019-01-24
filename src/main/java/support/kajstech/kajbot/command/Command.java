@@ -22,7 +22,7 @@ public abstract class Command {
         }
 
         if (requiredRole != null) {
-            if (!event.getEvent().isFromType(ChannelType.TEXT) || event.getEvent().getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(requiredRole))) {
+            if (!event.getEvent().isFromType(ChannelType.TEXT) || event.getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(requiredRole))) {
                 event.reply((Language.getMessage("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole));
                 return;
             }

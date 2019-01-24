@@ -54,6 +54,14 @@ public class CommandEvent {
         return event.getJDA().getSelfUser();
     }
 
+    public User getAuthor() {
+        return event.getAuthor();
+    }
+
+    public Member getMember() {
+        return event.getMember();
+    }
+
     boolean isOwner() {
         return event.getAuthor().getId().equals(ConfigHandler.getProperty("Bot owner ID"));
     }

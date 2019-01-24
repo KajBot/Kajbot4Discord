@@ -10,7 +10,6 @@ import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
-import support.kajstech.kajbot.handlers.KeywordHandler;
 
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.InvocationTargetException;
@@ -23,10 +22,7 @@ public class Bot {
     private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
     public static Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
-    static void run() {
-
-        KeywordHandler.init();
-        CustomCommandsHandler.init();
+    static void run() throws LoginException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
@@ -37,11 +33,7 @@ public class Bot {
 
         //Adding commands
         for (Class<? extends Command> command : internalCommands) {
-            try {
-                CommandManager.addCommand(command.getDeclaredConstructor().newInstance());
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            CommandManager.addCommand(command.getDeclaredConstructor().newInstance());
         }
 
         //Adding custom commands
@@ -51,11 +43,7 @@ public class Bot {
         Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");
         Set<Class<? extends ListenerAdapter>> allListeners = listenerReflections.getSubTypesOf(ListenerAdapter.class);
         for (Class<? extends ListenerAdapter> listener : allListeners) {
-            try {
-                builder.addEventListeners(listener.getDeclaredConstructor().newInstance());
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            builder.addEventListeners(listener.getDeclaredConstructor().newInstance());
         }
 
         //Builder settings
@@ -63,10 +51,6 @@ public class Bot {
         builder.setAudioEnabled(false);
 
         //Building JDA
-        try {
-            jda = builder.build();
-        } catch (LoginException e) {
-            e.printStackTrace();
-        }
+        jda = builder.build();
     }
 }

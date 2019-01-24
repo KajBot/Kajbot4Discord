@@ -3,13 +3,15 @@ package support.kajstech.kajbot.command;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CustomCommandsHandler {
 
     private static Properties commands = new Properties();
     private static File cmdPath = new File(System.getProperty("user.dir") + "\\commands.properties");
 
-    public static void init() {
+    static {
         if (!cmdPath.exists()) {
             saveCustomCommands();
         }
@@ -20,9 +22,15 @@ public class CustomCommandsHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                saveCustomCommands();
+            }
+        }, 600000);
     }
 
-    static void saveCustomCommands() {
+    public static void saveCustomCommands() {
         try {
             commands.store(new OutputStreamWriter(new FileOutputStream(cmdPath), StandardCharsets.UTF_8), null);
         } catch (IOException e) {

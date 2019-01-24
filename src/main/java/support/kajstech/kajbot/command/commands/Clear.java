@@ -21,7 +21,7 @@ public class Clear extends Command {
     public void execute(CommandEvent e) {
         try {
             int AMOUNT = Integer.parseInt(e.getArgsSplit().get(0));
-            MessageHistory history = new MessageHistory(e.getEvent().getTextChannel());
+            MessageHistory history = new MessageHistory(e.getChannel());
             List<Message> msgs;
             msgs = history.retrievePast(AMOUNT).complete();
             e.getChannel().deleteMessages(msgs).queue();

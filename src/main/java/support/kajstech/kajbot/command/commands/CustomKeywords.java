@@ -24,6 +24,7 @@ public class CustomKeywords extends Command {
     @Override
     public void execute(CommandEvent e) {
         switch (e.getArgsSplit().get(0)) {
+            default:
             case "list":
                 try {
                     EmbedBuilder eb = new EmbedBuilder();
