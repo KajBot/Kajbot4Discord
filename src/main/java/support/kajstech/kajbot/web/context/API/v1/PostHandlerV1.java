@@ -73,7 +73,7 @@ public class PostHandlerV1 {
         String response = "SUCCESS";
         http.sendResponseHeaders(200, response.length());
         OutputStream os = http.getResponseBody();
-        os.write(response.getBytes());
+        os.write(response.getBytes(StandardCharsets.UTF_8));
         os.close();
 
     }

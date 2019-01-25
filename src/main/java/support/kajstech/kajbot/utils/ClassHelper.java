@@ -3,13 +3,11 @@ package support.kajstech.kajbot.utils;
 import javax.tools.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
 import java.util.Collections;
 
-public class ClassHelper<C> {
+public class ClassHelper {
     public static String getFileExtension(File file) {
         String name = file.getName();
         int lastIndexOf = name.lastIndexOf(".");
@@ -19,7 +17,7 @@ public class ClassHelper<C> {
         return name.substring(lastIndexOf);
     }
 
-    private File compileClass(File clazz) throws IOException {
+    private static File compileClass(File clazz) throws IOException {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
@@ -31,12 +29,12 @@ public class ClassHelper<C> {
         return new File(clazz.getAbsolutePath().replace(".java", ".class"));
     }
 
-    public C loadClass(File classPath, Class<C> parentClass, boolean compile) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static Class loadClass(File classPath, Class parentClass, boolean compile) throws IOException, ClassNotFoundException {
         URL url = classPath.getParentFile().toURI().toURL();
         URL[] urls = new URL[]{url};
         if (!compile)
-            return new URLClassLoader(urls).loadClass(classPath.getName().replace(".class", "")).asSubclass(parentClass).getDeclaredConstructor().newInstance();
+            return new URLClassLoader(urls).loadClass(classPath.getName().replace(".class", "")).asSubclass(parentClass);
 
-        return new URLClassLoader(urls).loadClass(compileClass(classPath).getName().replace(".class", "")).asSubclass(parentClass).getDeclaredConstructor().newInstance();
+        return new URLClassLoader(urls).loadClass(compileClass(classPath).getName().replace(".class", "")).asSubclass(parentClass);
     }
 }

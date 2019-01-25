@@ -25,7 +25,7 @@ public class Bot {
     public static JDA jda;
 
     private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
-    public static Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
+    public static final Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
     static void run() throws LoginException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, ClassNotFoundException {
 
@@ -46,12 +46,12 @@ public class Bot {
 
         //External custom commands
         File dir = new File(System.getProperty("user.dir") + "\\commands");
-        ClassHelper<Command> loader = new ClassHelper<>();
         if (!dir.exists()) Files.createDirectory(dir.toPath());
         for (File clazz : Objects.requireNonNull(dir.listFiles())) {
             boolean compile = false;
             if (ClassHelper.getFileExtension(clazz).equals(".java")) compile = true;
-            CommandManager.addCommand(loader.loadClass(new File(dir + "\\" + clazz.getName()), Command.class, compile));
+
+            CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "\\" + clazz.getName()), Command.class, compile).getDeclaredConstructor().newInstance());
         }
 
 
