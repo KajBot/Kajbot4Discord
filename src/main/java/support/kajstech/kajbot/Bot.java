@@ -10,13 +10,12 @@ import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.ClassHelper;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.util.Objects;
 import java.util.Set;
@@ -28,7 +27,7 @@ public class Bot {
     private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
     public static Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
-    static void run() throws LoginException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    static void run() throws LoginException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, ClassNotFoundException {
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
@@ -46,17 +45,13 @@ public class Bot {
         CustomCommandsHandler.getCustomCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
 
         //External custom commands
-        File file = new File(System.getProperty("user.dir") + "\\commands");
-        try {
-            URL url = file.toURI().toURL();
-            URL[] urls = new URL[]{url};
-            if (!file.exists()) Files.createDirectory(file.toPath());
-            for (File clazz : Objects.requireNonNull(file.listFiles())) {
-                CommandManager.addCommand(new URLClassLoader(urls).loadClass(clazz.getName().replace(".class", "")).asSubclass(Command.class).getDeclaredConstructor().newInstance());
-
-            }
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+        File dir = new File(System.getProperty("user.dir") + "\\commands");
+        ClassHelper<Command> loader = new ClassHelper<>();
+        if (!dir.exists()) Files.createDirectory(dir.toPath());
+        for (File clazz : Objects.requireNonNull(dir.listFiles())) {
+            boolean compile = false;
+            if (ClassHelper.getFileExtension(clazz).equals(".java")) compile = true;
+            CommandManager.addCommand(loader.loadClass(new File(dir + "\\" + clazz.getName()), Command.class, compile));
         }
 
 
