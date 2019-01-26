@@ -50,6 +50,7 @@ public class Bot {
         for (File clazz : Objects.requireNonNull(dir.listFiles())) {
             boolean compile = false;
             if (ClassHelper.getFileExtension(clazz).equals(".java")) compile = true;
+            if (compile && !ConfigHandler.getProperty("AutoCompile commands").equalsIgnoreCase("true")) continue;
 
             CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "\\" + clazz.getName()), Command.class, compile).getDeclaredConstructor().newInstance());
         }

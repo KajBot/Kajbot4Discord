@@ -37,6 +37,23 @@ public class Blacklist extends ListenerAdapter {
         }
     }
 
+    private static void log(MessageUpdateEvent event, String link) {
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setColor(new Color(0xA6C055));
+        eb.setTimestamp(ZonedDateTime.now());
+        eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
+        eb.setDescription(link);
+        event.getGuild().getTextChannelById(ConfigHandler.getProperty("Modlog channel ID")).sendMessage(eb.build()).queue();
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
+            writer.newLine();
+            writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void onMessageReceived(MessageReceivedEvent event) {
         if (!ConfigHandler.getProperty("Link blacklist").equalsIgnoreCase("true") || Permit.permitted.contains(event.getMessage().getMember()) || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot())
             return;
@@ -50,7 +67,7 @@ public class Blacklist extends ListenerAdapter {
 
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
-            log(event, m.group(1));
+            log(event, m.group(0));
             event.getChannel().sendMessage((Language.getMessage("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
             event.getMessage().delete().queue();
         }
@@ -69,6 +86,7 @@ public class Blacklist extends ListenerAdapter {
 
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
+            log(event, m.group(0));
             event.getChannel().sendMessage((Language.getMessage("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
             event.getMessage().delete().queue();
         }
