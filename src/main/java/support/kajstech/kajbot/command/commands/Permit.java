@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.entities.Member;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
@@ -17,7 +17,7 @@ public class Permit extends Command {
 
     public Permit() {
         this.name = "permit";
-        this.guildOnly = false;
+        this.guildOnly = true;
         this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
 
@@ -26,9 +26,9 @@ public class Permit extends Command {
         if (e.getArgs().length() < 1) return;
         if (!ConfigHandler.getProperty("Link blacklist").equalsIgnoreCase("true")) return;
 
-        List<Member> memberMention = e.getEvent().getMessage().getMentionedMembers();
+        List<Member> memberMention = e.getMessage().getMentionedMembers();
 
-        if (!e.getEvent().getMessage().getMentionedMembers().isEmpty()) {
+        if (!e.getMessage().getMentionedMembers().isEmpty()) {
             for (Member member : memberMention) {
                 permitted.add(member);
                 e.reply((Language.getMessage("Permit.PERMITTED")).replace("%USER%", member.getAsMention()));

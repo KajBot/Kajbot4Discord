@@ -1,19 +1,14 @@
 package support.kajstech.kajbot;
 
 import support.kajstech.kajbot.cc.StreamAndVideoChecker;
+import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.handlers.KeywordHandler;
 import support.kajstech.kajbot.web.Server;
 
 public class Main {
 
     public static void main(String[] args) {
-
-
-        //CONFIG
-        ConfigHandler.loadCfg();
-
-        //LANGUAGE
-        Language.init();
 
         //BOT SETUP
         Setup.setUp();
@@ -21,7 +16,7 @@ public class Main {
         //API/WEB
         new Thread(() -> {
             try {
-                Server.run(Integer.parseInt(ConfigHandler.getProperty("API port")));
+                Server.run();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -39,6 +34,7 @@ public class Main {
         //YT/TWITCH
         new Thread(() -> {
             try {
+                if (!ConfigHandler.containsProperty("Notification channel ID")) return;
                 StreamAndVideoChecker.run();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -46,7 +42,9 @@ public class Main {
         }).start();
 
         //SHUTDOWN HOOK
-        Runtime.getRuntime().addShutdownHook(new Thread(ConfigHandler::saveCfg, "Shutdown-thread"));
+        Runtime.getRuntime().addShutdownHook(new Thread(ConfigHandler::saveCfg, "Config-shutdown-thread"));
+        Runtime.getRuntime().addShutdownHook(new Thread(CustomCommandsHandler::saveCustomCommands, "CustomCommands-shutdown-thread"));
+        Runtime.getRuntime().addShutdownHook(new Thread(KeywordHandler::saveKeywords, "Keyword-shutdown-thread"));
     }
 
 }

@@ -1,20 +1,21 @@
 package support.kajstech.kajbot.utils;
 
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogHelper {
 
-    private static File logPath = new File(System.getProperty("user.dir") + "\\kajbot.log");
     private static Logger logger = LoggerFactory.getLogger("[Kajbot]");
 
     /**
@@ -34,7 +35,6 @@ public class LogHelper {
         logger.info(message);
     }
 
-
     /**
      * helper class w() to log warning level information.
      */
@@ -47,13 +47,27 @@ public class LogHelper {
     /**
      * helper class e() to log error information.
      */
+    public static void error(Class cls, Exception ex, String message) {
+        logToFile(cls + ": " + ex);
+        logger.error(cls + ": " + ex);
+        try {
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle("ERROR");
+            eb.setDescription("```" + message + "```");
+            eb.setColor(new Color(0xFF0000));
+            eb.addField("Class:", "```" + cls.getName() + "```", false);
+            eb.addField("Exception: " + ex.getClass().getName(), "```" + ex.getLocalizedMessage() + "```", false);
+            eb.setTimestamp(ZonedDateTime.now());
+
+            Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
+        } catch (Exception e) {
+            error(LogHelper.class, e.getLocalizedMessage());
+        }
+    }
+
     public static void error(Class cls, String message) {
         logToFile(cls + ": " + message);
         logger.error(cls + ": " + message);
-        try {
-            Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage("Exception: ``" + cls + ": " + message + "``").queue());
-        } catch (Exception ignored) {
-        }
     }
 
 
@@ -65,11 +79,12 @@ public class LogHelper {
         logger.trace(cls + ": " + message);
     }
 
+
     private static void logToFile(String message) {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logPath, true), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
-            writer.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - " + message);
+            writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - " + message);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

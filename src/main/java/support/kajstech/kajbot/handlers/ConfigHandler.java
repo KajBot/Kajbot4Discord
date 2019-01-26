@@ -4,13 +4,15 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ConfigHandler {
     private static Properties config = new Properties();
 
     private static File cfgPath = new File(System.getProperty("user.dir") + "\\config.properties");
 
-    public static void loadCfg() {
+    static {
         try {
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(cfgPath), StandardCharsets.UTF_8)));
         } catch (IOException e) {
@@ -21,24 +23,16 @@ public class ConfigHandler {
                 ex.printStackTrace();
             }
         }
-    }
-
-    public static void saveCfg() {
-        try {
-            config.store(new OutputStreamWriter(new FileOutputStream(cfgPath), StandardCharsets.UTF_8), null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                saveCfg();
+            }
+        }, 600000);
     }
 
     public static void setProperty(String key, String value) {
         config.setProperty(key, value);
-        saveCfg();
-    }
-
-    public static void removeProperty(String key) {
-        config.remove(key);
-        saveCfg();
     }
 
     public static String getProperty(String key) {
@@ -50,6 +44,14 @@ public class ConfigHandler {
             return !getProperty(key).isEmpty();
         } catch (Exception ignored) {
             return false;
+        }
+    }
+
+    public static void saveCfg() {
+        try {
+            config.store(new OutputStreamWriter(new FileOutputStream(cfgPath), StandardCharsets.UTF_8), null);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

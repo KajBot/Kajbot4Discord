@@ -1,7 +1,7 @@
 package support.kajstech.kajbot.cc;
 
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.cc.sites.Twitch;
 import support.kajstech.kajbot.cc.sites.YouTube;

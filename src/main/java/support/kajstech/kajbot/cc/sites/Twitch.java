@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.cc.sites;
 
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,6 +74,7 @@ public class Twitch {
                         eb.addField(Language.getMessage("Twitch.TITLE"), getTitle(), false);
                         eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), getGame(), false);
                         eb.setImage(getThumbnail());
+                        eb.setTimestamp(ZonedDateTime.now());
                         Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                     }
                 } else {

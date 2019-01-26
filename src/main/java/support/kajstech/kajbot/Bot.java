@@ -1,60 +1,66 @@
 package support.kajstech.kajbot;
 
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.AccountType;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
+import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
-import support.kajstech.kajbot.handlers.CustomCommandsHandler;
-import support.kajstech.kajbot.handlers.KeywordHandler;
+import support.kajstech.kajbot.utils.ClassHelper;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.util.Objects;
 import java.util.Set;
 
 public class Bot {
 
     public static JDA jda;
 
-    static void run() {
+    private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
+    public static final Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
-        KeywordHandler.init();
-        CustomCommandsHandler.init();
+    static void run() throws LoginException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, ClassNotFoundException {
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
 
 
         builder.setToken(ConfigHandler.getProperty("Bot token"));
-        builder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
+        builder.setActivity(Activity.playing(ConfigHandler.getProperty("Bot game")));
 
         //Adding commands
-        Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
-        Set<Class<? extends Command>> allCommands = cmdReflections.getSubTypesOf(Command.class);
-        for (Class<? extends Command> command : allCommands) {
-            try {
-                CommandManager.addCommand(command.getDeclaredConstructor().newInstance());
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+        for (Class<? extends Command> command : internalCommands) {
+            CommandManager.addCommand(command.getDeclaredConstructor().newInstance());
         }
 
-        //Adding custom commands
-        CustomCommandsHandler.getCommands().forEach((k, v) -> CommandManager.addCommand(k.toString(), v.toString()));
+        //Simple custom commands
+        CustomCommandsHandler.getCustomCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
+
+        //External custom commands
+        File dir = new File(System.getProperty("user.dir") + "\\commands");
+        if (!dir.exists()) Files.createDirectory(dir.toPath());
+        for (File clazz : Objects.requireNonNull(dir.listFiles())) {
+            boolean compile = false;
+            if (ClassHelper.getFileExtension(clazz).equals(".java")) compile = true;
+            if (compile && !ConfigHandler.getProperty("AutoCompile commands").equalsIgnoreCase("true")) continue;
+
+            CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "\\" + clazz.getName()), Command.class, compile).getDeclaredConstructor().newInstance());
+        }
+
 
         //Adding listeners using ListenerAdaper
         Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");
         Set<Class<? extends ListenerAdapter>> allListeners = listenerReflections.getSubTypesOf(ListenerAdapter.class);
         for (Class<? extends ListenerAdapter> listener : allListeners) {
-            try {
-                builder.addEventListener(listener.getDeclaredConstructor().newInstance());
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            builder.addEventListeners(listener.getDeclaredConstructor().newInstance());
         }
 
         //Builder settings
@@ -62,10 +68,6 @@ public class Bot {
         builder.setAudioEnabled(false);
 
         //Building JDA
-        try {
-            jda = builder.build();
-        } catch (LoginException e) {
-            e.printStackTrace();
-        }
+        jda = builder.build();
     }
 }

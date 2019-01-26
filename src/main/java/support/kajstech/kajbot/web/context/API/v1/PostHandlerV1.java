@@ -1,12 +1,12 @@
 package support.kajstech.kajbot.web.context.API.v1;
 
 import com.sun.net.httpserver.HttpExchange;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
+import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.handlers.ConfigHandler;
-import support.kajstech.kajbot.handlers.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 import support.kajstech.kajbot.utils.LogHelper;
 
@@ -19,51 +19,45 @@ import java.nio.charset.StandardCharsets;
 public class PostHandlerV1 {
 
     public static void context(HttpExchange http) throws IOException {
-
         LogHelper.info("Post request from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort());
+
+        InputStreamReader isr = new InputStreamReader(http.getRequestBody(), StandardCharsets.UTF_8);
+        BufferedReader br = new BufferedReader(isr);
 
         int b;
         StringBuilder buf = new StringBuilder(512);
-        while ((b = new BufferedReader(new InputStreamReader(http.getRequestBody(), StandardCharsets.UTF_8)).read()) != -1)
+        while ((b = br.read()) != -1) {
             buf.append((char) b);
+        }
+        br.close();
+        isr.close();
 
+        System.out.println(buf.toString());
         JSONObject body = new JSONObject(buf.toString());
 
         if (!http.getRequestHeaders().containsKey("token") || !http.getRequestHeaders().get("token").get(0).equals(ConfigHandler.getProperty("API token")) || body.length() < 1)
             return;
 
         if (!body.isNull("add_command")) {
-            for (int i = 0; i < body.getJSONObject("add_command").names().length(); ++i) {
-                CustomCommandsHandler.addCommand(body.getJSONObject("add_command").names().getString(i), body.getJSONObject("add_command").getString(body.getJSONObject("add_command").names().getString(i)));
-
-            }
+            body.getJSONObject("add_command").toMap().forEach((k, v) -> CommandManager.addCustomCommand(k, (String) v));
         }
 
         if (!body.isNull("remove_command")) {
-            for (int i = 0; i < body.getJSONObject("remove_command").names().length(); ++i) {
-                CustomCommandsHandler.removeCommand(body.getJSONObject("remove_command").names().getString(i));
-
-            }
+            body.getJSONObject("remove_command").names().forEach((k) -> CommandManager.removeCustomCommand((String) k));
         }
 
         if (!body.isNull("add_keyword")) {
-            for (int i = 0; i < body.getJSONObject("add_keyword").names().length(); ++i) {
-                KeywordHandler.addKeyword(body.getJSONObject("add_keyword").names().getString(i), body.getJSONObject("add_keyword").getString(body.getJSONObject("add_keyword").names().getString(i)));
-
-            }
+            body.getJSONObject("add_keyword").toMap().forEach((k, v) -> KeywordHandler.addKeyword(k, (String) v));
         }
 
         if (!body.isNull("remove_keyword")) {
-            for (int i = 0; i < body.getJSONObject("remove_keyword").names().length(); ++i) {
-                KeywordHandler.removeKeyword(body.getJSONObject("remove_keyword").names().getString(i));
-
-            }
+            body.getJSONObject("remove_keyword").names().forEach((k) -> KeywordHandler.removeKeyword((String) k));
         }
 
         if (!body.isNull("set_status")) {
             if (!body.getJSONObject("set_status").isNull("game")) {
                 ConfigHandler.setProperty("Bot game", body.getJSONObject("set_status").getString("game"));
-                Bot.jda.getPresence().setGame(Game.playing(body.getJSONObject("set_status").getString("game")));
+                Bot.jda.getPresence().setActivity(Activity.playing(body.getJSONObject("set_status").getString("game")));
             }
 
             if (!body.getJSONObject("set_status").isNull("online")) {
@@ -79,7 +73,7 @@ public class PostHandlerV1 {
         String response = "SUCCESS";
         http.sendResponseHeaders(200, response.length());
         OutputStream os = http.getResponseBody();
-        os.write(response.getBytes());
+        os.write(response.getBytes(StandardCharsets.UTF_8));
         os.close();
 
     }

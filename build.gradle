@@ -15,9 +15,9 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+    compile('org.slf4j:slf4j-log4j12:1.7.25')
     compile('org.reflections:reflections:0.9.11')
-    compile('net.dv8tion:JDA:3.8.1_454') {
+    compile('net.dv8tion:JDA:4.ALPHA.0_19') {
         exclude module: 'opus-java'
     }
 }

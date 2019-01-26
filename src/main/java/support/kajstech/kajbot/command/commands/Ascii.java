@@ -38,6 +38,7 @@ public class Ascii extends Command {
             String url = asciiArtUrl + "make" + "?text=" + ascii.replaceAll(" ", "+") + (font == null || font.isEmpty() ? "" : "&font=" + font);
             return new Scanner(new URL(url).openStream(), String.valueOf(StandardCharsets.UTF_8)).useDelimiter("\\A").next();
         } catch (IOException e) {
+            LogHelper.error(this.getClass(), e, null);
             return Language.getMessage("ASCII.ERROR_RETRIEVING_TEXT");
         }
     }
@@ -49,8 +50,7 @@ public class Ascii extends Command {
             String list = new Scanner(new URL(url).openStream(), String.valueOf(StandardCharsets.UTF_8)).useDelimiter("\\A").next();
             fontList = Arrays.stream(list.split("\n")).collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
-            LogHelper.error(Ascii.class, e.toString());
+            LogHelper.error(this.getClass(), e, null);
         }
 
         return fontList;
@@ -77,6 +77,7 @@ public class Ascii extends Command {
 
                 e.reply("**Font:** " + font + "\n```fix\n\n" + ascii + "```");
             } catch (IllegalArgumentException iae) {
+                LogHelper.error(this.getClass(), iae, e.getMessage().getContentRaw());
                 e.reply("```fix\n\n" + Language.getMessage("ASCII.INVALID_CHARACTERS") + "```");
             }
         }

@@ -1,6 +1,7 @@
 package support.kajstech.kajbot.command;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class CommandManager {
 
-    public static final Map<String, Command> commands = new HashMap<>();
+    private static final Map<String, Command> commands = new HashMap<>();
 
 
     public static void addCommand(Command command) {
@@ -20,15 +21,28 @@ public class CommandManager {
         }
     }
 
-    public static void addCommand(String key, String value) {
-        if (!commands.containsKey(key)) {
-            commands.put(key, new Command() {
-                @Override
-                protected void execute(CommandEvent e) {
-                    e.reply(value);
-                }
-            });
+    public static void addCustomCommand(String key, String value) {
+        for (Class<? extends Command> command : Bot.internalCommands) {
+            if (command.getSimpleName().equalsIgnoreCase(key)) return;
         }
+        commands.put(key, new Command() {
+            @Override
+            protected void execute(CommandEvent e) {
+                String message = value
+                        .replace(">USER<", e.getAuthor().getAsMention())
+                        .replace(">MEMBERCOUNT<", String.valueOf(e.getGuild().getMembers().size()));
+                e.reply(message);
+            }
+        });
+        CustomCommandsHandler.getCustomCommands().setProperty(key, value);
+    }
+
+    public static void removeCustomCommand(String key) {
+        for (Class<? extends Command> command : Bot.internalCommands) {
+            if (command.getSimpleName().equalsIgnoreCase(key)) return;
+        }
+        commands.remove(key);
+        CustomCommandsHandler.getCustomCommands().remove(key);
     }
 
     public void handleCommand(MessageReceivedEvent event) {

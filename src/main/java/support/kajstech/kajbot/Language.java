@@ -13,7 +13,7 @@ public class Language {
     private static Properties messages = new Properties();
     private static File langPath = new File(System.getProperty("user.dir") + "\\" + ConfigHandler.getProperty("Language") + ".properties");
 
-    static void init() {
+    static {
         try {
             messages.load(new BufferedReader(new InputStreamReader(new FileInputStream(langPath), StandardCharsets.UTF_8)));
         } catch (IOException e) {
@@ -27,6 +27,7 @@ public class Language {
     }
 
     public static String getMessage(String key) {
+
         return messages.getProperty(key);
     }
 }
