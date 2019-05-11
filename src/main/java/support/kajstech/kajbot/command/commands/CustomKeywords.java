@@ -23,6 +23,8 @@ public class CustomKeywords extends Command {
 
     @Override
     public void execute(CommandEvent e) {
+        if (e.getArgs().length() < 1) return;
+
         switch (e.getArgsSplit().get(0)) {
             default:
             case "list":

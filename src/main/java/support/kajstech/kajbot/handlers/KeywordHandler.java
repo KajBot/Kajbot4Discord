@@ -8,7 +8,7 @@ public class KeywordHandler {
 
     public static final Map<String, String> kws = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private static Properties keywords = new Properties();
-    private static File kwPath = new File(System.getProperty("user.dir") + "\\keywords.properties");
+    private static File kwPath = new File(System.getProperty("user.dir") + "/keywords.properties");
 
     static {
         if (!kwPath.exists()) {

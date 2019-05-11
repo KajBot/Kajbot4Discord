@@ -17,9 +17,10 @@ repositories {
 dependencies {
     compile('org.slf4j:slf4j-log4j12:1.7.25')
     compile('org.reflections:reflections:0.9.11')
-    compile('net.dv8tion:JDA:4.ALPHA.0_19') {
+    compile('net.dv8tion:JDA:4.ALPHA.0_85') {
         exclude module: 'opus-java'
     }
+    compile('org.json:json:20180813')
 }
 
 shadowJar{

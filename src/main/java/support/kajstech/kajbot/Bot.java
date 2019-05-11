@@ -45,14 +45,14 @@ public class Bot {
         CustomCommandsHandler.getCustomCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
 
         //External custom commands
-        File dir = new File(System.getProperty("user.dir") + "\\commands");
+        File dir = new File(System.getProperty("user.dir") + "/commands");
         if (!dir.exists()) Files.createDirectory(dir.toPath());
         for (File clazz : Objects.requireNonNull(dir.listFiles())) {
             boolean compile = false;
             if (ClassHelper.getFileExtension(clazz).equals(".java")) compile = true;
             if (compile && !ConfigHandler.getProperty("AutoCompile commands").equalsIgnoreCase("true")) continue;
 
-            CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "\\" + clazz.getName()), Command.class, compile).getDeclaredConstructor().newInstance());
+            CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "/" + clazz.getName()), Command.class, compile).getDeclaredConstructor().newInstance());
         }
 
 

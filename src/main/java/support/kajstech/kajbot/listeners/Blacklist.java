@@ -28,7 +28,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setDescription(link);
         event.getGuild().getTextChannelById(ConfigHandler.getProperty("Modlog channel ID")).sendMessage(eb.build()).queue();
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "//kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
             writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
             writer.close();
@@ -45,7 +45,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setDescription(link);
         event.getGuild().getTextChannelById(ConfigHandler.getProperty("Modlog channel ID")).sendMessage(eb.build()).queue();
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "//kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
             writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
             writer.close();

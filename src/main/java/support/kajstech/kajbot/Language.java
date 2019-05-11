@@ -11,7 +11,7 @@ import java.util.Properties;
 public class Language {
 
     private static Properties messages = new Properties();
-    private static File langPath = new File(System.getProperty("user.dir") + "\\" + ConfigHandler.getProperty("Language") + ".properties");
+    private static File langPath = new File(System.getProperty("user.dir") + "//" + ConfigHandler.getProperty("Language") + ".properties");
 
     static {
         try {
@@ -19,7 +19,7 @@ public class Language {
         } catch (IOException e) {
             try {
                 messages.load(new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("en_US.properties"), StandardCharsets.UTF_8)));
-                Files.copy(ClassLoader.getSystemResourceAsStream("en_US.properties"), new File(System.getProperty("user.dir") + "\\en_US.properties").getAbsoluteFile().toPath());
+                Files.copy(ClassLoader.getSystemResourceAsStream("en_US.properties"), new File(System.getProperty("user.dir") + "/en_US.properties").getAbsoluteFile().toPath());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

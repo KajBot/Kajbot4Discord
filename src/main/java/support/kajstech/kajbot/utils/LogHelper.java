@@ -82,7 +82,7 @@ public class LogHelper {
 
     private static void logToFile(String message) {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "/kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
             writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - " + message);
             writer.close();
