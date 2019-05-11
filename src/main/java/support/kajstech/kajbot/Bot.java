@@ -1,10 +1,11 @@
 package support.kajstech.kajbot;
 
-import net.dv8tion.jda.api.AccountType;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
@@ -15,7 +16,6 @@ import support.kajstech.kajbot.utils.ClassHelper;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.util.Objects;
 import java.util.Set;
@@ -27,18 +27,18 @@ public class Bot {
     private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
     public static final Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
-    static void run() throws LoginException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, ClassNotFoundException {
+    static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException, ClassNotFoundException {
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
 
 
         builder.setToken(ConfigHandler.getProperty("Bot token"));
-        builder.setActivity(Activity.playing(ConfigHandler.getProperty("Bot game")));
+        builder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
 
         //Adding commands
         for (Class<? extends Command> command : internalCommands) {
-            CommandManager.addCommand(command.getDeclaredConstructor().newInstance());
+            CommandManager.addCommand(command.newInstance());
         }
 
         //Simple custom commands
@@ -52,15 +52,14 @@ public class Bot {
             if (ClassHelper.getFileExtension(clazz).equals(".java")) compile = true;
             if (compile && !ConfigHandler.getProperty("AutoCompile commands").equalsIgnoreCase("true")) continue;
 
-            CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "/" + clazz.getName()), Command.class, compile).getDeclaredConstructor().newInstance());
+            CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "/" + clazz.getName()), Command.class, compile).newInstance());
         }
-
 
         //Adding listeners using ListenerAdaper
         Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");
         Set<Class<? extends ListenerAdapter>> allListeners = listenerReflections.getSubTypesOf(ListenerAdapter.class);
         for (Class<? extends ListenerAdapter> listener : allListeners) {
-            builder.addEventListeners(listener.getDeclaredConstructor().newInstance());
+            builder.addEventListener(listener.newInstance());
         }
 
         //Builder settings

@@ -1,7 +1,7 @@
 package support.kajstech.kajbot.listeners;
 
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 

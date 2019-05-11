@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.core.JDA;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.LogHelper;

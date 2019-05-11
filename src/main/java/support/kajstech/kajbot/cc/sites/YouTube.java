@@ -44,7 +44,6 @@ public class YouTube {
 
         return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
     }
-
 }
 
 class YouTubeVideo {

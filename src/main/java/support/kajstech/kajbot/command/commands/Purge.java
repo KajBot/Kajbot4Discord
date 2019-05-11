@@ -1,7 +1,7 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageHistory;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageHistory;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;

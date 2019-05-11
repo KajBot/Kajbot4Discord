@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.command;
 
-import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.core.entities.ChannelType;
 import support.kajstech.kajbot.Language;
 
 public abstract class Command {

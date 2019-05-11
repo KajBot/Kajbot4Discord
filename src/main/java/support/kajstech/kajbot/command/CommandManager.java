@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.command;
 
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 
