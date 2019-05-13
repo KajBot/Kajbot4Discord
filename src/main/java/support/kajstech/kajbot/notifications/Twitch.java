@@ -1,4 +1,4 @@
-package support.kajstech.kajbot.cc.sites;
+package support.kajstech.kajbot.notifications;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
@@ -18,56 +18,42 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Twitch {
+class Twitch {
 
-    private static List<String> liveTwitch = new ArrayList<>();
-
+    private static List<String> live = new ArrayList<>();
     private static String channelUrl;
-
-    private static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigHandler.getProperty("Twitch client ID");
-
-        String jsonText = readFromUrl(channelUrl);
-        JSONObject json = new JSONObject(jsonText);
-
-        return !json.isNull("stream");
-    }
 
     private static String readFromUrl(String url) throws IOException {
         URL page = new URL(url);
-        try (Stream<String> stream = new BufferedReader(new InputStreamReader(page.openStream(), StandardCharsets.UTF_8)).lines()) {
+        try (Stream<String> stream = new BufferedReader(new InputStreamReader(
+                page.openStream(), StandardCharsets.UTF_8)).lines()) {
             return stream.collect(Collectors.joining(System.lineSeparator()));
         }
     }
 
-    private static String getGame() throws IOException {
-        String jsonChannels = readFromUrl(channelUrl);
-        JSONObject json = new JSONObject(jsonChannels);
+    private static boolean checkIfOnline(String channel) throws IOException {
+        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigHandler.getProperty("Twitch client ID");
+        return !new JSONObject(readFromUrl(channelUrl)).isNull("stream");
+    }
 
-        return json.getJSONObject("stream").getString("game");
+    private static String getGame() throws IOException {
+        return new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getString("game");
     }
 
     private static String getThumbnail() throws IOException {
-        String jsonChannels = readFromUrl(channelUrl);
-        JSONObject json = new JSONObject(jsonChannels);
-
-        return json.getJSONObject("stream").getJSONObject("preview").getString("large");
+        return new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("preview").getString("large");
     }
 
     private static String getTitle() throws IOException {
-        String jsonChannels = readFromUrl(channelUrl);
-        JSONObject json = new JSONObject(jsonChannels);
-
-        return json.getJSONObject("stream").getJSONObject("channel").getString("status");
+        return new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("channel").getString("status");
     }
 
-
-    public static void checkTwitch() throws IOException {
+    static void check() throws IOException {
         if (ConfigHandler.containsProperty("Twitch client ID") && ConfigHandler.containsProperty("Twitch channels") && ConfigHandler.getProperty("Twitch live notifications").equalsIgnoreCase("true")) {
             for (String c : ConfigHandler.getProperty("Twitch channels").split(", ")) {
                 if (checkIfOnline(c)) {
-                    if (!liveTwitch.contains(c)) {
-                        liveTwitch.add(c);
+                    if (!live.contains(c)) {
+                        live.add(c);
                         EmbedBuilder eb = new EmbedBuilder();
                         eb.setColor(new Color(0x6441A5));
                         eb.setTitle((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
@@ -78,7 +64,7 @@ public class Twitch {
                         Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
                     }
                 } else {
-                    liveTwitch.remove(c);
+                    live.remove(c);
                 }
             }
         }

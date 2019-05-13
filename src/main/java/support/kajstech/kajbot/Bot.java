@@ -11,6 +11,7 @@ import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.notifications.Checker;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
@@ -83,5 +84,14 @@ public class Bot {
 
         //Building JDA
         jda = builder.build();
+
+        //NOTIFICATIONS
+        new Thread(() -> {
+            try {
+                Checker.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

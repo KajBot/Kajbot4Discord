@@ -1,4 +1,4 @@
-package support.kajstech.kajbot.cc.sites;
+package support.kajstech.kajbot.notifications;
 
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static support.kajstech.kajbot.cc.sites.YouTube.*;
+import static support.kajstech.kajbot.notifications.YouTube.*;
 
 public class YouTube {
 
-    public static void checkYouTube() throws IOException {
+    public static void check() throws IOException {
         YouTubeLive.check();
         YouTubeVideo.check();
     }

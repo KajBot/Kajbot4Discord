@@ -1,6 +1,5 @@
 package support.kajstech.kajbot;
 
-import support.kajstech.kajbot.cc.StreamAndVideoChecker;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
@@ -26,16 +25,6 @@ public class Main {
         new Thread(() -> {
             try {
                 Bot.run();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-        //YT/TWITCH
-        new Thread(() -> {
-            try {
-                if (!ConfigHandler.containsProperty("Notification channel ID")) return;
-                StreamAndVideoChecker.run();
             } catch (Exception e) {
                 e.printStackTrace();
             }
