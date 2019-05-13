@@ -1,6 +1,5 @@
 package support.kajstech.kajbot;
 
-
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -57,7 +56,7 @@ public class Bot {
             if (lastIndexOf == -1) {
                 continue;
             }
-            if (!name.substring(lastIndexOf).equals(".java") || !ConfigHandler.getProperty("AutoCompile commands").equalsIgnoreCase("true")) continue;
+            if (!name.substring(lastIndexOf).equals(".java")) continue;
             try {
                 StringBuilder classCode = new StringBuilder();
                 try (Stream<String> stream = Files.lines(Paths.get(clazz.getAbsolutePath()), StandardCharsets.UTF_8)) {
