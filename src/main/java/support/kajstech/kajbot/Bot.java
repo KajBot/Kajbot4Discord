@@ -6,19 +6,22 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.mdkt.compiler.InMemoryJavaCompiler;
 import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.handlers.ConfigHandler;
-import support.kajstech.kajbot.utils.ClassHelper;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class Bot {
 
@@ -27,7 +30,7 @@ public class Bot {
     private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
     public static final Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
-    static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException, ClassNotFoundException {
+    static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException {
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
@@ -48,11 +51,24 @@ public class Bot {
         File dir = new File(System.getProperty("user.dir") + "/commands");
         if (!dir.exists()) Files.createDirectory(dir.toPath());
         for (File clazz : Objects.requireNonNull(dir.listFiles())) {
-            boolean compile = false;
-            if (ClassHelper.getFileExtension(clazz).equals(".java")) compile = true;
-            if (compile && !ConfigHandler.getProperty("AutoCompile commands").equalsIgnoreCase("true")) continue;
 
-            CommandManager.addCommand((Command) ClassHelper.loadClass(new File(dir + "/" + clazz.getName()), Command.class, compile).newInstance());
+            String name = clazz.getName();
+            int lastIndexOf = name.lastIndexOf(".");
+            if (lastIndexOf == -1) {
+                continue;
+            }
+            if (!name.substring(lastIndexOf).equals(".java") || !ConfigHandler.getProperty("AutoCompile commands").equalsIgnoreCase("true")) continue;
+            try {
+                StringBuilder classCode = new StringBuilder();
+                try (Stream<String> stream = Files.lines(Paths.get(clazz.getAbsolutePath()), StandardCharsets.UTF_8)) {
+                    stream.forEach(s -> classCode.append(s).append("\n"));
+                }
+
+                Class<?> command = InMemoryJavaCompiler.newInstance().compile(clazz.getName().replace(".java", ""), classCode.toString());
+                CommandManager.addCommand((Command) command.newInstance());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         //Adding listeners using ListenerAdaper
