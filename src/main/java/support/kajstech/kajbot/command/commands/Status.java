@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.core.OnlineStatus;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;

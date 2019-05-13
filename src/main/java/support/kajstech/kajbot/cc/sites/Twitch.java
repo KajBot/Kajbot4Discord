@@ -1,6 +1,6 @@
 package support.kajstech.kajbot.cc.sites;
 
-import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;

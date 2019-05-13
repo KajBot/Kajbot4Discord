@@ -1,7 +1,7 @@
 package support.kajstech.kajbot.utils;
 
 
-import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.core.EmbedBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import support.kajstech.kajbot.Bot;
@@ -82,7 +82,7 @@ public class LogHelper {
 
     private static void logToFile(String message) {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "\\kajbot.log"), true), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "/kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
             writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - " + message);
             writer.close();

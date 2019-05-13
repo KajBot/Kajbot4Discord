@@ -10,7 +10,7 @@ import java.util.TimerTask;
 public class ConfigHandler {
     private static Properties config = new Properties();
 
-    private static File cfgPath = new File(System.getProperty("user.dir") + "\\config.properties");
+    private static File cfgPath = new File(System.getProperty("user.dir") + "/config.properties");
 
     static {
         try {

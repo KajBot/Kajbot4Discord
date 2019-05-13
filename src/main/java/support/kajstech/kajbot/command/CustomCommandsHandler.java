@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public class CustomCommandsHandler {
 
     private static Properties commands = new Properties();
-    private static File cmdPath = new File(System.getProperty("user.dir") + "\\commands.properties");
+    private static File cmdPath = new File(System.getProperty("user.dir") + "/commands.properties");
 
     static {
         if (!cmdPath.exists()) {

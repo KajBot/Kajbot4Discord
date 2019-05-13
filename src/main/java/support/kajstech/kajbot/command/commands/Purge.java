@@ -1,7 +1,7 @@
 package support.kajstech.kajbot.command.commands;
 
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageHistory;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageHistory;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
@@ -10,9 +10,9 @@ import support.kajstech.kajbot.utils.LogHelper;
 
 import java.util.List;
 
-public class Clear extends Command {
-    public Clear() {
-        this.name = "clear";
+public class Purge extends Command {
+    public Purge() {
+        this.name = "purge";
         this.guildOnly = true;
         this.requiredRole = ConfigHandler.getProperty("Bot admin role");
     }
@@ -40,17 +40,17 @@ public class Clear extends Command {
                     }
 
                 }
-                e.reply((Language.getMessage("Clear.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
+                e.reply((Language.getMessage("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
             } else {
                 MessageHistory history = new MessageHistory(e.getChannel());
                 List<Message> msgs;
                 msgs = history.retrievePast(AMOUNT).complete();
                 e.getChannel().deleteMessages(msgs).queue();
-                e.reply((Language.getMessage("Clear.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
+                e.reply((Language.getMessage("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
             }
         } catch (Exception ex) {
             LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
-            e.reply(Language.getMessage("Clear.ERROR"));
+            e.reply(Language.getMessage("Purge.ERROR"));
         }
     }
 

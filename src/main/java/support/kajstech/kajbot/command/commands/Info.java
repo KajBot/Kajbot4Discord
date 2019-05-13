@@ -1,10 +1,10 @@
 package support.kajstech.kajbot.command.commands;
 
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.OnlineStatus;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.User;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
@@ -60,11 +60,11 @@ public class Info extends Command {
         /* Status */
         OnlineStatus stat = member == null ? null : member.getOnlineStatus();
         status = stat == null ? "N/A" : VariableToString("_", stat.getKey());
-        game = stat == null ? "N/A" : member.getActivities().size() < 1 ? "N/A" : member.getActivities().get(0).getName();
+        game = stat == null ? "N/A" : member.getGame() == null ? "N/A" : member.getGame().getName();
 
         /* Time */
-        join = member == null ? "N/A" : DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(member.getTimeJoined());
-        register = DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(user.getTimeCreated());
+        join = member == null ? "N/A" : DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(member.getJoinDate());
+        register = DateTimeFormatter.ofPattern("d/M/u HH:mm:ss").format(user.getCreationTime());
 
         /* Final */
         EmbedBuilder embed = new EmbedBuilder().setAuthor(nickname, null, icon).setThumbnail(icon);

@@ -16,7 +16,7 @@ public class Invite extends Command {
     @Override
     protected void execute(CommandEvent e) {
         try {
-            e.reply(e.getGuild().getTextChannelById(e.getChannel().getIdLong()).createInvite().setUnique(true).setMaxUses(1).setMaxAge(1800).complete().getUrl());
+            e.reply(e.getGuild().getTextChannelById(e.getChannel().getIdLong()).createInvite().setUnique(true).setMaxUses(1).setMaxAge(1800).complete().getURL());
         } catch (Exception ex) {
             LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
         }
