@@ -32,33 +32,22 @@ public class YouTube {
     }
 
     static String getId(String channel) throws IOException {
-        String jsonChannels = readFromUrl(channel);
-        JSONObject json = new JSONObject(jsonChannels);
-
-        return json.getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
+        return new JSONObject(readFromUrl(channel)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
     }
 
     static String getName(String channel) throws IOException {
-        String jsonChannels = readFromUrl(channel);
-        JSONObject json = new JSONObject(jsonChannels);
-
-        return json.getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
+        return new JSONObject(readFromUrl(channel)).getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
     }
 }
 
 class YouTubeVideo {
 
     private static String channelUrl;
-
     private static List<String> video = new ArrayList<>();
 
     private static boolean checkVideo(String channel) throws IOException {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + ConfigHandler.getProperty("YouTube API key");
-
-        String jsonText = readFromUrl(channelUrl);
-        JSONObject json = new JSONObject(jsonText);
-
-        return json.getJSONArray("items").length() > 0;
+        return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").length() > 0;
     }
 
 
@@ -81,16 +70,11 @@ class YouTubeVideo {
 
 class YouTubeLive {
     private static List<String> liveYoutube = new ArrayList<>();
-
     private static String channelUrl;
 
     private static boolean checkIfOnline(String channel) throws IOException {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + ConfigHandler.getProperty("YouTube API key");
-
-        String jsonText = readFromUrl(channelUrl);
-        JSONObject json = new JSONObject(jsonText);
-
-        return json.getJSONArray("items").length() > 0;
+        return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").length() > 0;
     }
 
 
