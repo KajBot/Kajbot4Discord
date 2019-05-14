@@ -17,9 +17,9 @@ import java.util.stream.Stream;
 
 import static support.kajstech.kajbot.notifications.YouTube.*;
 
-public class YouTube {
+class YouTube {
 
-    public static void check() throws IOException {
+    static void check() throws IOException {
         YouTubeLive.check();
         YouTubeVideo.check();
     }

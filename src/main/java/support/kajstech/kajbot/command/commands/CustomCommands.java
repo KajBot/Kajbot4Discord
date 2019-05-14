@@ -1,7 +1,6 @@
 package support.kajstech.kajbot.command.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
@@ -43,7 +42,7 @@ public class CustomCommands extends Command {
             case "del":
             case "remove":
                 try {
-                    for (Class<? extends Command> command : Bot.internalCommands) {
+                    for (Class<? extends Command> command : CommandManager.internalCommands) {
                         if (command.getSimpleName().equalsIgnoreCase(e.getArgsSplit().get(1))) return;
                     }
                     CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(ConfigHandler.getProperty("Command prefix"), ""));
@@ -55,7 +54,7 @@ public class CustomCommands extends Command {
             case "add":
                 try {
                     String cmdName = e.getArgsSplit().get(1).replace(ConfigHandler.getProperty("Command prefix"), "");
-                    for (Class<? extends Command> command : Bot.internalCommands) {
+                    for (Class<? extends Command> command : CommandManager.internalCommands) {
                         if (command.getSimpleName().equalsIgnoreCase(cmdName)) return;
                     }
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split("\\s+");

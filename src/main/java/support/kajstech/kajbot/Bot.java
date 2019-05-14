@@ -20,15 +20,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Stream;
 
 public class Bot {
 
     public static JDA jda;
-
-    private static Reflections cmdReflections = new Reflections("support.kajstech.kajbot.command.commands");
-    public static final Set<Class<? extends Command>> internalCommands = cmdReflections.getSubTypesOf(Command.class);
 
     static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException {
 
@@ -40,7 +35,7 @@ public class Bot {
         builder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
 
         //Internal commands
-        for (Class<? extends Command> command : internalCommands) {
+        for (Class<? extends Command> command : CommandManager.internalCommands) {
             CommandManager.addCommand(command.newInstance());
         }
 
@@ -54,27 +49,19 @@ public class Bot {
 
             String name = clazz.getName();
             int lastIndexOf = name.lastIndexOf(".");
-            if (lastIndexOf == -1) {
-                continue;
-            }
-            if (!name.substring(lastIndexOf).equals(".java")) continue;
+            if (lastIndexOf == -1 || !name.substring(lastIndexOf).equals(".java")) continue;
+
             try {
                 StringBuilder classCode = new StringBuilder();
-                try (Stream<String> stream = Files.lines(Paths.get(clazz.getAbsolutePath()), StandardCharsets.UTF_8)) {
-                    stream.forEach(s -> classCode.append(s).append("\n"));
-                }
-
-                Class<?> command = InMemoryJavaCompiler.newInstance().compile(clazz.getName().replace(".java", ""), classCode.toString());
-                CommandManager.addCommand((Command) command.newInstance());
+                Files.readAllLines(Paths.get(clazz.getAbsolutePath()), StandardCharsets.UTF_8).forEach(s -> classCode.append(s).append("\n"));
+                CommandManager.addCommand((Command) InMemoryJavaCompiler.newInstance().compile(name.replace(".java", ""), classCode.toString()).newInstance());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        //Adding listeners using ListenerAdaper
-        Reflections listenerReflections = new Reflections("support.kajstech.kajbot.listeners");
-        Set<Class<? extends ListenerAdapter>> allListeners = listenerReflections.getSubTypesOf(ListenerAdapter.class);
-        for (Class<? extends ListenerAdapter> listener : allListeners) {
+        //Add listeners using ListenerAdaper
+        for (Class<? extends ListenerAdapter> listener : new Reflections("support.kajstech.kajbot.listeners").getSubTypesOf(ListenerAdapter.class)) {
             builder.addEventListener(listener.newInstance());
         }
 
@@ -82,7 +69,7 @@ public class Bot {
         builder.setBulkDeleteSplittingEnabled(false);
         builder.setAudioEnabled(false);
 
-        //Building JDA
+        //Build JDA
         jda = builder.build();
 
         //NOTIFICATIONS
