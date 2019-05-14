@@ -1,6 +1,6 @@
 package support.kajstech.kajbot;
 
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,28 +11,28 @@ import java.util.UUID;
 class Setup {
     static void setUp() {
 
-        if (!ConfigHandler.containsProperty("Bot token")) {
+        if (!Config.contains("Bot token")) {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
             System.out.print("Bot token: ");
             try {
-                ConfigHandler.setProperty("Bot token", br.readLine());
+                Config.set("Bot token", br.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        if (!ConfigHandler.containsProperty("Bot owner ID")) {
+        if (!Config.contains("Bot owner ID")) {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
             System.out.print("Bot owner ID: ");
             try {
-                ConfigHandler.setProperty("Bot owner ID", br.readLine());
+                Config.set("Bot owner ID", br.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        if (!ConfigHandler.containsProperty("API token")) {
-            ConfigHandler.setProperty("API token", UUID.randomUUID().toString());
+        if (!Config.contains("API token")) {
+            Config.set("API token", UUID.randomUUID().toString());
         }
 
     }

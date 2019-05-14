@@ -1,4 +1,4 @@
-package support.kajstech.kajbot.handlers;
+package support.kajstech.kajbot.utils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -7,7 +7,7 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ConfigHandler {
+public class Config {
     private static Properties config = new Properties();
 
     private static File cfgPath = new File(System.getProperty("user.dir") + "/config.properties");
@@ -31,17 +31,17 @@ public class ConfigHandler {
         }, 600000);
     }
 
-    public static void setProperty(String key, String value) {
+    public static void set(String key, String value) {
         config.setProperty(key, value);
     }
 
-    public static String getProperty(String key) {
+    public static String get(String key) {
         return config.getProperty(key);
     }
 
-    public static boolean containsProperty(String key) {
+    public static boolean contains(String key) {
         try {
-            return !getProperty(key).isEmpty();
+            return !get(key).isEmpty();
         } catch (Exception ignored) {
             return false;
         }

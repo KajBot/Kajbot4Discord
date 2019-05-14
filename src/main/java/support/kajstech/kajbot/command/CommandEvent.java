@@ -4,7 +4,7 @@ package support.kajstech.kajbot.command;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 
 import java.io.File;
 import java.util.List;
@@ -63,7 +63,7 @@ public class CommandEvent {
     }
 
     boolean isOwner() {
-        return event.getAuthor().getId().equals(ConfigHandler.getProperty("Bot owner ID"));
+        return event.getAuthor().getId().equals(Config.get("Bot owner ID"));
     }
 
     public void reply(String message) {

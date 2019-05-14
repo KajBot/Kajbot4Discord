@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.handlers.ConfigHandler;
 
 import java.awt.*;
 import java.io.*;
@@ -59,7 +58,7 @@ public class LogHelper {
             eb.addField("Exception: " + ex.getClass().getName(), "```" + ex.getLocalizedMessage() + "```", false);
             eb.setTimestamp(ZonedDateTime.now());
 
-            Bot.jda.getUserById(ConfigHandler.getProperty("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
+            Bot.jda.getUserById(Config.get("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
         } catch (Exception e) {
             error(LogHelper.class, e.getLocalizedMessage());
         }

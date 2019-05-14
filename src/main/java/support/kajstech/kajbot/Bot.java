@@ -10,7 +10,7 @@ import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.notifications.Checker;
 
 import javax.security.auth.login.LoginException;
@@ -31,8 +31,8 @@ public class Bot {
         JDABuilder builder = new JDABuilder(AccountType.BOT);
 
 
-        builder.setToken(ConfigHandler.getProperty("Bot token"));
-        builder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
+        builder.setToken(Config.get("Bot token"));
+        builder.setGame(Game.playing(Config.get("Bot game")));
 
         //Internal commands
         for (Class<? extends Command> command : CommandManager.internalCommands) {

@@ -4,7 +4,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.Language;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -32,7 +32,7 @@ class Twitch {
     }
 
     private static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + ConfigHandler.getProperty("Twitch client ID");
+        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + Config.get("Twitch client ID");
         return !new JSONObject(readFromUrl(channelUrl)).isNull("stream");
     }
 
@@ -49,8 +49,8 @@ class Twitch {
     }
 
     static void check() throws IOException {
-        if (ConfigHandler.containsProperty("Twitch client ID") && ConfigHandler.containsProperty("Twitch channels") && ConfigHandler.getProperty("Twitch live notifications").equalsIgnoreCase("true")) {
-            for (String c : ConfigHandler.getProperty("Twitch channels").split(", ")) {
+        if (Config.contains("Twitch client ID") && Config.contains("Twitch channels") && Config.get("Twitch live notifications").equalsIgnoreCase("true")) {
+            for (String c : Config.get("Twitch channels").split(", ")) {
                 if (checkIfOnline(c)) {
                     if (!live.contains(c)) {
                         live.add(c);
@@ -61,7 +61,7 @@ class Twitch {
                         eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), getGame(), false);
                         eb.setImage(getThumbnail());
                         eb.setTimestamp(ZonedDateTime.now());
-                        Bot.jda.getTextChannelById(ConfigHandler.getProperty("Notification channel ID")).sendMessage(eb.build()).queue();
+                        Bot.jda.getTextChannelById(Config.get("Notification channel ID")).sendMessage(eb.build()).queue();
                     }
                 } else {
                     live.remove(c);

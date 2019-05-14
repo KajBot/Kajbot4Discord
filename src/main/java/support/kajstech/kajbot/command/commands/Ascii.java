@@ -3,7 +3,7 @@ package support.kajstech.kajbot.command.commands;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class Ascii extends Command {
     public Ascii() {
         this.name = "ascii";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
+        this.requiredRole = Config.get("Bot admin role");
     }
 
     private int randomNum(int start, int end) {

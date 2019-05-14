@@ -2,14 +2,14 @@ package support.kajstech.kajbot.listeners;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 
 public class KeywordListener extends ListenerAdapter {
 
     public void onMessageReceived(MessageReceivedEvent event) {
 
-        if (event.getMessage().getContentRaw().startsWith(ConfigHandler.getProperty("Command prefix")) || event.getAuthor().isBot())
+        if (event.getMessage().getContentRaw().startsWith(Config.get("Command prefix")) || event.getAuthor().isBot())
             return;
 
         String string = event.getMessage().getContentRaw();

@@ -8,7 +8,7 @@ import net.dv8tion.jda.core.entities.User;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +20,7 @@ public class Info extends Command {
     public Info() {
         this.name = "info";
         this.guildOnly = true;
-        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
+        this.requiredRole = Config.get("Bot admin role");
     }
 
     private static String VariableToString(String regex, String input) {

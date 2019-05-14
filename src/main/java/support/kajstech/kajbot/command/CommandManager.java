@@ -2,7 +2,7 @@ package support.kajstech.kajbot.command;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.reflections.Reflections;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -45,7 +45,7 @@ public class CommandManager {
     }
 
     public void handleCommand(MessageReceivedEvent event) {
-        final String[] split = event.getMessage().getContentRaw().replaceFirst("(?i)" + Pattern.quote(ConfigHandler.getProperty("Command prefix")), "").split("\\s+");
+        final String[] split = event.getMessage().getContentRaw().replaceFirst("(?i)" + Pattern.quote(Config.get("Command prefix")), "").split("\\s+");
         final String invoke = split[0].toLowerCase();
 
         if (commands.containsKey(invoke)) {
