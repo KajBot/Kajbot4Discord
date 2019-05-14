@@ -39,7 +39,7 @@ public class Bot {
         builder.setToken(ConfigHandler.getProperty("Bot token"));
         builder.setGame(Game.playing(ConfigHandler.getProperty("Bot game")));
 
-        //Adding commands
+        //Internal commands
         for (Class<? extends Command> command : internalCommands) {
             CommandManager.addCommand(command.newInstance());
         }
@@ -47,7 +47,7 @@ public class Bot {
         //Simple custom commands
         CustomCommandsHandler.getCustomCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
 
-        //External custom commands
+        //Java custom commands
         File dir = new File(System.getProperty("user.dir") + "/commands");
         if (!dir.exists()) Files.createDirectory(dir.toPath());
         for (File clazz : Objects.requireNonNull(dir.listFiles())) {
