@@ -23,9 +23,12 @@
 hs_err_pid*
 
 .gradle/
+gradle/
 build/
 .idea/
 out/
-kajbot.iml
 src/test/
 .github/ISSUE_TEMPLATE
+gradlew
+gradlew.bat
+settings.gradle

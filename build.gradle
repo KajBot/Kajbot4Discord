@@ -3,10 +3,11 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id "co.riiid.gradle" version "0.4.2"
 }
 
 group 'support.kajstech.kajbot'
-version '1.0-SNAPSHOT'
+version '2.0'
 mainClassName = 'support.kajstech.kajbot.Main'
 sourceCompatibility = 1.8
 
@@ -40,4 +41,15 @@ shadowJar {
     exclude "META-INF/maven/**"
     exclude "META-INF/proguard/**"
     archiveName = "${baseName}.jar"
+}
+
+github {
+    owner = 'KajBot'
+    repo = 'KajBot-java'
+    token = gradle.ext.token
+    tagName = rootProject.version
+    targetCommitish = 'master'
+    assets = [
+            "build/libs/KajBot.jar"
+    ]
 }
