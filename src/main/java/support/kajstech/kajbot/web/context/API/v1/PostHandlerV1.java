@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.entities.Game;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.command.CommandManager;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 import support.kajstech.kajbot.utils.LogHelper;
 
@@ -35,7 +35,7 @@ public class PostHandlerV1 {
         System.out.println(buf.toString());
         JSONObject body = new JSONObject(buf.toString());
 
-        if (!http.getRequestHeaders().containsKey("token") || !http.getRequestHeaders().get("token").get(0).equals(ConfigHandler.getProperty("API token")) || body.length() < 1)
+        if (!http.getRequestHeaders().containsKey("token") || !http.getRequestHeaders().get("token").get(0).equals(Config.cfg.get("API token")) || body.length() < 1)
             return;
 
         if (!body.isNull("add_command")) {
@@ -56,7 +56,7 @@ public class PostHandlerV1 {
 
         if (!body.isNull("set_status")) {
             if (!body.getJSONObject("set_status").isNull("game")) {
-                ConfigHandler.setProperty("Bot game", body.getJSONObject("set_status").getString("game"));
+                Config.cfg.set("Bot game", body.getJSONObject("set_status").getString("game"));
                 Bot.jda.getPresence().setGame(Game.playing(body.getJSONObject("set_status").getString("game")));
             }
 

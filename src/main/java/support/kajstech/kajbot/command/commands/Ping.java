@@ -2,7 +2,7 @@ package support.kajstech.kajbot.command.commands;
 
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 
 import java.time.temporal.ChronoUnit;
 
@@ -10,7 +10,7 @@ public class Ping extends Command {
     public Ping() {
         this.name = "ping";
         this.guildOnly = false;
-        this.requiredRole = ConfigHandler.getProperty("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
 

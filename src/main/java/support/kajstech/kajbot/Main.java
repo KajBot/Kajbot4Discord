@@ -1,8 +1,8 @@
 package support.kajstech.kajbot;
 
 import support.kajstech.kajbot.command.CustomCommandsHandler;
-import support.kajstech.kajbot.handlers.ConfigHandler;
 import support.kajstech.kajbot.handlers.KeywordHandler;
+import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.web.Server;
 
 public class Main {
@@ -31,9 +31,11 @@ public class Main {
         }).start();
 
         //SHUTDOWN HOOK
-        Runtime.getRuntime().addShutdownHook(new Thread(ConfigHandler::saveCfg, "Config-shutdown-thread"));
+        Runtime.getRuntime().addShutdownHook(new Thread(Config.cfg::save, "Config-shutdown-thread"));
         Runtime.getRuntime().addShutdownHook(new Thread(CustomCommandsHandler::saveCustomCommands, "CustomCommands-shutdown-thread"));
         Runtime.getRuntime().addShutdownHook(new Thread(KeywordHandler::saveKeywords, "Keyword-shutdown-thread"));
+
+
     }
 
 }

@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
-import support.kajstech.kajbot.handlers.ConfigHandler;
+import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 import support.kajstech.kajbot.utils.LogHelper;
 
@@ -24,7 +24,7 @@ public class APIServerV1 {
 
         try {
             Map<String, String> args = qToM(http.getRequestURI().getQuery());
-            if (args.containsKey("token") && args.get("token").contentEquals(ConfigHandler.getProperty("API token"))) {
+            if (args.containsKey("token") && args.get("token").contentEquals(Config.cfg.get("API token"))) {
                 json.put("game", Bot.jda.getPresence().getGame().getName());
                 json.put("status", Bot.jda.getPresence().getStatus());
                 json.put("commands", CustomCommandsHandler.getCustomCommands());
