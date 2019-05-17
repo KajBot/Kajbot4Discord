@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'support.kajstech.kajbot'
-version '2.0'
+version '1.4'
 mainClassName = 'support.kajstech.kajbot.Main'
 sourceCompatibility = 1.8
 
