@@ -24,7 +24,7 @@ public class APIServerV1 {
 
         try {
             Map<String, String> args = qToM(http.getRequestURI().getQuery());
-            if (args.containsKey("token") && args.get("token").contentEquals(Config.get("API token"))) {
+            if (args.containsKey("token") && args.get("token").contentEquals(Config.cfg.get("API token"))) {
                 json.put("game", Bot.jda.getPresence().getGame().getName());
                 json.put("status", Bot.jda.getPresence().getStatus());
                 json.put("commands", CustomCommandsHandler.getCustomCommands());

@@ -10,7 +10,7 @@ public class Invite extends Command {
     public Invite() {
         this.name = "invite";
         this.guildOnly = true;
-        this.requiredRole = Config.get("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
     @Override

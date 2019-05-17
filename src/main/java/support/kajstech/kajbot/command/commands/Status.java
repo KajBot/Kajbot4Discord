@@ -11,7 +11,7 @@ public class Status extends Command {
     public Status() {
         this.name = "status";
         this.guildOnly = false;
-        this.requiredRole = Config.get("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
     @Override

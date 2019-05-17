@@ -35,7 +35,7 @@ public class PostHandlerV1 {
         System.out.println(buf.toString());
         JSONObject body = new JSONObject(buf.toString());
 
-        if (!http.getRequestHeaders().containsKey("token") || !http.getRequestHeaders().get("token").get(0).equals(Config.get("API token")) || body.length() < 1)
+        if (!http.getRequestHeaders().containsKey("token") || !http.getRequestHeaders().get("token").get(0).equals(Config.cfg.get("API token")) || body.length() < 1)
             return;
 
         if (!body.isNull("add_command")) {
@@ -56,7 +56,7 @@ public class PostHandlerV1 {
 
         if (!body.isNull("set_status")) {
             if (!body.getJSONObject("set_status").isNull("game")) {
-                Config.set("Bot game", body.getJSONObject("set_status").getString("game"));
+                Config.cfg.set("Bot game", body.getJSONObject("set_status").getString("game"));
                 Bot.jda.getPresence().setGame(Game.playing(body.getJSONObject("set_status").getString("game")));
             }
 

@@ -20,7 +20,7 @@ public class Ascii extends Command {
     public Ascii() {
         this.name = "ascii";
         this.guildOnly = false;
-        this.requiredRole = Config.get("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
     private int randomNum(int start, int end) {

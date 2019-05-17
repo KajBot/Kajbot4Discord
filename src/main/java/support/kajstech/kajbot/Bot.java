@@ -25,14 +25,14 @@ public class Bot {
 
     public static JDA jda;
 
-    static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException {
+    static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException, InterruptedException {
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);
 
 
-        builder.setToken(Config.get("Bot token"));
-        builder.setGame(Game.playing(Config.get("Bot game")));
+        builder.setToken(Config.cfg.get("Bot token"));
+        builder.setGame(Game.playing(Config.cfg.get("Bot game")));
 
         //Internal commands
         for (Class<? extends Command> command : CommandManager.internalCommands) {
@@ -70,7 +70,7 @@ public class Bot {
         builder.setAudioEnabled(false);
 
         //Build JDA
-        jda = builder.build();
+        jda = builder.build().awaitReady();
 
         //NOTIFICATIONS
         new Thread(() -> {

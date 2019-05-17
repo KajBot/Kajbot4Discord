@@ -18,7 +18,7 @@ public class CustomKeywords extends Command {
     public CustomKeywords() {
         this.name = "keyword";
         this.guildOnly = false;
-        this.requiredRole = Config.get("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
     @Override

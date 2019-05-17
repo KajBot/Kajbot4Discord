@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 public class Server {
     public static void run() throws Exception {
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(Config.get("API port"))), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(Config.cfg.get("API port"))), 0);
 
         //APIv1
         server.createContext("/api/v1", APIServerV1::context);

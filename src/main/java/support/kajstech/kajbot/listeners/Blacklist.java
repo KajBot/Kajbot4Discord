@@ -26,7 +26,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setTimestamp(ZonedDateTime.now());
         eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
         eb.setDescription(link);
-        event.getGuild().getTextChannelById(Config.get("Modlog channel ID")).sendMessage(eb.build()).queue();
+        event.getGuild().getTextChannelById(Config.cfg.get("Modlog channel ID")).sendMessage(eb.build()).queue();
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "//kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
@@ -43,7 +43,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setTimestamp(ZonedDateTime.now());
         eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
         eb.setDescription(link);
-        event.getGuild().getTextChannelById(Config.get("Modlog channel ID")).sendMessage(eb.build()).queue();
+        event.getGuild().getTextChannelById(Config.cfg.get("Modlog channel ID")).sendMessage(eb.build()).queue();
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "//kajbot.log"), true), StandardCharsets.UTF_8));
             writer.newLine();
@@ -55,10 +55,10 @@ public class Blacklist extends ListenerAdapter {
     }
 
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (!Config.get("Link blacklist").equalsIgnoreCase("true") || Permit.permitted.contains(event.getMessage().getMember()) || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot())
+        if (!Config.cfg.get("Link blacklist").equalsIgnoreCase("true") || Permit.permitted.contains(event.getMessage().getMember()) || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot())
             return;
 
-        for (String c : Config.get("Blacklist bypass roles").split(", ")) {
+        for (String c : Config.cfg.get("Blacklist bypass roles").split(", ")) {
             if (event.getMember().getRoles().stream().anyMatch(r -> r.getName().equals(c))) {
                 return;
             }
@@ -74,10 +74,10 @@ public class Blacklist extends ListenerAdapter {
     }
 
     public void onMessageUpdate(MessageUpdateEvent event) {
-        if (!Config.get("Link blacklist").equalsIgnoreCase("true") || Permit.permitted.contains(event.getMessage().getMember()) || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot())
+        if (!Config.cfg.get("Link blacklist").equalsIgnoreCase("true") || Permit.permitted.contains(event.getMessage().getMember()) || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot())
             return;
 
-        for (String c : Config.get("Blacklist bypass roles").split(", ")) {
+        for (String c : Config.cfg.get("Blacklist bypass roles").split(", ")) {
             if (event.getMember().getRoles().stream().anyMatch(r -> r.getName().equals(c))) {
                 return;
             }

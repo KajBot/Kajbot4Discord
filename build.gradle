@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '4.0.3'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
 }
 
 group 'support.kajstech.kajbot'
@@ -12,20 +12,25 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
     jcenter()
+    maven{
+        url 'https://mymavenrepo.com/repo/smMDhg5kfYwztJtaavrB/'
+    }
+
 }
 
 dependencies {
     compile('org.slf4j:slf4j-log4j12:1.7.25')
     compile('org.reflections:reflections:0.9.11')
+    compile('org.json:json:20180813')
+    compile('org.mdkt.compiler:InMemoryJavaCompiler:1.3.0')
+    compile('support.kajstech.simplecfg:SimpleCfg:0.1')
     compile('net.dv8tion:JDA:3.8.3_463') {
         exclude module: 'opus-java'
     }
-    compile('org.json:json:20180813')
-    compile('org.mdkt.compiler:InMemoryJavaCompiler:1.3.0')
 }
 
-shadowJar{
-    mergeServiceFiles('META-INF/spring.*')
+shadowJar {
+    mergeServiceFiles 'META-INF/spring.*'
     exclude "META-INF/*.SF"
     exclude "META-INF/*.DSA"
     exclude "META-INF/*.RSA"
@@ -33,6 +38,7 @@ shadowJar{
     exclude "META-INF/LICENSE.*"
     exclude "META-INF/NOTICE"
     exclude "META-INF/NOTICE.*"
-    exclude ("META-INF/maven/**")
+    exclude "META-INF/maven/**"
+    exclude "META-INF/proguard/**"
     archiveName = "${baseName}.jar"
 }

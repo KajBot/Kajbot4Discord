@@ -58,7 +58,7 @@ public class LogHelper {
             eb.addField("Exception: " + ex.getClass().getName(), "```" + ex.getLocalizedMessage() + "```", false);
             eb.setTimestamp(ZonedDateTime.now());
 
-            Bot.jda.getUserById(Config.get("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
+            Bot.jda.getUserById(Config.cfg.get("Bot owner ID")).openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
         } catch (Exception e) {
             error(LogHelper.class, e.getLocalizedMessage());
         }

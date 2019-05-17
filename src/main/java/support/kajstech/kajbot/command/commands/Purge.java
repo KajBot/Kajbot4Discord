@@ -14,7 +14,7 @@ public class Purge extends Command {
     public Purge() {
         this.name = "purge";
         this.guildOnly = true;
-        this.requiredRole = Config.get("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
     @Override

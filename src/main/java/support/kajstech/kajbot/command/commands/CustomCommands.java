@@ -18,7 +18,7 @@ public class CustomCommands extends Command {
     public CustomCommands() {
         this.name = "command";
         this.guildOnly = false;
-        this.requiredRole = Config.get("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CustomCommands extends Command {
                     for (Class<? extends Command> command : CommandManager.internalCommands) {
                         if (command.getSimpleName().equalsIgnoreCase(e.getArgsSplit().get(1))) return;
                     }
-                    CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(Config.get("Command prefix"), ""));
+                    CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(Config.cfg.get("Command prefix"), ""));
                     e.reply((Language.getMessage("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
@@ -53,7 +53,7 @@ public class CustomCommands extends Command {
                 break;
             case "add":
                 try {
-                    String cmdName = e.getArgsSplit().get(1).replace(Config.get("Command prefix"), "");
+                    String cmdName = e.getArgsSplit().get(1).replace(Config.cfg.get("Command prefix"), "");
                     for (Class<? extends Command> command : CommandManager.internalCommands) {
                         if (command.getSimpleName().equalsIgnoreCase(cmdName)) return;
                     }

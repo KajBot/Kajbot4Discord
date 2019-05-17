@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 public class MessageLogger extends ListenerAdapter {
 
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (!Config.get("Message logging").equalsIgnoreCase("true") || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot() || event.getMessage().isWebhookMessage())
+        if (!Config.cfg.get("Message logging").equalsIgnoreCase("true") || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot() || event.getMessage().isWebhookMessage())
             return;
 
 

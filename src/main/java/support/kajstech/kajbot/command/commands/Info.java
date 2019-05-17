@@ -20,7 +20,7 @@ public class Info extends Command {
     public Info() {
         this.name = "info";
         this.guildOnly = true;
-        this.requiredRole = Config.get("Bot admin role");
+        this.requiredRole = Config.cfg.get("Bot admin role");
     }
 
     private static String VariableToString(String regex, String input) {
