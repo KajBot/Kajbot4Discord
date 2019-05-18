@@ -13,7 +13,7 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
     jcenter()
-    maven { url "http://repo.jensz12.com/repository/jensbot/" }
+    maven { url "http://repo.jensz12.com/repository/jensz12/" }
 
 }
 
