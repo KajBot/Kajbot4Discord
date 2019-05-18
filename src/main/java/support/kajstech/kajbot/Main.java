@@ -9,9 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //BOT SETUP
-        Setup.setUp();
-
         //API/WEB
         new Thread(() -> {
             try {
