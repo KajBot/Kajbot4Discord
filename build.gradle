@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'support.kajstech.kajbot'
-version '1.4'
+version '0.1.4'
 mainClassName = 'support.kajstech.kajbot.Main'
 sourceCompatibility = 1.8
 
@@ -43,10 +43,11 @@ shadowJar {
     archiveName = "${baseName}.jar"
 }
 
+if (System.env.JITPACK) return
 github {
     owner = 'KajBot'
     repo = 'KajBot-java'
-    token = gradle.ext.token
+    token = githubToken
     tagName = rootProject.version
     targetCommitish = 'master'
     assets = [
