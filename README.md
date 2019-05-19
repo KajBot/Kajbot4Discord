@@ -2,6 +2,7 @@
 ![Kaj](https://static.jensz12.com/images/kaj.png)
 
 [![Build Status](http://jenkins.jensz12.com/buildStatus/icon?job=Kajbot-Discord)](http://jenkins.jensz12.com/job/Kajbot-Discord/)
+[![Lastest build](http://jenkins.jensz12.com/job/Kajbot-Discord/badge/icon?subject=Download&status=latest%20build&color=darkturquoise)](http://jenkins.jensz12.com/job/Kajbot-Discord/lastSuccessfulBuild/deployedArtifacts/download/artifact.1/)
 
 ## Introduction
 KajBot is a Discord Bot, created by Jonas & Jens.\
