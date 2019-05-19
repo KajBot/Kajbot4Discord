@@ -10,8 +10,8 @@ import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
-import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.notifications.Checker;
+import support.kajstech.kajbot.utils.Config;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;

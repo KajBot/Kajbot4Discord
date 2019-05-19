@@ -6,8 +6,8 @@ import net.dv8tion.jda.core.entities.Game;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.command.CommandManager;
-import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.handlers.KeywordHandler;
+import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.io.BufferedReader;
@@ -66,6 +66,14 @@ public class PostHandlerV1 {
                 if (!(status.equalsIgnoreCase(OnlineStatus.INVISIBLE.toString()) || status.equalsIgnoreCase(OnlineStatus.ONLINE.toString()) || status.equalsIgnoreCase(OnlineStatus.DO_NOT_DISTURB.toString()) || status.equalsIgnoreCase(OnlineStatus.IDLE.toString())))
                     return;
                 Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(status.toUpperCase()));
+            }
+
+            if (!body.getJSONObject("set_status").isNull("activity")) {
+                String status = body.getJSONObject("set_status").getString("activity");
+                if (status.equalsIgnoreCase("playing")) status = Game.GameType.DEFAULT.toString();
+                if (!(status.equalsIgnoreCase(Game.GameType.DEFAULT.toString()) || status.equalsIgnoreCase(Game.GameType.LISTENING.toString()) || status.equalsIgnoreCase(Game.GameType.WATCHING.toString()) || status.equalsIgnoreCase(Game.GameType.STREAMING.toString())))
+                    return;
+                Bot.jda.getPresence().setGame(Game.of(Game.GameType.valueOf(status.toUpperCase()), Bot.jda.getPresence().getGame().getName()));
             }
         }
 
