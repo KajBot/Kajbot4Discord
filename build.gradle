@@ -39,5 +39,5 @@ shadowJar {
     exclude "META-INF/NOTICE.*"
     exclude "META-INF/maven/**"
     exclude "META-INF/proguard/**"
-    archiveName = "${baseName}.jar"
+    archiveName = "${baseName}-${version}.jar"
 }
