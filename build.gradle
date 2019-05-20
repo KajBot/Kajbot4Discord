@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'support.kajstech.kajbot'
-version '0.1.4'
+version '0.1.5'
 mainClassName = 'support.kajstech.kajbot.Main'
 sourceCompatibility = 1.8
 
