@@ -6,7 +6,6 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.mdkt.compiler.InMemoryJavaCompiler;
-import org.reflections.Reflections;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
@@ -35,7 +34,7 @@ public class Bot {
         builder.setGame(Game.playing(Config.cfg.get("Bot game")));
 
         //Internal commands
-        for (Class<? extends Command> command : CommandManager.internalCommands) {
+        for (Class<? extends Command> command : Main.internalCommands) {
             CommandManager.addCommand(command.newInstance());
         }
 
@@ -61,7 +60,7 @@ public class Bot {
         }
 
         //Add listeners using ListenerAdaper
-        for (Class<? extends ListenerAdapter> listener : new Reflections("support.kajstech.kajbot.listeners").getSubTypesOf(ListenerAdapter.class)) {
+        for (Class<? extends ListenerAdapter> listener : Main.listeners) {
             builder.addEventListener(listener.newInstance());
         }
 

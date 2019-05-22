@@ -1,15 +1,17 @@
 package support.kajstech.kajbot.command;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import org.reflections.Reflections;
+import support.kajstech.kajbot.Main;
 import support.kajstech.kajbot.utils.Config;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CommandManager {
 
-    public static final Set<Class<? extends Command>> internalCommands = new Reflections("support.kajstech.kajbot.command.commands").getSubTypesOf(Command.class);
 
     private static final Map<String, Command> commands = new HashMap<>();
 
@@ -21,7 +23,7 @@ public class CommandManager {
     }
 
     public static void addCustomCommand(String key, String value) {
-        for (Class<? extends Command> command : internalCommands) {
+        for (Class<? extends Command> command : Main.internalCommands) {
             if (command.getSimpleName().equalsIgnoreCase(key)) return;
         }
         commands.put(key, new Command() {
@@ -37,7 +39,7 @@ public class CommandManager {
     }
 
     public static void removeCustomCommand(String key) {
-        for (Class<? extends Command> command : internalCommands) {
+        for (Class<? extends Command> command : Main.internalCommands) {
             if (command.getSimpleName().equalsIgnoreCase(key)) return;
         }
         commands.remove(key);

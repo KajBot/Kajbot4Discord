@@ -26,7 +26,7 @@ public class KeywordHandler {
             public void run() {
                 saveKeywords();
             }
-        }, 600000);
+        }, 60000);
     }
 
     public static void saveKeywords() {

@@ -4,16 +4,21 @@
 [![Build Status](http://jenkins.jensz12.com/buildStatus/icon?job=Kajbot-Discord)](http://jenkins.jensz12.com/job/Kajbot-Discord/)
 [![Lastest build](http://jenkins.jensz12.com/job/Kajbot-Discord/badge/icon?subject=Download&status=latest%20build&color=darkturquoise)](http://jenkins.jensz12.com/job/Kajbot-Discord/lastSuccessfulBuild/deployedArtifacts/download/artifact.1/)
 
-## Introduction
-KajBot is a Discord Bot, created by Jonas & Jens.\
-It's the sucessor to the old KajBot & to JensBot, found [here](https://github.com/KajBot/bot-java-old)\
+
+KajBot is a Discord Bot, created by [Jonas](https://twitter.com/minemand) & [Jens](https://twitter.com/jensz12).\
 Created in Java
 
 ## Commands
-[See bot commands here](https://github.com/KajBot/Kajbot-java/wiki/Commands)
+[See bot commands here](https://github.com/KajBot/Kajbot-java/wiki/Commands).
 
-## Custom Language
-Custom language files is available [here](https://github.com/KajBot/Kajbot-java-lang)
+## Setup
 
-## Custom Commands
-Some examples of special custom commands, can be found [here](https://github.com/KajBot/custom-commands)
+A very basic guide can be found [here](https://github.com/KajBot/Kajbot-java/wiki/Setup).
+
+## Languages
+
+The bot support other languages than english. Find a list [here](https://github.com/KajBot/Kajbot-java/wiki/Languages).
+
+## Advanced custom commands
+
+The bot support the use of .java files to create advanced custom commands. Look at this [page](https://github.com/KajBot/Kajbot-java/wiki/Advanced-Custom-Command-Example) for more info on that.

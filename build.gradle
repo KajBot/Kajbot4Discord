@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'support.kajstech.kajbot'
-version '0.1.5'
+version '0.1.6'
 mainClassName = 'support.kajstech.kajbot.Main'
 sourceCompatibility = 1.8
 
@@ -22,10 +22,14 @@ dependencies {
     compile('org.reflections:reflections:0.9.11')
     compile('org.json:json:20180813')
     compile('org.mdkt.compiler:InMemoryJavaCompiler:1.3.0')
-    compile('support.kajstech.simplecfg:SimpleCfg:0.1')
+    compile('support.kajstech.simplecfg:SimpleCfg:0.1.1')
     compile('net.dv8tion:JDA:3.8.3_463') {
         exclude module: 'opus-java'
     }
+    compile 'org.eclipse.jetty:jetty-server:9.4.18.v20190429'
+    compile 'org.eclipse.jetty:jetty-servlet:9.4.18.v20190429'
+
+
 }
 
 shadowJar {

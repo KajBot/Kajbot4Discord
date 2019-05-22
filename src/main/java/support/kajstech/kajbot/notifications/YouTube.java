@@ -15,13 +15,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static support.kajstech.kajbot.notifications.YouTube.*;
+import static support.kajstech.kajbot.notifications.YouTube.readFromUrl;
 
 class YouTube {
 
     static void check() throws IOException {
-        YouTubeLive.check();
-        YouTubeVideo.check();
+        if (Config.cfg.contains("YouTube API key") && Config.cfg.contains("YouTube channels")) {
+            if (Config.cfg.get("YouTube video notifications").equalsIgnoreCase("true")) {
+                for (String c : Config.cfg.get("YouTube channels").split(", ")) {
+                    if (YouTubeVideo.check(c)) {
+                        if (!YouTubeVideo.postedVideos.contains(getId(YouTubeVideo.channelUrl))) {
+                            Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage((Language.getMessage("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName(YouTubeVideo.channelUrl)) + "  https://www.youtube.com/watch?v=" + getId(YouTubeVideo.channelUrl)).queue();
+                            YouTubeVideo.postedVideos.add(getId(YouTubeVideo.channelUrl));
+                        }
+                    } else {
+                        YouTubeVideo.postedVideos.remove(getId(YouTubeVideo.channelUrl));
+                    }
+                }
+            }
+            if (Config.cfg.get("YouTube live notifications").equalsIgnoreCase("true")) {
+                for (String c : Config.cfg.get("YouTube channels").split(", ")) {
+                    if (YouTubeLive.check(c)) {
+                        if (!YouTubeLive.liveChannels.contains(c)) {
+                            Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage((Language.getMessage("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName(YouTubeLive.channelUrl)) + "  https://www.youtube.com/watch?v=" + getId(YouTubeLive.channelUrl)).queue();
+                            YouTubeLive.liveChannels.add(c);
+                        }
+                    } else {
+                        YouTubeLive.liveChannels.remove(c);
+                    }
+                }
+            }
+        }
     }
 
     static String readFromUrl(String url) throws IOException {
@@ -41,56 +65,23 @@ class YouTube {
 }
 
 class YouTubeVideo {
+    static String channelUrl;
+    static List<String> postedVideos = new ArrayList<>();
 
-    private static String channelUrl;
-    private static List<String> video = new ArrayList<>();
-
-    private static boolean checkVideo(String channel) throws IOException {
+    static boolean check(String channel) throws IOException {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube API key");
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").length() > 0;
-    }
-
-
-    static void check() throws IOException {
-        if (Config.cfg.contains("YouTube API key") && Config.cfg.contains("YouTube channels") && Config.cfg.get("YouTube video notifications").equalsIgnoreCase("true")) {
-            for (String c : Config.cfg.get("YouTube channels").split(", ")) {
-                if (checkVideo(c)) {
-                    if (!video.contains(getId(channelUrl))) {
-                        video.add(getId(channelUrl));
-                        Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage((Language.getMessage("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName(channelUrl)) + "  https://www.youtube.com/watch?v=" + getId(channelUrl)).queue();
-                    }
-                } else {
-                    video.remove(getId(channelUrl));
-                }
-            }
-        }
     }
 
 }
 
 class YouTubeLive {
-    private static List<String> liveYoutube = new ArrayList<>();
-    private static String channelUrl;
+    static String channelUrl;
+    static List<String> liveChannels = new ArrayList<>();
 
-    private static boolean checkIfOnline(String channel) throws IOException {
+    static boolean check(String channel) throws IOException {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube API key");
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").length() > 0;
-    }
-
-
-    static void check() throws IOException {
-        if (Config.cfg.contains("YouTube API key") && Config.cfg.contains("YouTube channels") && Config.cfg.get("YouTube live notifications").equalsIgnoreCase("true")) {
-            for (String c : Config.cfg.get("YouTube channels").split(", ")) {
-                if (checkIfOnline(c)) {
-                    if (!liveYoutube.contains(c)) {
-                        liveYoutube.add(c);
-                        Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage((Language.getMessage("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName(channelUrl)) + "  https://www.youtube.com/watch?v=" + getId(channelUrl)).queue();
-                    }
-                } else {
-                    liveYoutube.remove(c);
-                }
-            }
-        }
     }
 
 }
