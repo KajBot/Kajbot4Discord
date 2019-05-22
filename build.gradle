@@ -6,11 +6,7 @@ plugins {
 }
 
 group 'support.kajstech.kajbot'
-<<<<<<< HEAD
 version '0.1.6'
-=======
-version '0.1.5'
->>>>>>> 4908c8d686bbdbe92c1d8315eba179980e05ab3d
 mainClassName = 'support.kajstech.kajbot.Main'
 sourceCompatibility = 1.8
 
