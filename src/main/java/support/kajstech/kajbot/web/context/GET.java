@@ -32,8 +32,6 @@ public class GET extends Servlet {
             return;
         }
         Map<String, String> args = qToM(context.request().getQueryString());
-        args.put("kvæk", "123");
-        System.out.println(args);
         if (!args.containsKey("token") || !args.get("token").contentEquals(Config.cfg.get("API token"))) {
             context.response().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             osw.close();
