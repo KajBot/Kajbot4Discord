@@ -44,7 +44,7 @@ public class GET extends Servlet {
         json.put("commands", CustomCommandsHandler.getCustomCommands());
         json.put("keywords", KeywordHandler.getKeywords());
 
-        context.response().setContentType("application/json");
+        context.response().setContentType("application/json; charset=UTF-8");
         context.response().setStatus(HttpServletResponse.SC_OK);
         osw.write(json.toString());
         osw.close();
