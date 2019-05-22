@@ -53,7 +53,6 @@ class Twitch {
             for (String c : Config.cfg.get("Twitch channels").split(", ")) {
                 if (checkIfOnline(c)) {
                     if (!live.contains(c)) {
-                        live.add(c);
                         EmbedBuilder eb = new EmbedBuilder();
                         eb.setColor(new Color(0x6441A5));
                         eb.setTitle((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
@@ -62,6 +61,7 @@ class Twitch {
                         eb.setImage(getThumbnail());
                         eb.setTimestamp(ZonedDateTime.now());
                         Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage(eb.build()).queue();
+                        live.add(c);
                     }
                 } else {
                     live.remove(c);

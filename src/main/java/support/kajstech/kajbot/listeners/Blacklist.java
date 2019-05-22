@@ -7,12 +7,10 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.commands.Permit;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.LogHelper;
 
 import java.awt.*;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,14 +25,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
         eb.setDescription(link);
         event.getGuild().getTextChannelById(Config.cfg.get("Modlog channel ID")).sendMessage(eb.build()).queue();
-        try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "//kajbot.log"), true), StandardCharsets.UTF_8));
-            writer.newLine();
-            writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        LogHelper.logToFile(" - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
     }
 
     private static void log(MessageUpdateEvent event, String link) {
@@ -44,14 +35,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
         eb.setDescription(link);
         event.getGuild().getTextChannelById(Config.cfg.get("Modlog channel ID")).sendMessage(eb.build()).queue();
-        try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "//kajbot.log"), true), StandardCharsets.UTF_8));
-            writer.newLine();
-            writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.getMessage("Logging.TIME_FORMAT"))) + " - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        LogHelper.logToFile(" - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
     }
 
     public void onMessageReceived(MessageReceivedEvent event) {

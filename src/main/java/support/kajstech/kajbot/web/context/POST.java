@@ -1,42 +1,45 @@
-package support.kajstech.kajbot.web.context.API.v1;
+package support.kajstech.kajbot.web.context;
 
-import com.sun.net.httpserver.HttpExchange;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Game;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.json.JSONException;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 import support.kajstech.kajbot.utils.Config;
-import support.kajstech.kajbot.utils.LogHelper;
+import support.kajstech.kajbot.web.Context;
+import support.kajstech.kajbot.web.Servlet;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
-public class PostHandlerV1 {
+public class POST extends Servlet {
+    public POST() {
+        this.name = "post";
+        this.path = "/api";
+    }
 
-    public static void context(HttpExchange http) throws IOException {
-        LogHelper.info("Post request from: " + http.getRemoteAddress().getAddress().getHostAddress() + ":" + http.getRemoteAddress().getPort());
+    @Override
+    protected void post(Context context) throws ServletException, IOException {
+        OutputStream os = context.response().getOutputStream();
 
-        InputStreamReader isr = new InputStreamReader(http.getRequestBody(), StandardCharsets.UTF_8);
-        BufferedReader br = new BufferedReader(isr);
-
-        int b;
-        StringBuilder buf = new StringBuilder(512);
-        while ((b = br.read()) != -1) {
-            buf.append((char) b);
-        }
-        br.close();
+        InputStreamReader isr = new InputStreamReader(context.request().getInputStream(), StandardCharsets.UTF_8);
+        Scanner s = new Scanner(isr).useDelimiter("\\A");
+        String requestBody = s.hasNext() ? s.next() : "";
         isr.close();
 
-        System.out.println(buf.toString());
-        JSONObject body = new JSONObject(buf.toString());
 
-        if (!http.getRequestHeaders().containsKey("token") || !http.getRequestHeaders().get("token").get(0).equals(Config.cfg.get("API token")) || body.length() < 1)
-            return;
+        JSONObject body = new JSONObject(requestBody);
+
+        if(body.isEmpty() || context.request().getHeader("token").isEmpty() || !context.request().getHeader("token").equals(Config.cfg.get("API token"))) {
+            context.response().setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            os.close();
+        }
 
         if (!body.isNull("add_command")) {
             body.getJSONObject("add_command").toMap().forEach((k, v) -> CommandManager.addCustomCommand(k, (String) v));
@@ -78,10 +81,7 @@ public class PostHandlerV1 {
         }
 
 
-        String response = "SUCCESS";
-        http.sendResponseHeaders(200, response.length());
-        OutputStream os = http.getResponseBody();
-        os.write(response.getBytes(StandardCharsets.UTF_8));
+        context.response().setStatus(HttpServletResponse.SC_OK);
         os.close();
 
     }

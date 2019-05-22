@@ -27,7 +27,7 @@ public class CustomCommandsHandler {
             public void run() {
                 saveCustomCommands();
             }
-        }, 600000);
+        }, 60000);
     }
 
     public static void saveCustomCommands() {
