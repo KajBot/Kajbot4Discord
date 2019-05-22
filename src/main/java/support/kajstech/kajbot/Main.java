@@ -31,7 +31,6 @@ public class Main {
         new Thread(() -> {
             try {
                 JettyServer.run();
-                //Server_old.run();
             } catch (Exception e) {
                 e.printStackTrace();
             }
