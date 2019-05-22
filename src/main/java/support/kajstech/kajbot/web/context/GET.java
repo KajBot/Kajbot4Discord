@@ -26,26 +26,28 @@ public class GET extends Servlet {
     protected void get(Context context) throws ServletException, IOException {
         OutputStreamWriter osw = new OutputStreamWriter(context.response().getOutputStream(), StandardCharsets.UTF_8);
 
-        JSONObject json = new JSONObject();
-        try {
-            Map<String, String> args = qToM(context.request().getQueryString());
-            if (args.containsKey("token") && args.get("token").contentEquals(Config.cfg.get("API token"))) {
-                json.put("game", Bot.jda.getPresence().getGame().getName());
-                json.put("status", Bot.jda.getPresence().getStatus());
-                json.put("commands", CustomCommandsHandler.getCustomCommands());
-                json.put("keywords", KeywordHandler.getKeywords());
-
-                context.response().setContentType("application/json");
-            } else {
-                json.put("401", "Unauthorized");
-                context.response().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            }
-
-        } catch (Exception ignored) {
-            json.put("401", "Unauthorized");
+        if (context.request().getQueryString() == null || context.request().getQueryString().isEmpty()) {
+            context.response().setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            osw.close();
+            return;
+        }
+        Map<String, String> args = qToM(context.request().getQueryString());
+        args.put("kvæk", "123");
+        System.out.println(args);
+        if (!args.containsKey("token") || !args.get("token").contentEquals(Config.cfg.get("API token"))) {
             context.response().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            osw.close();
+            return;
         }
 
+        JSONObject json = new JSONObject();
+        json.put("game", Bot.jda.getPresence().getGame().getName());
+        json.put("status", Bot.jda.getPresence().getStatus());
+        json.put("commands", CustomCommandsHandler.getCustomCommands());
+        json.put("keywords", KeywordHandler.getKeywords());
+
+        context.response().setContentType("application/json");
+        context.response().setStatus(HttpServletResponse.SC_OK);
         osw.write(json.toString());
         osw.close();
 
