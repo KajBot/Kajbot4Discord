@@ -49,23 +49,21 @@ class Twitch {
     }
 
     static void check() throws IOException {
-        if (Config.cfg.contains("Twitch client ID") && Config.cfg.contains("Twitch channels") && Config.cfg.get("Twitch live notifications").equalsIgnoreCase("true")) {
-            for (String c : Config.cfg.get("Twitch channels").split(", ")) {
-                if (checkIfOnline(c)) {
-                    if (!live.contains(c)) {
-                        EmbedBuilder eb = new EmbedBuilder();
-                        eb.setColor(new Color(0x6441A5));
-                        eb.setTitle((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
-                        eb.addField(Language.getMessage("Twitch.TITLE"), getTitle(), false);
-                        eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), getGame(), false);
-                        eb.setImage(getThumbnail());
-                        eb.setTimestamp(ZonedDateTime.now());
-                        Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage(eb.build()).queue();
-                        live.add(c);
-                    }
-                } else {
-                    live.remove(c);
+        for (String c : Config.cfg.get("Twitch channels").split(", ")) {
+            if (checkIfOnline(c)) {
+                if (!live.contains(c)) {
+                    EmbedBuilder eb = new EmbedBuilder();
+                    eb.setColor(new Color(0x6441A5));
+                    eb.setTitle((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
+                    eb.addField(Language.getMessage("Twitch.TITLE"), getTitle(), false);
+                    eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), getGame(), false);
+                    eb.setImage(getThumbnail());
+                    eb.setTimestamp(ZonedDateTime.now());
+                    Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage(eb.build()).queue();
+                    live.add(c);
                 }
+            } else {
+                live.remove(c);
             }
         }
     }

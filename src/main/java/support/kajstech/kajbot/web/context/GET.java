@@ -22,6 +22,21 @@ public class GET extends Servlet {
         this.path = "/api";
     }
 
+    private static Map<String, String> qToM(String query) {
+        Map<String, String> result = new HashMap<>();
+        for (String param : query.split("&")) {
+            String[] pair = param.split("=");
+            if (pair.length > 1) {
+                result.put(pair[0], pair[1]);
+            } else {
+                result.put(pair[0], "");
+            }
+        }
+        return result;
+
+
+    }
+
     @Override
     protected void get(Context context) throws ServletException, IOException {
         OutputStreamWriter osw = new OutputStreamWriter(context.response().getOutputStream(), StandardCharsets.UTF_8);
@@ -48,21 +63,6 @@ public class GET extends Servlet {
         context.response().setStatus(HttpServletResponse.SC_OK);
         osw.write(json.toString());
         osw.close();
-
-    }
-
-    private static Map<String, String> qToM(String query) {
-        Map<String, String> result = new HashMap<>();
-        for (String param : query.split("&")) {
-            String[] pair = param.split("=");
-            if (pair.length > 1) {
-                result.put(pair[0], pair[1]);
-            } else {
-                result.put(pair[0], "");
-            }
-        }
-        return result;
-
 
     }
 }

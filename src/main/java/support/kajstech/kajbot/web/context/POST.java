@@ -2,8 +2,6 @@ package support.kajstech.kajbot.web.context;
 
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Game;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.json.JSONException;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.command.CommandManager;
@@ -14,7 +12,9 @@ import support.kajstech.kajbot.web.Servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -36,7 +36,7 @@ public class POST extends Servlet {
 
         JSONObject body = new JSONObject(requestBody);
 
-        if(body.isEmpty() || context.request().getHeader("token").isEmpty() || !context.request().getHeader("token").equals(Config.cfg.get("API token"))) {
+        if (body.isEmpty() || context.request().getHeader("token").isEmpty() || !context.request().getHeader("token").equals(Config.cfg.get("API token"))) {
             context.response().setStatus(HttpServletResponse.SC_BAD_REQUEST);
             os.close();
         }
