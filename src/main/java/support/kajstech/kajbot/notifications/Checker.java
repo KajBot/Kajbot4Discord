@@ -26,7 +26,7 @@ public class Checker extends ListenerAdapter {
             } catch (IOException e) {
                 LogHelper.error(Checker.class, e.toString());
             }
-            Thread.sleep(6000);
+            Thread.sleep(60000);
         }
 
     }
