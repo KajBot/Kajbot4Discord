@@ -21,4 +21,4 @@ The bot support other languages than english. Find a list [here](https://github.
 
 ## Advanced custom commands
 
-The bot support the use of .java files to create advanced custom commands. Look at this [page](https://github.com/KajBot/Kajbot-java/wiki/Advanced-Custom-Command-Example) for more info on that.
+The bot support the use of .java files to create advanced custom commands. Look at this [page](https://github.com/KajBot/Kajbot-java/wiki/Advanced-Custom-Command-Example) for more info on that
