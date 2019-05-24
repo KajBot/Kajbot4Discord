@@ -10,7 +10,6 @@ public class CommandListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-
         if (!event.getAuthor().isBot() && !event.getMessage().isWebhookMessage() && (event.getMessage().getContentRaw().startsWith(Config.cfg.get("Command prefix")) || event.getMessage().getContentRaw().startsWith(Bot.jda.getSelfUser().getAsMention() + " "))) {
             new CommandManager().handleCommand(event);
         }
