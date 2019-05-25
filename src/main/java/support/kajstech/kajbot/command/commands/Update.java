@@ -46,7 +46,7 @@ public class Update extends Command {
 
             e.reply("Restarting..");
             final ProcessBuilder builder = new ProcessBuilder(command);
-            builder.inheritIO().redirectInput(ProcessBuilder.Redirect.INHERIT).start();
+            builder.inheritIO().start();
             System.exit(0);
 
         } catch (IOException | URISyntaxException ex) {
