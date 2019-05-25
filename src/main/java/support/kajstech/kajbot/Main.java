@@ -9,9 +9,7 @@ import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.web.JettyServer;
 import support.kajstech.kajbot.web.Servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Set;
 
 public class Main {
@@ -43,12 +41,6 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(Config.cfg::save, "Config-shutdown-thread"));
         Runtime.getRuntime().addShutdownHook(new Thread(CustomCommandsHandler::saveCustomCommands, "CustomCommands-shutdown-thread"));
         Runtime.getRuntime().addShutdownHook(new Thread(KeywordHandler::saveKeywords, "Keyword-shutdown-thread"));
-
-        while(true){
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String line = reader.readLine();
-            if(line.equalsIgnoreCase("exit")) System.exit(0);
-        }
 
 
     }

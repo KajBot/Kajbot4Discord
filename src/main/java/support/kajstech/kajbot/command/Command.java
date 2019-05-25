@@ -11,7 +11,6 @@ public abstract class Command {
     protected boolean guildOnly = true;
 
     final void run(CommandEvent event) {
-
         if (guildOnly && (event.getEvent().isFromType(ChannelType.PRIVATE) || event.getEvent().isFromType(ChannelType.GROUP))) {
             event.reply(Language.getMessage("CommandSystem.DIRECT_ERROR"));
             return;
