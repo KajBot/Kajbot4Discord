@@ -2,8 +2,8 @@ package support.kajstech.kajbot.notifications;
 
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +43,7 @@ class YouTubeVideo {
     static void check() throws IOException {
         for (String c : Config.cfg.get("YouTube channels").split(", ")) {
             if (YouTubeVideo.checkForVideos(c) && !YouTubeVideo.postedVideos.contains(getId())) {
-                Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage((Language.getMessage("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
+                Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage((Language.lang.get("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
                 YouTubeVideo.postedVideos.add(getId());
             }
         }

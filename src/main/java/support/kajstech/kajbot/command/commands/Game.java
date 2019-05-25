@@ -1,10 +1,10 @@
 package support.kajstech.kajbot.command.commands;
 
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 
 public class Game extends Command {
     public Game() {
@@ -19,6 +19,6 @@ public class Game extends Command {
 
         Bot.jda.getPresence().setGame(net.dv8tion.jda.core.entities.Game.playing(e.getArgs()));
         Config.cfg.set("Bot game", e.getArgs());
-        e.reply((Language.getMessage("Status.SET")).replace("%STATUS%", e.getArgs()));
+        e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgs()));
     }
 }

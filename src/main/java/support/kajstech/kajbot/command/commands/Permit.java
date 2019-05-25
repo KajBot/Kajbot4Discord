@@ -1,10 +1,10 @@
 package support.kajstech.kajbot.command.commands;
 
 import net.dv8tion.jda.core.entities.Member;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class Permit extends Command {
         if (!e.getMessage().getMentionedMembers().isEmpty()) {
             for (Member member : memberMention) {
                 permitted.add(member);
-                e.reply((Language.getMessage("Permit.PERMITTED")).replace("%USER%", member.getAsMention()));
+                e.reply((Language.lang.get("Permit.PERMITTED")).replace("%USER%", member.getAsMention()));
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {

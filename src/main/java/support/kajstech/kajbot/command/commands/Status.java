@@ -2,10 +2,10 @@ package support.kajstech.kajbot.command.commands;
 
 import net.dv8tion.jda.core.OnlineStatus;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 
 public class Status extends Command {
     public Status() {
@@ -26,6 +26,6 @@ public class Status extends Command {
 
 
         Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(e.getArgsSplit().get(0).toUpperCase()));
-        e.reply((Language.getMessage("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
+        e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
     }
 }

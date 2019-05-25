@@ -1,7 +1,7 @@
 package support.kajstech.kajbot.command;
 
 import net.dv8tion.jda.core.entities.ChannelType;
-import support.kajstech.kajbot.Language;
+import support.kajstech.kajbot.utils.Language;
 
 public abstract class Command {
 
@@ -12,7 +12,7 @@ public abstract class Command {
 
     final void run(CommandEvent event) {
         if (guildOnly && (event.getEvent().isFromType(ChannelType.PRIVATE) || event.getEvent().isFromType(ChannelType.GROUP))) {
-            event.reply(Language.getMessage("CommandSystem.DIRECT_ERROR"));
+            event.reply(Language.lang.get("CommandSystem.DIRECT_ERROR"));
             return;
         }
 
@@ -22,7 +22,7 @@ public abstract class Command {
 
         if (requiredRole != null) {
             if (!event.getEvent().isFromType(ChannelType.TEXT) || event.getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(requiredRole))) {
-                event.reply((Language.getMessage("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole));
+                event.reply((Language.lang.get("CommandSystem.MISSING_ROLE")).replace("%ROLE%", requiredRole));
                 return;
             }
         }

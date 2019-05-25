@@ -1,13 +1,13 @@
 package support.kajstech.kajbot.command.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.Main;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.command.CommandManager;
 import support.kajstech.kajbot.command.CustomCommandsHandler;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.awt.*;
@@ -47,7 +47,7 @@ public class CustomCommands extends Command {
                         if (command.getSimpleName().equalsIgnoreCase(e.getArgsSplit().get(1))) return;
                     }
                     CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(Config.cfg.get("Command prefix"), ""));
-                    e.reply((Language.getMessage("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
+                    e.reply((Language.lang.get("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
@@ -60,7 +60,7 @@ public class CustomCommands extends Command {
                     }
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split("\\s+");
                     CommandManager.addCustomCommand(cmdName, String.join(" ", cmdContext));
-                    e.reply((Language.getMessage("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase()));
+                    e.reply((Language.lang.get("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }

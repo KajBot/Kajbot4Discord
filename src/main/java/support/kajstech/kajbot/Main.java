@@ -9,7 +9,6 @@ import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.web.JettyServer;
 import support.kajstech.kajbot.web.Servlet;
 
-import java.io.IOException;
 import java.util.Set;
 
 public class Main {
@@ -17,7 +16,7 @@ public class Main {
     public static final Set<Class<? extends ListenerAdapter>> listeners = new Reflections("support.kajstech.kajbot.listeners").getSubTypesOf(ListenerAdapter.class);
     public static final Set<Class<? extends Command>> internalCommands = new Reflections("support.kajstech.kajbot.command.commands").getSubTypesOf(Command.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         //BOT
         new Thread(() -> {

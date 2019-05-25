@@ -2,10 +2,10 @@ package support.kajstech.kajbot.command.commands;
 
 import net.dv8tion.jda.core.entities.Game;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 
 public class Activity extends Command {
     public Activity() {
@@ -25,6 +25,6 @@ public class Activity extends Command {
             return;
 
         Bot.jda.getPresence().setGame(Game.of(Game.GameType.valueOf(e.getArgsSplit().get(0).toUpperCase()), Bot.jda.getPresence().getGame().getName()));
-        e.reply((Language.getMessage("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
+        e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
     }
 }

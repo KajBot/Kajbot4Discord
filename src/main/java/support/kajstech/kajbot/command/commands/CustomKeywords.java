@@ -2,11 +2,11 @@ package support.kajstech.kajbot.command.commands;
 
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.handlers.KeywordHandler;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.awt.*;
@@ -45,7 +45,7 @@ public class CustomKeywords extends Command {
                 try {
                     if (KeywordHandler.kws.containsKey(e.getArgsSplit().get(1))) {
                         KeywordHandler.removeKeyword(e.getArgsSplit().get(1));
-                        e.reply((Language.getMessage("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase()));
+                        e.reply((Language.lang.get("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase()));
                     }
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
@@ -56,7 +56,7 @@ public class CustomKeywords extends Command {
                     String kwName = e.getArgsSplit().get(1);
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split("\\s+");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
-                    e.reply((Language.getMessage("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
+                    e.reply((Language.lang.get("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
