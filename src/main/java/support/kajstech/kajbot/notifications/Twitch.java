@@ -3,8 +3,8 @@ package support.kajstech.kajbot.notifications;
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.json.JSONObject;
 import support.kajstech.kajbot.Bot;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -54,9 +54,9 @@ class Twitch {
                 if (!live.contains(c)) {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0x6441A5));
-                    eb.setTitle((Language.getMessage("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
-                    eb.addField(Language.getMessage("Twitch.TITLE"), getTitle(), false);
-                    eb.addField(Language.getMessage("Twitch.NOW_PLAYING"), getGame(), false);
+                    eb.setTitle((Language.lang.get("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
+                    eb.addField(Language.lang.get("Twitch.TITLE"), getTitle(), false);
+                    eb.addField(Language.lang.get("Twitch.NOW_PLAYING"), getGame(), false);
                     eb.setImage(getThumbnail());
                     eb.setTimestamp(ZonedDateTime.now());
                     Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage(eb.build()).queue();

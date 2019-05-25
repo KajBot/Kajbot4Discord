@@ -2,10 +2,10 @@ package support.kajstech.kajbot.command.commands;
 
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageHistory;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.util.List;
@@ -40,17 +40,17 @@ public class Purge extends Command {
                     }
 
                 }
-                e.reply((Language.getMessage("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
+                e.reply((Language.lang.get("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
             } else {
                 MessageHistory history = new MessageHistory(e.getChannel());
                 List<Message> msgs;
                 msgs = history.retrievePast(AMOUNT).complete();
                 e.getChannel().deleteMessages(msgs).queue();
-                e.reply((Language.getMessage("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
+                e.reply((Language.lang.get("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
             }
         } catch (Exception ex) {
             LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
-            e.reply(Language.getMessage("Purge.ERROR"));
+            e.reply(Language.lang.get("Purge.ERROR"));
         }
     }
 

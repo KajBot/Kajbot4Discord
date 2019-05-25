@@ -24,7 +24,7 @@ public class Bot {
 
     public static JDA jda;
 
-    static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException, InterruptedException {
+    public static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException, InterruptedException {
 
         //JDA Builder
         JDABuilder builder = new JDABuilder(AccountType.BOT);

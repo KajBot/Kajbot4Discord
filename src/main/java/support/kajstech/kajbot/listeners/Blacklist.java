@@ -4,9 +4,9 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import support.kajstech.kajbot.Language;
 import support.kajstech.kajbot.command.commands.Permit;
 import support.kajstech.kajbot.utils.Config;
+import support.kajstech.kajbot.utils.Language;
 import support.kajstech.kajbot.utils.LogHelper;
 
 import java.awt.*;
@@ -25,7 +25,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
         eb.setDescription(link);
         event.getGuild().getTextChannelById(Config.cfg.get("Modlog channel ID")).sendMessage(eb.build()).queue();
-        LogHelper.logToFile(" - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
+        LogHelper.logToFile(" - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link, "kajbot.log");
     }
 
     private static void log(MessageUpdateEvent event, String link) {
@@ -35,7 +35,7 @@ public class Blacklist extends ListenerAdapter {
         eb.setTitle(event.getAuthor().getAsTag(), "https://discordapp.com/users/" + event.getAuthor().getId());
         eb.setDescription(link);
         event.getGuild().getTextChannelById(Config.cfg.get("Modlog channel ID")).sendMessage(eb.build()).queue();
-        LogHelper.logToFile(" - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link);
+        LogHelper.logToFile(" - (" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + link, "kajbot.log");
     }
 
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -52,7 +52,7 @@ public class Blacklist extends ListenerAdapter {
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
             log(event, m.group(0));
-            event.getChannel().sendMessage((Language.getMessage("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
+            event.getChannel().sendMessage((Language.lang.get("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
             event.getMessage().delete().queue();
         }
     }
@@ -71,7 +71,7 @@ public class Blacklist extends ListenerAdapter {
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
             log(event, m.group(0));
-            event.getChannel().sendMessage((Language.getMessage("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
+            event.getChannel().sendMessage((Language.lang.get("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
             event.getMessage().delete().queue();
         }
     }
