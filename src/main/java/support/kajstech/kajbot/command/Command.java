@@ -10,7 +10,7 @@ public abstract class Command {
     protected boolean ownerCommand = false;
     protected boolean adminCommand = false;
     protected String requiredRole = null;
-    protected boolean guildOnly = true;
+    protected boolean guildOnly = false;
 
     final void run(CommandEvent event) {
         if (ownerCommand && !event.isOwner()) {
