@@ -2,8 +2,7 @@ package support.kajstech.kajbot.utils;
 
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import support.kajstech.kajbot.Bot;
 
 import java.awt.*;
@@ -14,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 public class LogHelper {
 
-    private static Logger logger = LoggerFactory.getLogger("[Kajbot]");
+    private static org.apache.log4j.Logger logger = Logger.getLogger("[Kajbot]");
 
     /**
      * helper class d() to log debug level information.
@@ -80,7 +79,7 @@ public class LogHelper {
 
     public static void logToFile(String message, String file) {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir")  + "/" + file), true), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "/" + file), true), StandardCharsets.UTF_8));
             writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.lang.get("Logging.TIME_FORMAT"))) + " - " + message + "\n");
             writer.close();
         } catch (IOException e) {

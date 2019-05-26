@@ -4,7 +4,6 @@ import net.dv8tion.jda.core.OnlineStatus;
 import support.kajstech.kajbot.Bot;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
-import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.utils.Language;
 
 public class Status extends Command {

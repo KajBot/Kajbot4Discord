@@ -4,7 +4,6 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageHistory;
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
-import support.kajstech.kajbot.utils.Config;
 import support.kajstech.kajbot.utils.Language;
 import support.kajstech.kajbot.utils.LogHelper;
 

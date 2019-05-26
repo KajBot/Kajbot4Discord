@@ -2,7 +2,6 @@ package support.kajstech.kajbot.command.commands;
 
 import support.kajstech.kajbot.command.Command;
 import support.kajstech.kajbot.command.CommandEvent;
-import support.kajstech.kajbot.utils.Config;
 
 import java.time.temporal.ChronoUnit;
 
