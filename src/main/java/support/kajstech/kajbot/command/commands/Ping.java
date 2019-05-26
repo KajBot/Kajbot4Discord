@@ -9,8 +9,7 @@ import java.time.temporal.ChronoUnit;
 public class Ping extends Command {
     public Ping() {
         this.name = "ping";
-        this.guildOnly = false;
-        this.requiredRole = Config.cfg.get("Bot admin role");
+        this.adminCommand = true;
     }
 
 

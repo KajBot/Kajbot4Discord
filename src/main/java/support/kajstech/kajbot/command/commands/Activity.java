@@ -10,8 +10,7 @@ import support.kajstech.kajbot.utils.Language;
 public class Activity extends Command {
     public Activity() {
         this.name = "activity";
-        this.guildOnly = false;
-        this.requiredRole = Config.cfg.get("Bot admin role");
+        this.adminCommand = true;
     }
 
     @Override

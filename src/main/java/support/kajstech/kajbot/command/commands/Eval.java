@@ -15,7 +15,6 @@ public class Eval extends Command {
 
     public Eval() {
         this.name = "eval";
-        this.guildOnly = false;
         this.ownerCommand = true;
 
         engine = new ScriptEngineManager().getEngineByName("nashorn");

@@ -13,8 +13,7 @@ import java.util.List;
 public class Purge extends Command {
     public Purge() {
         this.name = "purge";
-        this.guildOnly = true;
-        this.requiredRole = Config.cfg.get("Bot admin role");
+        this.adminCommand = true;
     }
 
     @Override

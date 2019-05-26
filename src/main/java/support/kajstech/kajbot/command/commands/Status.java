@@ -10,8 +10,7 @@ import support.kajstech.kajbot.utils.Language;
 public class Status extends Command {
     public Status() {
         this.name = "status";
-        this.guildOnly = false;
-        this.requiredRole = Config.cfg.get("Bot admin role");
+        this.adminCommand = true;
     }
 
     @Override

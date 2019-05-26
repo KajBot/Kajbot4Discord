@@ -17,14 +17,13 @@ public class Permit extends Command {
 
     public Permit() {
         this.name = "permit";
-        this.guildOnly = true;
-        this.requiredRole = Config.cfg.get("Bot admin role");
+        this.adminCommand = true;
     }
 
     @Override
     public void execute(CommandEvent e) {
         if (e.getArgs().length() < 1) return;
-        if (!Config.cfg.get("Link blacklist").equalsIgnoreCase("true")) return;
+        if (!Config.cfg.get("Link-blacklist").equalsIgnoreCase("true")) return;
 
         List<Member> memberMention = e.getMessage().getMentionedMembers();
 

@@ -36,14 +36,14 @@ class YouTubeVideo {
     }
 
     static boolean checkForVideos(String channel) throws IOException {
-        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube API key");
+        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube-API-key");
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").length() > 0;
     }
 
     static void check() throws IOException {
-        for (String c : Config.cfg.get("YouTube channels").split(", ")) {
+        for (String c : Config.cfg.get("YouTube-channels").split(", ")) {
             if (YouTubeVideo.checkForVideos(c) && !YouTubeVideo.postedVideos.contains(getId())) {
-                Bot.jda.getTextChannelById(Config.cfg.get("Notification channel ID")).sendMessage((Language.lang.get("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
+                Bot.jda.getTextChannelById(Config.cfg.get("Notification-channel-ID")).sendMessage((Language.lang.get("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
                 YouTubeVideo.postedVideos.add(getId());
             }
         }

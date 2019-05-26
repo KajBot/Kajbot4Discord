@@ -9,7 +9,7 @@ public class KeywordListener extends ListenerAdapter {
 
     public void onMessageReceived(MessageReceivedEvent event) {
 
-        if (event.getMessage().getContentRaw().startsWith(Config.cfg.get("Command prefix")) || event.getAuthor().isBot())
+        if (event.getMessage().getContentRaw().startsWith(Config.cfg.get("Command-prefix")) || event.getAuthor().isBot())
             return;
 
         String string = event.getMessage().getContentRaw();

@@ -36,7 +36,7 @@ public class POST extends Servlet {
 
         JSONObject body = new JSONObject(requestBody);
 
-        if (body.isEmpty() || context.request().getHeader("token").isEmpty() || !context.request().getHeader("token").equals(Config.cfg.get("API token"))) {
+        if (body.isEmpty() || context.request().getHeader("token").isEmpty() || !context.request().getHeader("token").equals(Config.cfg.get("API-token"))) {
             context.response().setStatus(HttpServletResponse.SC_BAD_REQUEST);
             os.close();
         }
@@ -59,7 +59,7 @@ public class POST extends Servlet {
 
         if (!body.isNull("set_status")) {
             if (!body.getJSONObject("set_status").isNull("game")) {
-                Config.cfg.set("Bot game", body.getJSONObject("set_status").getString("game"));
+                Config.cfg.set("Bot-game", body.getJSONObject("set_status").getString("game"));
                 Bot.jda.getPresence().setGame(Game.playing(body.getJSONObject("set_status").getString("game")));
             }
 

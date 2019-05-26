@@ -63,7 +63,7 @@ public class CommandEvent {
     }
 
     boolean isOwner() {
-        return event.getAuthor().getId().equals(Config.cfg.get("Bot owner ID"));
+        return event.getAuthor().getId().equals(Config.cfg.get("Bot-owner-ID"));
     }
 
     public void reply(String message) {
