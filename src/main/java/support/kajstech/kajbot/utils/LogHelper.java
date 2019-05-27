@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 public class LogHelper {
 
-    private static org.apache.log4j.Logger logger = Logger.getLogger("[Kajbot]");
+    private static Logger logger = Logger.getLogger("[Kajbot]");
 
     /**
      * helper class d() to log debug level information.
