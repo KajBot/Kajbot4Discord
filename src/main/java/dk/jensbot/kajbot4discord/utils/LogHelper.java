@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 public class LogHelper {
 
-    private static Logger logger = Logger.getLogger("[Kajbot]");
+    private static Logger logger = Logger.getLogger("[Discord]");
 
     /**
      * helper class d() to log debug level information.
