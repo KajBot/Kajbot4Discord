@@ -13,9 +13,7 @@ import java.util.regex.Pattern;
 
 public class CommandManager {
 
-
     private static final Map<String, Command> commands = new HashMap<>();
-
 
     public static void addCommand(Command command) {
         if (!commands.containsKey(command.name)) {
