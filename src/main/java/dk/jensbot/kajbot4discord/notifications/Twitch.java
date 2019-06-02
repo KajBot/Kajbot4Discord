@@ -36,17 +36,6 @@ class Twitch {
         return !new JSONObject(readFromUrl(channelUrl)).isNull("stream");
     }
 
-    private static String getGame() throws IOException {
-        return new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getString("game");
-    }
-
-    private static String getThumbnail() throws IOException {
-        return new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("preview").getString("large");
-    }
-
-    private static String getTitle() throws IOException {
-        return new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("channel").getString("status");
-    }
 
     static void check() throws IOException {
         for (String c : Config.cfg.get("Twitch-channels").split(", ")) {
@@ -54,10 +43,10 @@ class Twitch {
                 if (!live.contains(c)) {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0x6441A5));
-                    eb.setTitle((Language.lang.get("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), "https://www.twitch.tv/" + c);
-                    eb.addField(Language.lang.get("Twitch.TITLE"), getTitle(), false);
-                    eb.addField(Language.lang.get("Twitch.NOW_PLAYING"), getGame(), false);
-                    eb.setImage(getThumbnail());
+                    eb.setTitle((Language.lang.get("Twitch.WENT_LIVE")).replace("%CHANNEL%", c), new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("channel").getString("url"));
+                    eb.addField(Language.lang.get("Twitch.TITLE"), new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("channel").getString("status"), false);
+                    eb.addField(Language.lang.get("Twitch.NOW_PLAYING"), new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getString("game"), false);
+                    eb.setImage("https://static-cdn.jtvnw.net/previews-ttv/live_user_" + new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("channel").getString("name") + "-1920x1080.jpg");
                     eb.setTimestamp(ZonedDateTime.now());
                     Bot.jda.getTextChannelById(Config.cfg.get("Notification-channel-ID")).sendMessage(eb.build()).queue();
                     live.add(c);
