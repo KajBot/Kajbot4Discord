@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'dk.jensbot.kajbot4discord'
-version '0.1.8'
+version '0.1.9'
 mainClassName = 'dk.jensbot.kajbot4discord.Main'
 sourceCompatibility = 1.8
 
