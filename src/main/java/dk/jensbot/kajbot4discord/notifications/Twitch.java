@@ -32,13 +32,13 @@ class Twitch {
     }
 
     private static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + Config.cfg.get("Twitch-client-ID");
+        channelUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + Config.cfg.get("Twitch.clientID");
         return !new JSONObject(readFromUrl(channelUrl)).isNull("stream");
     }
 
 
     static void check() throws IOException {
-        for (String c : Config.cfg.get("Twitch-channels").split(", ")) {
+        for (String c : Config.cfg.get("Twitch.channels").split(", ")) {
             if (checkIfOnline(c)) {
                 if (!live.contains(c)) {
                     EmbedBuilder eb = new EmbedBuilder();
@@ -48,7 +48,7 @@ class Twitch {
                     eb.addField(Language.lang.get("Twitch.NOW_PLAYING"), new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getString("game"), false);
                     eb.setImage("https://static-cdn.jtvnw.net/previews-ttv/live_user_" + new JSONObject(readFromUrl(channelUrl)).getJSONObject("stream").getJSONObject("channel").getString("name") + "-1920x1080.jpg");
                     eb.setTimestamp(ZonedDateTime.now());
-                    Bot.jda.getTextChannelById(Config.cfg.get("Notification-channel-ID")).sendMessage(eb.build()).queue();
+                    Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage(eb.build()).queue();
                     live.add(c);
                 }
             } else {

@@ -27,28 +27,28 @@ class YouTubeLive {
         }
     }
 
-    static String getId() throws IOException {
+    private static String getId() throws IOException {
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
     }
 
-    static String getName() throws IOException {
+    private static String getName() throws IOException {
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
     }
 
-    static boolean checkIfOnline(String channel) throws IOException {
-        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube-API-key");
+    private static boolean checkIfOnline(String channel) throws IOException {
+        channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&eventType=live&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube.key");
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").length() > 0;
     }
 
     static void check() throws IOException {
-        for (String c : Config.cfg.get("YouTube-channels").split(", ")) {
+        for (String c : Config.cfg.get("YouTube.channels").split(", ")) {
             if (checkIfOnline(c)) {
-                if (!YouTubeLive.liveChannels.contains(c)) {
-                    Bot.jda.getTextChannelById(Config.cfg.get("Notification-channel-ID")).sendMessage((Language.lang.get("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
-                    YouTubeLive.liveChannels.add(c);
+                if (!liveChannels.contains(c)) {
+                    Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.get("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
+                    liveChannels.add(c);
                 }
             } else {
-                YouTubeLive.liveChannels.remove(c);
+                liveChannels.remove(c);
             }
         }
     }

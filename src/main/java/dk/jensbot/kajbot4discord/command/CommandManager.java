@@ -46,7 +46,7 @@ public class CommandManager {
     }
 
     public void handleCommand(MessageReceivedEvent event) {
-        final String[] split = event.getMessage().getContentRaw().replaceFirst("(?i)" + Pattern.quote(Config.cfg.get("Command-prefix")), "").replaceFirst(Bot.jda.getSelfUser().getAsMention() + " ", "").split("\\s+");
+        final String[] split = event.getMessage().getContentRaw().replaceFirst("(?i)" + Pattern.quote(Config.cfg.get("Bot.prefix")), "").replaceFirst(Bot.jda.getSelfUser().getAsMention() + " ", "").split("\\s+");
         final String invoke = split[0].toLowerCase();
 
         if (commands.containsKey(invoke)) {

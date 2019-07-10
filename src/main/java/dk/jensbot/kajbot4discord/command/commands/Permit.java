@@ -23,7 +23,7 @@ public class Permit extends Command {
     @Override
     public void execute(CommandEvent e) {
         if (e.getArgs().length() < 1) return;
-        if (!Config.cfg.get("Link-blacklist").equalsIgnoreCase("true")) return;
+        if (!Config.cfg.get("Chat.linkBlacklist").equalsIgnoreCase("true")) return;
 
         List<Member> memberMention = e.getMessage().getMentionedMembers();
 

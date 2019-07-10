@@ -17,7 +17,7 @@ public class Game extends Command {
         if (e.getArgsSplit().get(0).length() < 1) return;
 
         Bot.jda.getPresence().setGame(net.dv8tion.jda.core.entities.Game.playing(e.getArgs()));
-        Config.cfg.set("Bot-game", e.getArgs());
+        Config.cfg.set("Bot.game", e.getArgs());
         e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgs()));
     }
 }

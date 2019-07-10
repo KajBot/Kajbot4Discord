@@ -11,7 +11,7 @@ import java.util.Calendar;
 public class JettyServer {
 
     public static void run() throws Exception {
-        Server server = new Server(Integer.parseInt(Config.cfg.get("API-port")));
+        Server server = new Server(Integer.parseInt(Config.cfg.get("API.port")));
         ServletHandler handler = new ServletHandler();
         server.setHandler(handler);
 

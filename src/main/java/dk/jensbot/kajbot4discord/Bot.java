@@ -30,8 +30,8 @@ public class Bot {
         JDABuilder builder = new JDABuilder(AccountType.BOT);
 
 
-        builder.setToken(Config.cfg.get("Bot-token"));
-        builder.setGame(Game.playing(Config.cfg.get("Bot-game")));
+        builder.setToken(Config.cfg.get("Bot.token"));
+        builder.setGame(Game.playing(Config.cfg.get("Bot.game")));
 
         //Internal commands
         for (Class<? extends Command> command : Main.internalCommands) {

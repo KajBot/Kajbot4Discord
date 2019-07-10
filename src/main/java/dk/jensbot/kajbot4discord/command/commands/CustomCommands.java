@@ -45,7 +45,7 @@ public class CustomCommands extends Command {
                     for (Class<? extends Command> command : Main.internalCommands) {
                         if (command.getSimpleName().equalsIgnoreCase(e.getArgsSplit().get(1))) return;
                     }
-                    CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(Config.cfg.get("Command-prefix"), ""));
+                    CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(Config.cfg.get("Bot.prefix"), ""));
                     e.reply((Language.lang.get("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
@@ -53,7 +53,7 @@ public class CustomCommands extends Command {
                 break;
             case "add":
                 try {
-                    String cmdName = e.getArgsSplit().get(1).replace(Config.cfg.get("Command-prefix"), "");
+                    String cmdName = e.getArgsSplit().get(1).replace(Config.cfg.get("Bot.prefix"), "");
                     for (Class<? extends Command> command : Main.internalCommands) {
                         if (command.getSimpleName().equalsIgnoreCase(cmdName)) return;
                     }

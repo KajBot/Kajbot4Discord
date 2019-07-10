@@ -30,7 +30,9 @@ public class Main {
         //API/WEB
         new Thread(() -> {
             try {
-                JettyServer.run();
+                if(Config.cfg.get("API.enabled").equalsIgnoreCase("true")) {
+                    JettyServer.run();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

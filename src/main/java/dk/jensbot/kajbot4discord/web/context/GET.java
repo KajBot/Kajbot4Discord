@@ -47,7 +47,7 @@ public class GET extends Servlet {
             return;
         }
         Map<String, String> args = qToM(context.request().getQueryString());
-        if (!args.containsKey("token") || !args.get("token").contentEquals(Config.cfg.get("API-token"))) {
+        if (!args.containsKey("token") || !args.get("token").contentEquals(Config.cfg.get("API.token"))) {
             context.response().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             osw.close();
             return;
