@@ -10,5 +10,5 @@ public class Config {
     private static File cfgPath = new File("config");
     private static File fallbackPath = new File("config.properties");
 
-    public static SimpleCfg cfg = new ConfigFactory(cfgPath).format(Format.PROPERTIES).create();
+    public static SimpleCfg cfg = new ConfigFactory(cfgPath).format(Format.PROPERTIES).fallback(fallbackPath).create();
 }
