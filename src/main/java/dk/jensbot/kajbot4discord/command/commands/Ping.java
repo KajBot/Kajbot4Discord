@@ -1,7 +1,7 @@
 package dk.jensbot.kajbot4discord.command.commands;
 
-import dk.jensbot.kajbot4discord.command.CommandEvent;
 import dk.jensbot.kajbot4discord.command.Command;
+import dk.jensbot.kajbot4discord.command.CommandEvent;
 
 import java.time.temporal.ChronoUnit;
 

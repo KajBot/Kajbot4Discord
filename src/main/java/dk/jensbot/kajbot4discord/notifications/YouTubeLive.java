@@ -1,9 +1,9 @@
 package dk.jensbot.kajbot4discord.notifications;
 
 import dk.jensbot.kajbot4discord.Bot;
-import org.json.JSONObject;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.utils.Language;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;

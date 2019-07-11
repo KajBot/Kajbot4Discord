@@ -1,10 +1,10 @@
 package dk.jensbot.kajbot4discord.command.commands;
 
-import net.dv8tion.jda.core.entities.Game;
 import dk.jensbot.kajbot4discord.Bot;
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandEvent;
 import dk.jensbot.kajbot4discord.utils.Language;
+import net.dv8tion.jda.core.entities.Game;
 
 public class Activity extends Command {
     public Activity() {

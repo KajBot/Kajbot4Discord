@@ -1,10 +1,10 @@
 package dk.jensbot.kajbot4discord.command;
 
 
+import dk.jensbot.kajbot4discord.utils.Config;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import dk.jensbot.kajbot4discord.utils.Config;
 
 import java.io.File;
 import java.util.List;

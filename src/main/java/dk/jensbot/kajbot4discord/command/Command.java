@@ -1,8 +1,8 @@
 package dk.jensbot.kajbot4discord.command;
 
 import dk.jensbot.kajbot4discord.utils.Config;
-import net.dv8tion.jda.core.entities.ChannelType;
 import dk.jensbot.kajbot4discord.utils.Language;
+import net.dv8tion.jda.core.entities.ChannelType;
 
 public abstract class Command {
 
@@ -36,7 +36,7 @@ public abstract class Command {
                 }
             }
 
-            if(boosterCommand && event.getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase("Nitro Booster")) && event.getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(Config.cfg.get("Bot.adminRole")))){
+            if (boosterCommand && event.getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase("Nitro Booster")) && event.getMember().getRoles().stream().noneMatch(r -> r.getName().equalsIgnoreCase(Config.cfg.get("Bot.adminRole")))) {
                 event.reply(Language.lang.get("CommandSystem.NOT_BOOSTER"));
                 return;
             }

@@ -1,9 +1,9 @@
 package dk.jensbot.kajbot4discord.listeners;
 
+import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import dk.jensbot.kajbot4discord.utils.Config;
 
 public class MessageLogger extends ListenerAdapter {
 

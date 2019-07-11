@@ -2,11 +2,11 @@ package dk.jensbot.kajbot4discord.notifications;
 
 import dk.jensbot.kajbot4discord.Bot;
 import dk.jensbot.kajbot4discord.utils.Config;
+import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.simplecfg.ConfigFactory;
 import dk.jensbot.simplecfg.Format;
 import dk.jensbot.simplecfg.SimpleCfg;
 import org.json.JSONObject;
-import dk.jensbot.kajbot4discord.utils.Language;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class YouTubeVideo {
-    public static SimpleCfg postedVideos = new ConfigFactory(new File("postedvideos")).format(Format.XML).build();
+    public static SimpleCfg postedVideos = new ConfigFactory(new File("postedvideos")).format(Format.XML).create();
 
     private static String channelUrl;
 

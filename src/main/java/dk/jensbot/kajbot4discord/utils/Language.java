@@ -11,5 +11,5 @@ public class Language {
     private static File langPath = new File(Config.cfg.get("Language"));
     private static File fallbackPath = new File("en_US.properties");
 
-    public static SimpleCfg lang = new ConfigFactory(langPath).format(Format.PROPERTIES).fallback(fallbackPath).build();
+    public static SimpleCfg lang = new ConfigFactory(langPath).format(Format.PROPERTIES).fallback(fallbackPath).create();
 }

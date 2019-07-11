@@ -1,16 +1,16 @@
 package dk.jensbot.kajbot4discord;
 
+import dk.jensbot.kajbot4discord.command.Command;
+import dk.jensbot.kajbot4discord.command.CommandManager;
+import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
+import dk.jensbot.kajbot4discord.notifications.Checker;
+import dk.jensbot.kajbot4discord.utils.Config;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.mdkt.compiler.InMemoryJavaCompiler;
-import dk.jensbot.kajbot4discord.command.Command;
-import dk.jensbot.kajbot4discord.command.CommandManager;
-import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
-import dk.jensbot.kajbot4discord.notifications.Checker;
-import dk.jensbot.kajbot4discord.utils.Config;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;

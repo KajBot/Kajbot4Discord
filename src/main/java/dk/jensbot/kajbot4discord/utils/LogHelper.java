@@ -1,9 +1,9 @@
 package dk.jensbot.kajbot4discord.utils;
 
 
+import dk.jensbot.kajbot4discord.Bot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import org.apache.log4j.Logger;
-import dk.jensbot.kajbot4discord.Bot;
 
 import java.awt.*;
 import java.io.*;

@@ -1,13 +1,13 @@
 package dk.jensbot.kajbot4discord.listeners;
 
+import dk.jensbot.kajbot4discord.command.commands.Permit;
+import dk.jensbot.kajbot4discord.utils.Config;
+import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import dk.jensbot.kajbot4discord.command.commands.Permit;
-import dk.jensbot.kajbot4discord.utils.Config;
-import dk.jensbot.kajbot4discord.utils.Language;
 
 import java.awt.*;
 import java.time.ZonedDateTime;
