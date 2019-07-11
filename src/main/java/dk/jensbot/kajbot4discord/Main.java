@@ -38,12 +38,6 @@ public class Main {
             }
         }).start();
 
-        //SHUTDOWN HOOK
-        Runtime.getRuntime().addShutdownHook(new Thread(Config.cfg::save, "Config-shutdown-thread"));
-        Runtime.getRuntime().addShutdownHook(new Thread(CustomCommandsHandler::saveCustomCommands, "CustomCommands-shutdown-thread"));
-        Runtime.getRuntime().addShutdownHook(new Thread(KeywordHandler::saveKeywords, "Keyword-shutdown-thread"));
-
-
     }
 
 }
