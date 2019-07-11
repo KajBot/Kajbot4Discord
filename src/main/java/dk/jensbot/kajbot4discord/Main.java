@@ -12,6 +12,7 @@ import org.reflections.Reflections;
 import java.util.Set;
 
 public class Main {
+    //REFLECTIONS
     public static final Set<Class<? extends Servlet>> servlets = new Reflections("dk.jensbot.kajbot4discord.web.context").getSubTypesOf(Servlet.class);
     public static final Set<Class<? extends ListenerAdapter>> listeners = new Reflections("dk.jensbot.kajbot4discord.listeners").getSubTypesOf(ListenerAdapter.class);
     public static final Set<Class<? extends Command>> internalCommands = new Reflections("dk.jensbot.kajbot4discord.command.commands").getSubTypesOf(Command.class);
