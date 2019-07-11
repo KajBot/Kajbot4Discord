@@ -18,8 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class YouTubeVideo {
-    public static SimpleCfg postedVideos = new ConfigFactory(new File("postedvideos")).format(Format.XML).create();
-
+    private static SimpleCfg postedVideos = new ConfigFactory(new File("postedvideos")).format(Format.XML).create();
     private static String channelUrl;
 
     private static String readFromUrl(String url) throws IOException {
