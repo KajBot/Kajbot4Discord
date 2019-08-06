@@ -15,6 +15,9 @@ public class Checker extends ListenerAdapter {
                 if (Config.cfg.hasValue("Twitch.clientID") && Config.cfg.hasValue("Twitch.channels") && Config.cfg.get("Twitch.notifications").equalsIgnoreCase("true")) {
                     Twitch.check();
                 }
+                if (Config.cfg.hasValue("Mixer.channels") && Config.cfg.get("Mixer.notifications").equalsIgnoreCase("true")) {
+                    Mixer.check();
+                }
                 if (Config.cfg.hasValue("YouTube.key") && Config.cfg.hasValue("YouTube.channels")) {
                     if (Config.cfg.get("YouTube.videoNotifications").equalsIgnoreCase("true")) {
                         YouTubeVideo.check();
