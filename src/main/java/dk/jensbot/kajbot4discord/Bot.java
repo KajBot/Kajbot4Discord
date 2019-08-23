@@ -5,11 +5,11 @@ import dk.jensbot.kajbot4discord.command.CommandManager;
 import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
 import dk.jensbot.kajbot4discord.notifications.Checker;
 import dk.jensbot.kajbot4discord.utils.Config;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.AccountType;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.mdkt.compiler.InMemoryJavaCompiler;
 
 import javax.security.auth.login.LoginException;
@@ -31,7 +31,7 @@ public class Bot {
 
 
         builder.setToken(Config.cfg.get("Bot.token"));
-        builder.setGame(Game.playing(Config.cfg.get("Bot.game")));
+        builder.setActivity(Activity.playing(Config.cfg.get("Bot.game")));
 
         //Internal commands
         for (Class<? extends Command> command : Main.internalCommands) {
@@ -61,12 +61,11 @@ public class Bot {
 
         //Add listeners using ListenerAdaper
         for (Class<? extends ListenerAdapter> listener : Main.listeners) {
-            builder.addEventListener(listener.newInstance());
+            builder.addEventListeners(listener.newInstance());
         }
 
         //Builder settings
         builder.setBulkDeleteSplittingEnabled(false);
-        builder.setAudioEnabled(false);
 
         //Build JDA
         jda = builder.build().awaitReady();

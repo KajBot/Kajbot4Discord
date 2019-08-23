@@ -8,7 +8,7 @@ import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 import java.time.ZonedDateTime;

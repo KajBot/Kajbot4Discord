@@ -6,7 +6,7 @@ import dk.jensbot.kajbot4discord.command.CommandEvent;
 import dk.jensbot.kajbot4discord.handlers.KeywordHandler;
 import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 import java.time.ZonedDateTime;

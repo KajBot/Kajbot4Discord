@@ -2,7 +2,7 @@ package dk.jensbot.kajbot4discord.notifications;
 
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.io.IOException;
 

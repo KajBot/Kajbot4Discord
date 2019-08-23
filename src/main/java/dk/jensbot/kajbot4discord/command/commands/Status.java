@@ -4,7 +4,7 @@ import dk.jensbot.kajbot4discord.Bot;
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandEvent;
 import dk.jensbot.kajbot4discord.utils.Language;
-import net.dv8tion.jda.core.OnlineStatus;
+import net.dv8tion.jda.api.OnlineStatus;
 
 public class Status extends Command {
     public Status() {

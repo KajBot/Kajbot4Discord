@@ -2,8 +2,8 @@ package dk.jensbot.kajbot4discord.listeners;
 
 import dk.jensbot.kajbot4discord.handlers.KeywordHandler;
 import dk.jensbot.kajbot4discord.utils.Config;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class KeywordListener extends ListenerAdapter {
 

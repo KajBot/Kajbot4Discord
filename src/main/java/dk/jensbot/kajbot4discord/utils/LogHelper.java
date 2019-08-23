@@ -2,7 +2,7 @@ package dk.jensbot.kajbot4discord.utils;
 
 
 import dk.jensbot.kajbot4discord.Bot;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 import org.apache.log4j.Logger;
 
 import java.awt.*;

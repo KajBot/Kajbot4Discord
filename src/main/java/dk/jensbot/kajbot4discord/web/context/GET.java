@@ -54,7 +54,7 @@ public class GET extends Servlet {
         }
 
         JSONObject json = new JSONObject();
-        json.put("game", Bot.jda.getPresence().getGame().getName());
+        json.put("game", Bot.jda.getPresence().getActivity() == null ? "N/A" : Bot.jda.getPresence().getActivity().getName());
         json.put("status", Bot.jda.getPresence().getStatus());
         json.put("commands", CustomCommandsHandler.getCustomCommands());
         json.put("keywords", KeywordHandler.getKeywords());

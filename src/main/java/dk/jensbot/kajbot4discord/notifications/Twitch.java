@@ -3,7 +3,7 @@ package dk.jensbot.kajbot4discord.notifications;
 import dk.jensbot.kajbot4discord.Bot;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.utils.Language;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 import org.json.JSONObject;
 
 import java.awt.*;

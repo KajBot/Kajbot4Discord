@@ -6,8 +6,8 @@ import dk.jensbot.kajbot4discord.handlers.KeywordHandler;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.web.Context;
 import dk.jensbot.kajbot4discord.web.Servlet;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -60,7 +60,7 @@ public class POST extends Servlet {
         if (!body.isNull("set_status")) {
             if (!body.getJSONObject("set_status").isNull("game")) {
                 Config.cfg.set("Bot.game", body.getJSONObject("set_status").getString("game"));
-                Bot.jda.getPresence().setGame(Game.playing(body.getJSONObject("set_status").getString("game")));
+                Bot.jda.getPresence().setActivity(Activity.playing(body.getJSONObject("set_status").getString("game")));
             }
 
             if (!body.getJSONObject("set_status").isNull("online")) {
@@ -73,10 +73,10 @@ public class POST extends Servlet {
 
             if (!body.getJSONObject("set_status").isNull("activity")) {
                 String status = body.getJSONObject("set_status").getString("activity");
-                if (status.equalsIgnoreCase("playing")) status = Game.GameType.DEFAULT.toString();
-                if (!(status.equalsIgnoreCase(Game.GameType.DEFAULT.toString()) || status.equalsIgnoreCase(Game.GameType.LISTENING.toString()) || status.equalsIgnoreCase(Game.GameType.WATCHING.toString()) || status.equalsIgnoreCase(Game.GameType.STREAMING.toString())))
+                if (status.equalsIgnoreCase("playing")) status = Activity.ActivityType.DEFAULT.toString();
+                if (!(status.equalsIgnoreCase(Activity.ActivityType.DEFAULT.toString()) || status.equalsIgnoreCase(Activity.ActivityType.LISTENING.toString()) || status.equalsIgnoreCase(Activity.ActivityType.WATCHING.toString()) || status.equalsIgnoreCase(Activity.ActivityType.STREAMING.toString())))
                     return;
-                Bot.jda.getPresence().setGame(Game.of(Game.GameType.valueOf(status.toUpperCase()), Bot.jda.getPresence().getGame().getName()));
+                Bot.jda.getPresence().setActivity(Activity.of(Activity.ActivityType.valueOf(status.toUpperCase()), Bot.jda.getPresence().getActivity() == null ? "N/A" : Bot.jda.getPresence().getActivity().getName()));
             }
         }
 

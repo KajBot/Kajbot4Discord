@@ -2,7 +2,7 @@ package dk.jensbot.kajbot4discord.command;
 
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.utils.Language;
-import net.dv8tion.jda.core.entities.ChannelType;
+import net.dv8tion.jda.api.entities.ChannelType;
 
 public abstract class Command {
 

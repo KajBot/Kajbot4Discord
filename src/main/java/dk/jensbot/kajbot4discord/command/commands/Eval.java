@@ -3,7 +3,7 @@ package dk.jensbot.kajbot4discord.command.commands;
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandEvent;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
-import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.api.JDA;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
