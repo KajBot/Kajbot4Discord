@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'dk.jensbot.kajbot4discord'
-version '0.2.0'
+version '0.2.1'
 mainClassName = 'dk.jensbot.kajbot4discord.Main'
 sourceCompatibility = 1.8
 
@@ -22,7 +22,7 @@ dependencies {
     compile('org.json:json:20180813')
     compile('org.mdkt.compiler:InMemoryJavaCompiler:1.3.0')
     compile('dk.jensbot.simplecfg:SimpleCfg:0.1.8')
-    compile('net.dv8tion:JDA:4.0.0_45') {
+    compile('net.dv8tion:JDA:4.0.0_52') {
         exclude module: 'opus-java'
     }
     compile 'org.eclipse.jetty:jetty-server:9.4.18.v20190429'
