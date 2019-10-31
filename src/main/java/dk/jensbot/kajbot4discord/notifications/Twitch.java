@@ -51,13 +51,12 @@ class Twitch {
         for (String c : Config.cfg.get("Twitch.channels").split(", ")) {
             if (isOnline(c)) {
                 if (!live.contains(c)) {
-                    System.out.println(readFromUrl(channelUrl));
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0x6441A5));
                     eb.setTitle((Language.lang.get("Twitch.WENT_LIVE")).replace("%CHANNEL%", readFromUrl(channelUrl).getJSONArray("data").getJSONObject(0).getString("user_name")), "https://twitch.tv/" + readFromUrl(channelUrl).getJSONArray("data").getJSONObject(0).getString("user_name"));
                     eb.addField(Language.lang.get("Twitch.TITLE"), readFromUrl(channelUrl).getJSONArray("data").getJSONObject(0).getString("title"), false);
                     eb.addField(Language.lang.get("Twitch.NOW_PLAYING"), readFromUrl("https://api.twitch.tv/helix/games?id=" + readFromUrl(channelUrl).getJSONArray("data").getJSONObject(0).getString("game_id")).getJSONArray("data").getJSONObject(0).getString("name"), false);
-                    eb.setImage("https://static-cdn.jtvnw.net/previews-ttv/live_user_" + c + "-1920x1080.jpg");
+                    eb.setImage("https://static-cdn.jtvnw.net/previews-ttv/live_user_" + c);
                     eb.setTimestamp(ZonedDateTime.now());
                     Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage(eb.build()).queue();
                     live.add(c);

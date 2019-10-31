@@ -44,7 +44,7 @@ class YouTubeLive {
         for (String c : Config.cfg.get("YouTube.channels").split(", ")) {
             if (checkIfOnline(c)) {
                 if (!liveChannels.contains(c)) {
-                    Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.get("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
+                    Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.get("YouTube.Live.WENT_LIVE")).replace("%CHANNEL%", getName()) + "  https://youtu.be/" + getId()).queue();
                     liveChannels.add(c);
                 }
             } else {

@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import org.json.JSONObject;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,7 +24,7 @@ public class POST extends Servlet {
     }
 
     @Override
-    protected void post(Context context) throws ServletException, IOException {
+    protected void post(Context context) throws IOException {
         OutputStream os = context.response().getOutputStream();
 
         InputStreamReader isr = new InputStreamReader(context.request().getInputStream(), StandardCharsets.UTF_8);

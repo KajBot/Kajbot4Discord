@@ -8,7 +8,6 @@ import dk.jensbot.kajbot4discord.web.Context;
 import dk.jensbot.kajbot4discord.web.Servlet;
 import org.json.JSONObject;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -38,7 +37,7 @@ public class GET extends Servlet {
     }
 
     @Override
-    protected void get(Context context) throws ServletException, IOException {
+    protected void get(Context context) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(context.response().getOutputStream(), StandardCharsets.UTF_8);
 
         if (context.request().getQueryString() == null || context.request().getQueryString().isEmpty()) {

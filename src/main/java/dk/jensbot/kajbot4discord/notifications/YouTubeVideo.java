@@ -18,7 +18,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class YouTubeVideo {
-    private static SimpleCfg postedVideos = new ConfigFactory(new File("postedvideos")).format(Format.XML).create();
+
+    private static File filePath = new File("postedvideos");
+    public static SimpleCfg postedVideos = new ConfigFactory(filePath).format(Format.XML).create();
     private static String channelUrl;
 
     private static String readFromUrl(String url) throws IOException {
@@ -45,7 +47,7 @@ class YouTubeVideo {
     static void check() throws IOException {
         for (String c : Config.cfg.get("YouTube.channels").split(", ")) {
             if (checkForVideos(c) && !postedVideos.hasKey(getId())) {
-                Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.get("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://www.youtube.com/watch?v=" + getId()).queue();
+                Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.get("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://youtu.be/" + getId()).queue();
                 postedVideos.set(getId(), "");
             }
         }
