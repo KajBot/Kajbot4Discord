@@ -35,9 +35,10 @@ public class POST extends Servlet {
 
         JSONObject body = new JSONObject(requestBody);
 
-        if (body.isEmpty() || context.request().getHeader("token").isEmpty() || !context.request().getHeader("token").equals(Config.cfg.get("API.token"))) {
-            context.response().setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        if (context.request().getHeader("token") == null || !context.request().getHeader("token").contentEquals(Config.cfg.get("API.token"))) {
+            context.response().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             os.close();
+            return;
         }
 
         if (!body.isNull("add_command")) {

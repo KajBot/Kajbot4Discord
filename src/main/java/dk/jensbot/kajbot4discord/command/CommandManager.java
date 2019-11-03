@@ -1,6 +1,5 @@
 package dk.jensbot.kajbot4discord.command;
 
-import dk.jensbot.kajbot4discord.Bot;
 import dk.jensbot.kajbot4discord.Main;
 import dk.jensbot.kajbot4discord.utils.Config;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -46,7 +45,7 @@ public class CommandManager {
     }
 
     public void handleCommand(MessageReceivedEvent event) {
-        final String[] split = event.getMessage().getContentRaw().replaceFirst("(?i)" + Pattern.quote(Config.cfg.get("Bot.prefix")), "").replaceFirst(Bot.jda.getSelfUser().getAsMention() + " ", "").split("\\s+");
+        final String[] split = event.getMessage().getContentRaw().replaceFirst("(?i)" + Pattern.quote(Config.cfg.get("Bot.prefix")), "").replaceFirst(event.getJDA().getSelfUser().getAsMention() + " ", "").split("\\s+");
         final String invoke = split[0].toLowerCase();
 
         if (commands.containsKey(invoke)) {

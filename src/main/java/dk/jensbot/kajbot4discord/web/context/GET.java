@@ -40,13 +40,7 @@ public class GET extends Servlet {
     protected void get(Context context) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(context.response().getOutputStream(), StandardCharsets.UTF_8);
 
-        if (context.request().getQueryString() == null || context.request().getQueryString().isEmpty()) {
-            context.response().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            osw.close();
-            return;
-        }
-        Map<String, String> args = qToM(context.request().getQueryString());
-        if (!args.containsKey("token") || !args.get("token").contentEquals(Config.cfg.get("API.token"))) {
+        if (context.request().getHeader("token") == null || !context.request().getHeader("token").contentEquals(Config.cfg.get("API.token"))) {
             context.response().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             osw.close();
             return;

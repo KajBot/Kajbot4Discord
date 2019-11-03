@@ -5,11 +5,10 @@ import dk.jensbot.kajbot4discord.command.CommandManager;
 import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
 import dk.jensbot.kajbot4discord.notifications.Checker;
 import dk.jensbot.kajbot4discord.utils.Config;
-import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import org.mdkt.compiler.InMemoryJavaCompiler;
 
 import javax.security.auth.login.LoginException;
@@ -24,10 +23,10 @@ public class Bot {
 
     public static JDA jda;
 
-    public static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException, InterruptedException {
+    public static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException {
 
         //JDA Builder
-        JDABuilder builder = new JDABuilder(AccountType.BOT);
+        DefaultShardManagerBuilder builder = new DefaultShardManagerBuilder();
 
 
         builder.setToken(Config.cfg.get("Bot.token"));
@@ -67,8 +66,11 @@ public class Bot {
         //Builder settings
         builder.setBulkDeleteSplittingEnabled(false);
 
+        //Sharding
+        builder.setShardsTotal(2);
+
         //Build JDA
-        jda = builder.build().awaitReady();
+        builder.build();
 
         //NOTIFICATIONS
         new Thread(() -> {
@@ -78,5 +80,6 @@ public class Bot {
                 e.printStackTrace();
             }
         }).start();
+
     }
 }

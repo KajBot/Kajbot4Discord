@@ -1,6 +1,5 @@
 package dk.jensbot.kajbot4discord.command.commands;
 
-import dk.jensbot.kajbot4discord.Bot;
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandEvent;
 import dk.jensbot.kajbot4discord.utils.Language;
@@ -23,7 +22,7 @@ public class Status extends Command {
             return;
 
 
-        Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(e.getArgsSplit().get(0).toUpperCase()));
+        e.getJDA().getPresence().setStatus(OnlineStatus.valueOf(e.getArgsSplit().get(0).toUpperCase()));
         e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
     }
 }
