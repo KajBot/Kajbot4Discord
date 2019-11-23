@@ -1,6 +1,7 @@
 package dk.jensbot.kajbot4discord;
 
 import dk.jensbot.kajbot4discord.command.Command;
+import dk.jensbot.kajbot4discord.notifications.Checker;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.web.JettyServer;
 import dk.jensbot.kajbot4discord.web.Servlet;
@@ -20,7 +21,7 @@ public class Main {
         //BOT
         new Thread(() -> {
             try {
-                Bot.run();
+                new Bot();
             } catch (Exception e) {
                 e.printStackTrace();
             }

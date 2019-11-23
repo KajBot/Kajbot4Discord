@@ -3,19 +3,14 @@ package dk.jensbot.kajbot4discord;
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandManager;
 import dk.jensbot.kajbot4discord.command.CustomCommandHandler;
-import dk.jensbot.kajbot4discord.listeners.Ready;
 import dk.jensbot.kajbot4discord.notifications.Checker;
 import dk.jensbot.kajbot4discord.utils.Config;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.events.GenericEvent;
-import net.dv8tion.jda.api.events.ReadyEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import org.mdkt.compiler.InMemoryJavaCompiler;
 
-import javax.annotation.Nonnull;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
@@ -28,10 +23,11 @@ public class Bot {
 
     public static JDA jda;
 
-    public static void run() throws LoginException, IllegalAccessException, InstantiationException, IOException {
+    public Bot() throws LoginException, IllegalAccessException, InstantiationException, IOException, InterruptedException {
 
         //JDA Builder
-        DefaultShardManagerBuilder builder = new DefaultShardManagerBuilder();
+        JDABuilder builder = new JDABuilder();
+        //DefaultShardManagerBuilder builder = new DefaultShardManagerBuilder();
 
         builder.setToken(Config.cfg.get("Bot.token"));
         builder.setActivity(Activity.playing(Config.cfg.get("Bot.game")));
@@ -48,7 +44,6 @@ public class Bot {
         File dir = new File(System.getProperty("user.dir") + "/commands");
         if (!dir.exists()) Files.createDirectory(dir.toPath());
         for (File clazz : Objects.requireNonNull(dir.listFiles())) {
-
             String name = clazz.getName();
             int lastIndexOf = name.lastIndexOf(".");
             if (lastIndexOf == -1 || !name.substring(lastIndexOf).equals(".java")) continue;
@@ -71,16 +66,20 @@ public class Bot {
         builder.setBulkDeleteSplittingEnabled(false);
 
         //Sharding
-        builder.setShardsTotal(4);
+        //builder.setShardsTotal(2);
 
         //Build JDA
-        builder.build();
+        jda = builder.build().awaitReady();
 
-        try {
-            jda.awaitReady();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //NOTIFICATIONS
+        new Thread(() -> {
+            try {
+                Checker.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
 
     }
 }

@@ -6,7 +6,6 @@ import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.simplecfg.ConfigFactory;
 import dk.jensbot.simplecfg.Format;
 import dk.jensbot.simplecfg.SimpleCfg;
-import net.dv8tion.jda.api.entities.ChannelType;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -40,7 +39,7 @@ class YouTubeVideo {
 
     private static boolean checkForVideos(String channel) throws IOException {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube.key");
-        return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId") != null && !postedVideos.hasKey(getId());
+        return !postedVideos.hasKey(new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId"));
     }
 
     static void check() throws IOException {

@@ -4,7 +4,6 @@ import dk.jensbot.simplecfg.ConfigFactory;
 import dk.jensbot.simplecfg.Format;
 import dk.jensbot.simplecfg.SimpleCfg;
 
-import java.io.File;
 import java.util.Properties;
 
 public class CustomCommandHandler {
