@@ -21,30 +21,34 @@ class YouTubeVideo {
     private static SimpleCfg postedVideos = new ConfigFactory("data/postedvideos").format(Format.XML).create();
     private static String channelUrl;
 
-    private static String readFromUrl(String url) throws IOException {
-        URL page = new URL(url);
-        try (Stream<String> stream = new BufferedReader(new InputStreamReader(
-                page.openStream(), StandardCharsets.UTF_8)).lines()) {
-            return stream.collect(Collectors.joining(System.lineSeparator()));
+    private static String readFromUrl(String url) {
+        try {
+            URL page = new URL(url);
+            try (Stream<String> stream = new BufferedReader(new InputStreamReader(page.openStream(), StandardCharsets.UTF_8)).lines()) {
+                return stream.collect(Collectors.joining(System.lineSeparator()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return "Couldn't read from URL";
     }
 
-    private static String getId() throws IOException {
+    private static String getId() {
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
     }
 
-    private static String getName() throws IOException {
+    private static String getName() {
         return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
     }
 
-    private static boolean checkForVideos(String channel) throws IOException {
+    private static boolean checkNewVideo(String channel) {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube.key");
-        return !postedVideos.hasKey(new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId"));
+        return !postedVideos.hasKey(getId());
     }
 
-    static void check() throws IOException {
+    static void check() {
         for (String c : Config.cfg.get("YouTube.channels").split(", ")) {
-            if (checkForVideos(c)) {
+            if (checkNewVideo(c)) {
                 Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.getProperty("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://youtu.be/" + getId()).queue();
                 postedVideos.set(getId(), "");
             }

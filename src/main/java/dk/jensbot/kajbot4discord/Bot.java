@@ -3,7 +3,6 @@ package dk.jensbot.kajbot4discord;
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandManager;
 import dk.jensbot.kajbot4discord.command.CustomCommandHandler;
-import dk.jensbot.kajbot4discord.notifications.Checker;
 import dk.jensbot.kajbot4discord.utils.Config;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -18,10 +17,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 public class Bot {
 
     public static JDA jda;
+    static final CountDownLatch botStarted = new CountDownLatch(1);
 
     public Bot() throws LoginException, IllegalAccessException, InstantiationException, IOException, InterruptedException {
 
@@ -70,15 +71,7 @@ public class Bot {
 
         //Build JDA
         jda = builder.build().awaitReady();
-
-        //NOTIFICATIONS
-        new Thread(() -> {
-            try {
-                Checker.run();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        botStarted.countDown();
 
 
     }

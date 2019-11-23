@@ -5,8 +5,6 @@ import dk.jensbot.simplecfg.Format;
 import dk.jensbot.simplecfg.SimpleCfg;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URL;
 
 public class Config {
     private static File fallbackPath = new File("config.properties");

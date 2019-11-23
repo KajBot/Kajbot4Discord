@@ -27,13 +27,28 @@ public class Main {
             }
         }).start();
 
+        try {
+            Bot.botStarted.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //API/WEB
         new Thread(() -> {
-            try {
-                if (Config.cfg.get("API.enabled").equalsIgnoreCase("true")) {
+            if (Config.cfg.get("API.enabled").equalsIgnoreCase("true")) {
+                try {
                     JettyServer.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
+            }
+        }).start();
+
+        //NOTIFICATIONS
+        new Thread(() -> {
+            try {
+                Checker.run();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
