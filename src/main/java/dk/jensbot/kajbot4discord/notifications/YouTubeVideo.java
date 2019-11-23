@@ -11,42 +11,43 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class YouTubeVideo {
 
     private static SimpleCfg postedVideos = new ConfigFactory("data/postedvideos").format(Format.XML).create();
     private static String channelUrl;
 
-    private static String readFromUrl(String url) {
-        try {
-            URL page = new URL(url);
-            try (Stream<String> stream = new BufferedReader(new InputStreamReader(page.openStream(), StandardCharsets.UTF_8)).lines()) {
-                return stream.collect(Collectors.joining(System.lineSeparator()));
+    private static JSONObject readFromUrl(String url) throws IOException {
+        JSONObject responseJson;
+        HttpURLConnection httpClient = (HttpURLConnection) new URL(url).openConnection();
+
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(httpClient.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = in.readLine()) != null) {
+                response.append(line);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            responseJson = new JSONObject(response.toString());
         }
-        return "Couldn't read from URL";
+        return responseJson;
     }
 
-    private static String getId() {
-        return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
+    private static String getId() throws IOException {
+        return readFromUrl(channelUrl).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId");
     }
 
-    private static String getName() {
-        return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
+    private static String getName() throws IOException {
+        return readFromUrl(channelUrl).getJSONArray("items").getJSONObject(0).getJSONObject("snippet").getString("channelTitle");
     }
 
-    private static boolean checkNewVideo(String channel) {
+    private static boolean checkNewVideo(String channel) throws IOException {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube.key");
         return !postedVideos.hasKey(getId());
     }
 
-    static void check() {
+    static void check() throws IOException {
         for (String c : Config.cfg.get("YouTube.channels").split(", ")) {
             if (checkNewVideo(c)) {
                 Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.getProperty("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://youtu.be/" + getId()).queue();
