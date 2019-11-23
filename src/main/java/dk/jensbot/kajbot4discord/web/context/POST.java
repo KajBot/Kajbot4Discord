@@ -31,14 +31,10 @@ public class POST extends Servlet {
     @Override
     public void post(Context context) throws IOException {
         OutputStream os = context.response().getOutputStream();
-
         InputStreamReader isr = new InputStreamReader(context.request().getInputStream(), StandardCharsets.UTF_8);
         Scanner s = new Scanner(isr).useDelimiter("\\A");
         String requestBody = s.hasNext() ? s.next() : "";
         isr.close();
-
-
-        JSONObject body = new JSONObject(requestBody);
 
         if (context.request().getHeader("token") == null || !context.request().getHeader("token").contentEquals(Config.cfg.get("API.token"))) {
             context.response().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -46,28 +42,24 @@ public class POST extends Servlet {
             return;
         }
 
+        JSONObject body = new JSONObject(requestBody);
         if (!body.isNull("add_command")) {
             body.getJSONObject("add_command").toMap().forEach((k, v) -> CommandManager.addCustomCommand(k, (String) v));
         }
-
         if (!body.isNull("remove_command")) {
             body.getJSONObject("remove_command").names().forEach((k) -> CommandManager.removeCustomCommand((String) k));
         }
-
         if (!body.isNull("add_keyword")) {
             body.getJSONObject("add_keyword").toMap().forEach((k, v) -> KeywordHandler.addKeyword(k, (String) v));
         }
-
         if (!body.isNull("remove_keyword")) {
             body.getJSONObject("remove_keyword").names().forEach((k) -> KeywordHandler.removeKeyword((String) k));
         }
-
         if (!body.isNull("set_status")) {
             if (!body.getJSONObject("set_status").isNull("game")) {
                 Config.cfg.set("Bot.game", body.getJSONObject("set_status").getString("game"));
                 Bot.jda.getPresence().setActivity(Activity.playing(body.getJSONObject("set_status").getString("game")));
             }
-
             if (!body.getJSONObject("set_status").isNull("online")) {
                 String status = body.getJSONObject("set_status").getString("online");
                 if (status.equalsIgnoreCase("dnd")) status = OnlineStatus.DO_NOT_DISTURB.toString();
@@ -75,7 +67,6 @@ public class POST extends Servlet {
                     return;
                 Bot.jda.getPresence().setStatus(OnlineStatus.valueOf(status.toUpperCase()));
             }
-
             if (!body.getJSONObject("set_status").isNull("activity")) {
                 String status = body.getJSONObject("set_status").getString("activity");
                 if (status.equalsIgnoreCase("playing")) status = Activity.ActivityType.DEFAULT.toString();
@@ -84,7 +75,6 @@ public class POST extends Servlet {
                 Bot.jda.getPresence().setActivity(Activity.of(Activity.ActivityType.valueOf(status.toUpperCase()), Bot.jda.getPresence().getActivity() == null ? "N/A" : Bot.jda.getPresence().getActivity().getName()));
             }
         }
-
 
         context.response().setStatus(HttpServletResponse.SC_OK);
         os.close();

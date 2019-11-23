@@ -7,7 +7,7 @@ public class Context {
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
-    public Context(HttpServletRequest request, HttpServletResponse response) {
+    Context(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }

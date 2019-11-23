@@ -28,7 +28,6 @@ dependencies {
     compile 'org.eclipse.jetty:jetty-server:9.4.22.v20191022'
     compile 'org.eclipse.jetty:jetty-servlet:9.4.22.v20191022'
     compile 'org.eclipse.jetty:jetty-servlets:9.4.22.v20191022'
-
 }
 
 shadowJar {
