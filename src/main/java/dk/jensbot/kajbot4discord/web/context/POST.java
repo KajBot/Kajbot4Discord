@@ -24,7 +24,12 @@ public class POST extends Servlet {
     }
 
     @Override
-    protected void post(Context context) throws IOException {
+    protected void get(Context c) {
+
+    }
+
+    @Override
+    public void post(Context context) throws IOException {
         OutputStream os = context.response().getOutputStream();
 
         InputStreamReader isr = new InputStreamReader(context.request().getInputStream(), StandardCharsets.UTF_8);
@@ -83,6 +88,5 @@ public class POST extends Servlet {
 
         context.response().setStatus(HttpServletResponse.SC_OK);
         os.close();
-
     }
 }

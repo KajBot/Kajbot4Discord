@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GET extends Servlet {
     public GET() {
@@ -21,23 +19,8 @@ public class GET extends Servlet {
         this.path = "/api";
     }
 
-    private static Map<String, String> qToM(String query) {
-        Map<String, String> result = new HashMap<>();
-        for (String param : query.split("&")) {
-            String[] pair = param.split("=");
-            if (pair.length > 1) {
-                result.put(pair[0], pair[1]);
-            } else {
-                result.put(pair[0], "");
-            }
-        }
-        return result;
-
-
-    }
-
     @Override
-    protected void get(Context context) throws IOException {
+    public void get(Context context) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(context.response().getOutputStream(), StandardCharsets.UTF_8);
 
         if (context.request().getHeader("token") == null || !context.request().getHeader("token").contentEquals(Config.cfg.get("API.token"))) {
@@ -56,6 +39,11 @@ public class GET extends Servlet {
         context.response().setStatus(HttpServletResponse.SC_OK);
         osw.write(json.toString());
         osw.close();
+
+    }
+
+    @Override
+    protected void post(Context c) {
 
     }
 }
