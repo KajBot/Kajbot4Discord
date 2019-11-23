@@ -5,10 +5,11 @@ import dk.jensbot.simplecfg.Format;
 import dk.jensbot.simplecfg.SimpleCfg;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
 
 public class Config {
-    private static File cfgPath = new File("config");
     private static File fallbackPath = new File("config.properties");
 
-    public static SimpleCfg cfg = new ConfigFactory(cfgPath).format(Format.PROPERTIES).fallback(fallbackPath).create();
+    public static SimpleCfg cfg = new ConfigFactory("data/config").format(Format.PROPERTIES).fallback(fallbackPath).create();
 }

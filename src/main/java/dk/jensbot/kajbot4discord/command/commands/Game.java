@@ -18,6 +18,6 @@ public class Game extends Command {
 
         e.getJDA().getPresence().setActivity(Activity.playing(e.getArgs()));
         Config.cfg.set("Bot.game", e.getArgs());
-        e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgs()));
+        e.reply((Language.lang.getProperty("Status.SET")).replace("%STATUS%", e.getArgs()));
     }
 }

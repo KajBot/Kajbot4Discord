@@ -28,12 +28,12 @@ public class CommandManager {
             @Override
             protected void execute(CommandEvent e) {
                 String message = value
-                        .replace(">USER<", e.getAuthor().getAsMention())
-                        .replace(">MEMBERCOUNT<", String.valueOf(e.getGuild().getMembers().size()));
+                        .replace("%USER%", e.getAuthor().getAsMention())
+                        .replace("%MEMBERCOUNT%", String.valueOf(e.getGuild().getMembers().size()));
                 e.reply(message);
             }
         });
-        CustomCommandsHandler.getCustomCommands().setProperty(key, value);
+        CustomCommandHandler.getCommands().setProperty(key, value);
     }
 
     public static void removeCustomCommand(String key) {
@@ -41,7 +41,7 @@ public class CommandManager {
             if (command.getSimpleName().equalsIgnoreCase(key)) return;
         }
         commands.remove(key);
-        CustomCommandsHandler.getCustomCommands().remove(key);
+        CustomCommandHandler.getCommands().remove(key);
     }
 
     public void handleCommand(MessageReceivedEvent event) {

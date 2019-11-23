@@ -52,7 +52,7 @@ public class Blacklist extends ListenerAdapter {
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
             log(event, m.group(0));
-            event.getChannel().sendMessage((Language.lang.get("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
+            event.getChannel().sendMessage((Language.lang.getProperty("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
             event.getMessage().delete().queue();
         }
     }
@@ -71,7 +71,7 @@ public class Blacklist extends ListenerAdapter {
         Matcher m = URL_REGEX.matcher(event.getMessage().getContentRaw());
         if (m.find()) {
             log(event, m.group(0));
-            event.getChannel().sendMessage((Language.lang.get("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
+            event.getChannel().sendMessage((Language.lang.getProperty("BlacklistListener.BLACKLIST_ENABLED")).replace("%USER%", event.getMember().getAsMention())).queue();
             event.getMessage().delete().queue();
         }
     }

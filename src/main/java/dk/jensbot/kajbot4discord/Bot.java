@@ -2,15 +2,20 @@ package dk.jensbot.kajbot4discord;
 
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandManager;
-import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
+import dk.jensbot.kajbot4discord.command.CustomCommandHandler;
+import dk.jensbot.kajbot4discord.listeners.Ready;
 import dk.jensbot.kajbot4discord.notifications.Checker;
 import dk.jensbot.kajbot4discord.utils.Config;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import org.mdkt.compiler.InMemoryJavaCompiler;
 
+import javax.annotation.Nonnull;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +33,6 @@ public class Bot {
         //JDA Builder
         DefaultShardManagerBuilder builder = new DefaultShardManagerBuilder();
 
-
         builder.setToken(Config.cfg.get("Bot.token"));
         builder.setActivity(Activity.playing(Config.cfg.get("Bot.game")));
 
@@ -38,7 +42,7 @@ public class Bot {
         }
 
         //Simple custom commands
-        CustomCommandsHandler.getCustomCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
+        CustomCommandHandler.getCommands().forEach((k, v) -> CommandManager.addCustomCommand(k.toString(), v.toString()));
 
         //Java custom commands
         File dir = new File(System.getProperty("user.dir") + "/commands");
@@ -67,19 +71,16 @@ public class Bot {
         builder.setBulkDeleteSplittingEnabled(false);
 
         //Sharding
-        builder.setShardsTotal(2);
+        builder.setShardsTotal(4);
 
         //Build JDA
         builder.build();
 
-        //NOTIFICATIONS
-        new Thread(() -> {
-            try {
-                Checker.run();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        try {
+            jda.awaitReady();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 }

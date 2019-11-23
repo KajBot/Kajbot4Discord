@@ -38,17 +38,17 @@ public class Purge extends Command {
                     }
 
                 }
-                e.reply((Language.lang.get("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
+                e.reply((Language.lang.getProperty("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
             } else {
                 MessageHistory history = new MessageHistory(e.getChannel());
                 List<Message> msgs;
                 msgs = history.retrievePast(AMOUNT).complete();
                 e.getChannel().deleteMessages(msgs).queue();
-                e.reply((Language.lang.get("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
+                e.reply((Language.lang.getProperty("Purge.SUCCESS")).replace("%AMOUNT%", e.getArgsSplit().get(0)));
             }
         } catch (Exception ex) {
             LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
-            e.reply(Language.lang.get("Purge.ERROR"));
+            e.reply(Language.lang.getProperty("Purge.ERROR"));
         }
     }
 

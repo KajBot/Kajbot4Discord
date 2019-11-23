@@ -43,9 +43,9 @@ class Mixer {
                 if (!live.contains(c)) {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0x6441A5));
-                    eb.setTitle((Language.lang.get("Mixer.WENT_LIVE")).replace("%CHANNEL%", c), "https://mixer.com/" + c);
-                    eb.addField(Language.lang.get("Mixer.TITLE"), new JSONObject(readFromUrl(channelUrl)).getString("name"), false);
-                    eb.addField(Language.lang.get("Mixer.NOW_PLAYING"), new JSONObject(readFromUrl(channelUrl)).getJSONObject("type").getString("name"), false);
+                    eb.setTitle((Language.lang.getProperty("Mixer.WENT_LIVE")).replace("%CHANNEL%", c), "https://mixer.com/" + c);
+                    eb.addField(Language.lang.getProperty("Mixer.TITLE"), new JSONObject(readFromUrl(channelUrl)).getString("name"), false);
+                    eb.addField(Language.lang.getProperty("Mixer.NOW_PLAYING"), new JSONObject(readFromUrl(channelUrl)).getJSONObject("type").getString("name"), false);
                     eb.setImage(new JSONObject(readFromUrl(channelUrl)).getJSONObject("type").getString("coverUrl"));
                     eb.setTimestamp(ZonedDateTime.now());
                     Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage(eb.build()).queue();

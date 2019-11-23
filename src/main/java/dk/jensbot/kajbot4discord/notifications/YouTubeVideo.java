@@ -6,10 +6,10 @@ import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.simplecfg.ConfigFactory;
 import dk.jensbot.simplecfg.Format;
 import dk.jensbot.simplecfg.SimpleCfg;
+import net.dv8tion.jda.api.entities.ChannelType;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -19,8 +19,7 @@ import java.util.stream.Stream;
 
 class YouTubeVideo {
 
-    private static File filePath = new File("postedvideos");
-    public static SimpleCfg postedVideos = new ConfigFactory(filePath).format(Format.XML).create();
+    private static SimpleCfg postedVideos = new ConfigFactory("data/postedvideos").format(Format.XML).create();
     private static String channelUrl;
 
     private static String readFromUrl(String url) throws IOException {
@@ -41,13 +40,13 @@ class YouTubeVideo {
 
     private static boolean checkForVideos(String channel) throws IOException {
         channelUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&type=video&maxResults=1&channelId=" + channel + "&key=" + Config.cfg.get("YouTube.key");
-        return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").length() > 0;
+        return new JSONObject(readFromUrl(channelUrl)).getJSONArray("items").getJSONObject(0).getJSONObject("id").getString("videoId") != null && !postedVideos.hasKey(getId());
     }
 
     static void check() throws IOException {
         for (String c : Config.cfg.get("YouTube.channels").split(", ")) {
-            if (checkForVideos(c) && !postedVideos.hasKey(getId())) {
-                Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.get("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://youtu.be/" + getId()).queue();
+            if (checkForVideos(c)) {
+                Bot.jda.getTextChannelById(Config.cfg.get("Notifications.channelID")).sendMessage((Language.lang.getProperty("YouTube.Video.POSTED_VIDEO")).replace("%CHANNEL%", getName()) + "  https://youtu.be/" + getId()).queue();
                 postedVideos.set(getId(), "");
             }
         }

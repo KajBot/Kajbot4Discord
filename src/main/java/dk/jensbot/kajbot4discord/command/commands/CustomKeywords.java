@@ -3,7 +3,7 @@ package dk.jensbot.kajbot4discord.command.commands;
 
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandEvent;
-import dk.jensbot.kajbot4discord.handlers.KeywordHandler;
+import dk.jensbot.kajbot4discord.keyword.KeywordHandler;
 import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -41,9 +41,9 @@ public class CustomKeywords extends Command {
             case "del":
             case "remove":
                 try {
-                    if (KeywordHandler.kws.containsKey(e.getArgsSplit().get(1))) {
+                    if (KeywordHandler.kws.hasKey(e.getArgsSplit().get(1))) {
                         KeywordHandler.removeKeyword(e.getArgsSplit().get(1));
-                        e.reply((Language.lang.get("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase()));
+                        e.reply((Language.lang.getProperty("Keyword.UNREGISTERED")).replace("%KW%", e.getArgsSplit().get(1).toUpperCase()));
                     }
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
@@ -54,7 +54,7 @@ public class CustomKeywords extends Command {
                     String kwName = e.getArgsSplit().get(1);
                     String[] kwContext = e.getArgs().substring(kwName.length() + "add ".length() + 1).split("\\s+");
                     KeywordHandler.addKeyword(kwName, String.join(" ", kwContext));
-                    e.reply((Language.lang.get("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
+                    e.reply((Language.lang.getProperty("Keyword.REGISTERED")).replace("%KW%", kwName.toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }

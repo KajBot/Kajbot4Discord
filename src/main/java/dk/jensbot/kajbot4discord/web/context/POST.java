@@ -2,7 +2,7 @@ package dk.jensbot.kajbot4discord.web.context;
 
 import dk.jensbot.kajbot4discord.Bot;
 import dk.jensbot.kajbot4discord.command.CommandManager;
-import dk.jensbot.kajbot4discord.handlers.KeywordHandler;
+import dk.jensbot.kajbot4discord.keyword.KeywordHandler;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.web.Context;
 import dk.jensbot.kajbot4discord.web.Servlet;

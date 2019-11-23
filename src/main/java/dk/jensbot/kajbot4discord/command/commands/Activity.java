@@ -21,6 +21,6 @@ public class Activity extends Command {
             return;
 
         e.getJDA().getPresence().setActivity(net.dv8tion.jda.api.entities.Activity.of(ActivityType.valueOf(e.getArgsSplit().get(0).toUpperCase()), e.getJDA().getPresence().getActivity() == null ? "N/A" : e.getJDA().getPresence().getActivity().getName()));
-        e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
+        e.reply((Language.lang.getProperty("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
     }
 }

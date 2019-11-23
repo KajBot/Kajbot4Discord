@@ -1,6 +1,5 @@
 package dk.jensbot.kajbot4discord.utils;
 
-
 import dk.jensbot.kajbot4discord.Bot;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.apache.log4j.Logger;
@@ -14,12 +13,13 @@ import java.time.format.DateTimeFormatter;
 public class LogHelper {
 
     private static Logger logger = Logger.getLogger("[Discord]");
+    private static String logFile = "logs/kajbot.log";
 
     /**
      * helper class d() to log debug level information.
      */
     public static void debug(Class cls, String message) {
-        logToFile(cls + ": " + message, "kajbot.log");
+        logToFile(cls + ": " + message, logFile);
         logger.debug(cls + ": " + message);
     }
 
@@ -28,7 +28,7 @@ public class LogHelper {
      * helper class i() to log info level information.
      */
     public static void info(String message) {
-        logToFile(message, "kajbot.log");
+        logToFile(message, logFile);
         logger.info(message);
     }
 
@@ -36,7 +36,7 @@ public class LogHelper {
      * helper class w() to log warning level information.
      */
     public static void warning(Class cls, String message) {
-        logToFile(cls + ": " + message, "kajbot.log");
+        logToFile(cls + ": " + message, logFile);
         logger.warn(cls + ": " + message);
     }
 
@@ -45,7 +45,7 @@ public class LogHelper {
      * helper class e() to log error information.
      */
     public static void error(Class cls, Exception ex, String message) {
-        logToFile(cls + ": " + ex, "kajbot.log");
+        logToFile(cls + ": " + ex, logFile);
         logger.error(cls + ": " + ex);
         try {
             EmbedBuilder eb = new EmbedBuilder();
@@ -63,7 +63,7 @@ public class LogHelper {
     }
 
     public static void error(Class cls, String message) {
-        logToFile(cls + ": " + message, "kajbot.log");
+        logToFile(cls + ": " + message, logFile);
         logger.error(cls + ": " + message);
     }
 
@@ -72,7 +72,7 @@ public class LogHelper {
      * helper class t() to log trace information.
      */
     public static void trace(Class cls, String message) {
-        logToFile(cls + ": " + message, "kajbot.log");
+        logToFile(cls + ": " + message, logFile);
         logger.trace(cls + ": " + message);
     }
 
@@ -80,7 +80,7 @@ public class LogHelper {
     public static void logToFile(String message, String file) {
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(System.getProperty("user.dir") + "/" + file), true), StandardCharsets.UTF_8));
-            writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.lang.get("Logging.TIME_FORMAT"))) + " - " + message + "\n");
+            writer.write(ZonedDateTime.now().format(DateTimeFormatter.ofPattern(Language.lang.getProperty("Logging.TIME_FORMAT"))) + " - " + message + "\n");
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

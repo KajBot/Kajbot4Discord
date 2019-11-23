@@ -4,7 +4,7 @@ import dk.jensbot.kajbot4discord.Main;
 import dk.jensbot.kajbot4discord.command.Command;
 import dk.jensbot.kajbot4discord.command.CommandEvent;
 import dk.jensbot.kajbot4discord.command.CommandManager;
-import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
+import dk.jensbot.kajbot4discord.command.CustomCommandHandler;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.utils.Language;
 import dk.jensbot.kajbot4discord.utils.LogHelper;
@@ -32,7 +32,7 @@ public class CustomCommands extends Command {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(0xA6C055));
                     eb.setTimestamp(ZonedDateTime.now());
-                    CustomCommandsHandler.getCustomCommands().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
+                    CustomCommandHandler.getCommands().forEach((k, v) -> eb.addField(String.valueOf(k), String.valueOf(v), true));
                     e.reply(eb.build());
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
@@ -46,7 +46,7 @@ public class CustomCommands extends Command {
                         if (command.getSimpleName().equalsIgnoreCase(e.getArgsSplit().get(1))) return;
                     }
                     CommandManager.removeCustomCommand(e.getArgsSplit().get(1).replace(Config.cfg.get("Bot.prefix"), ""));
-                    e.reply((Language.lang.get("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
+                    e.reply((Language.lang.getProperty("Command.UNREGISTERED")).replace("%CMD%", e.getArgsSplit().get(1).toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }
@@ -59,7 +59,7 @@ public class CustomCommands extends Command {
                     }
                     String[] cmdContext = e.getArgs().substring(cmdName.length() + "add ".length() + 1).split("\\s+");
                     CommandManager.addCustomCommand(cmdName, String.join(" ", cmdContext));
-                    e.reply((Language.lang.get("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase()));
+                    e.reply((Language.lang.getProperty("Command.REGISTERED")).replace("%CMD%", cmdName.toUpperCase()));
                 } catch (Exception ex) {
                     LogHelper.error(this.getClass(), ex, e.getMessage().getContentRaw());
                 }

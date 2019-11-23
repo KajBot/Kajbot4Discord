@@ -1,15 +1,24 @@
 package dk.jensbot.kajbot4discord.utils;
 
-import dk.jensbot.simplecfg.ConfigFactory;
-import dk.jensbot.simplecfg.Format;
-import dk.jensbot.simplecfg.SimpleCfg;
-
-import java.io.File;
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 public class Language {
 
-    private static File langPath = new File(Config.cfg.get("Language"));
-    private static File fallbackPath = new File("en_US.properties");
+    public static Properties lang = new Properties();
 
-    public static SimpleCfg lang = new ConfigFactory(langPath).format(Format.PROPERTIES).fallback(fallbackPath).create();
+    static {
+        try {
+            lang.load(new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/KajBot/Kajbot4Discord-Lang/master/" + Config.cfg.get("Language") + ".properties").openStream(), StandardCharsets.UTF_8)));
+        } catch (IOException ignored) {
+            try {
+                lang.load(ClassLoader.getSystemResourceAsStream("en_US.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

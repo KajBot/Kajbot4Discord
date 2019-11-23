@@ -30,7 +30,7 @@ public class Permit extends Command {
         if (!e.getMessage().getMentionedMembers().isEmpty()) {
             for (Member member : memberMention) {
                 permitted.add(member);
-                e.reply((Language.lang.get("Permit.PERMITTED")).replace("%USER%", member.getAsMention()));
+                e.reply((Language.lang.getProperty("Permit.PERMITTED")).replace("%USER%", member.getAsMention()));
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {

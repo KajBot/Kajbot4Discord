@@ -1,8 +1,8 @@
 package dk.jensbot.kajbot4discord.web.context;
 
 import dk.jensbot.kajbot4discord.Bot;
-import dk.jensbot.kajbot4discord.command.CustomCommandsHandler;
-import dk.jensbot.kajbot4discord.handlers.KeywordHandler;
+import dk.jensbot.kajbot4discord.command.CustomCommandHandler;
+import dk.jensbot.kajbot4discord.keyword.KeywordHandler;
 import dk.jensbot.kajbot4discord.utils.Config;
 import dk.jensbot.kajbot4discord.web.Context;
 import dk.jensbot.kajbot4discord.web.Servlet;
@@ -49,7 +49,7 @@ public class GET extends Servlet {
         JSONObject json = new JSONObject();
         json.put("game", Bot.jda.getPresence().getActivity() == null ? "N/A" : Bot.jda.getPresence().getActivity().getName());
         json.put("status", Bot.jda.getPresence().getStatus());
-        json.put("commands", CustomCommandsHandler.getCustomCommands());
+        json.put("commands", CustomCommandHandler.getCommands());
         json.put("keywords", KeywordHandler.getKeywords());
 
         context.response().setContentType("application/json; charset=UTF-8");

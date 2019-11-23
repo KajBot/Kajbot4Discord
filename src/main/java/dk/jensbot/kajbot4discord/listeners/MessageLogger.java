@@ -11,7 +11,7 @@ public class MessageLogger extends ListenerAdapter {
         if (!Config.cfg.get("Chat.logging").equalsIgnoreCase("true") || event.getMessage().isWebhookMessage() || !event.getChannelType().isGuild() || event.getAuthor().isBot() || event.getMessage().isWebhookMessage())
             return;
 
-        LogHelper.logToFile("(" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + event.getMessage().getContentRaw(), "chat.log");
+        LogHelper.logToFile("(" + event.getGuild().getName() + " - #" + event.getChannel().getName() + ") " + event.getAuthor().getAsTag() + ": " + event.getMessage().getContentRaw(), "logs/chat.log");
 
 
     }

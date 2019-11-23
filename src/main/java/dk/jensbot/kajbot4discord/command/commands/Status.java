@@ -23,6 +23,6 @@ public class Status extends Command {
 
 
         e.getJDA().getPresence().setStatus(OnlineStatus.valueOf(e.getArgsSplit().get(0).toUpperCase()));
-        e.reply((Language.lang.get("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
+        e.reply((Language.lang.getProperty("Status.SET")).replace("%STATUS%", e.getArgsSplit().get(0).toUpperCase()));
     }
 }
