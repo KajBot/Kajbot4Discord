@@ -1,11 +1,6 @@
 # Kajbot Java
 ![Kaj](https://avatars0.githubusercontent.com/u/37408794?s=400&u=45274bd3f9a554a4a28aed9df9a51f9515f9f679&v=4)
 
-[![Build Status](https://jenkins.jensz12.com/buildStatus/icon?job=Kajbot-Discord)](https://jenkins.jensz12.com/job/Kajbot-Discord/)
-[![Lastest stable](https://jenkins.jensz12.com/job/Kajbot-Discord/badge/icon?subject=Download&status=latest%20stable&color=darkturquoise)](https://jenkins.jensz12.com/job/Kajbot-Discord/lastSuccessfulBuild/deployedArtifacts/download/artifact.1/)
-[![Lastest dev build](https://jenkins.jensz12.com/job/Kajbot-Discord/badge/icon?subject=Download&status=latest%20build&color=darkturquoise)](https://jenkins.jensz12.com/job/Kajbot-Discord-Dev/lastSuccessfulBuild/deployedArtifacts/download/artifact.1/)
-
-
 KajBot is a Discord Bot, created by [Jonas](https://twitter.com/minemand) & [Jens](https://twitter.com/jensz12).\
 Created in Java
 
