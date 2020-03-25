@@ -33,3 +33,10 @@ gradlew
 gradlew.bat
 settings.gradle
 *.iml
+bin/main/log4j.properties
+bin/main/en_US.properties
+bin/main/config.properties
+.vscode/settings.json
+.settings/org.eclipse.buildship.core.prefs
+.project
+.classpath
