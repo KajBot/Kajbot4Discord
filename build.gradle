@@ -1,19 +1,19 @@
 plugins {
-    id 'maven'
+    id 'maven-publish'
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '5.0.0'
 }
 
 group 'dk.jensbot.kajbot4discord'
-version '0.1.9'
+version '0.1.10'
 mainClassName = 'dk.jensbot.kajbot4discord.Main'
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
     jcenter()
-    maven { url "https://repo.jensz12.com/repository/jensz12/" }
+    maven { url "https://mymavenrepo.com/repo/yR4KRmqg7vStPOMMld41/" }
 }
 
 dependencies {
